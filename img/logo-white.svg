@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60">
+  <style>
+    .logo-text { font-family: 'Arial', sans-serif; font-weight: bold; }
+    .white { fill: #ffffff; }
+  </style>
+  <g>
+    <text x="10" y="40" class="logo-text white" font-size="28">APE</text>
+    <text x="70" y="40" class="logo-text white" font-size="24">skansa</text>
+    <path class="white" d="M5,45 L195,45" stroke-width="2" stroke="#ffffff" />
+    <text x="10" y="58" class="logo-text white" font-size="10">Marketplace Siswa SMKN 1 Bawang</text>
+  </g>
+</svg>
