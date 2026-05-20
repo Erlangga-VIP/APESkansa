@@ -33,15 +33,19 @@ include 'js/php/config.php'; // Koneksi ke database
                 </nav>
                 <div class="auth-buttons">
                     <?php if (isset($_SESSION['user_id'])):
-                        // Cek role untuk link dashboard
-                        $dashboard_link = '#';
-                        if ($_SESSION['role'] == 'penjual') {
-                            $dashboard_link = 'penjual-profil.php';
-                        } elseif ($_SESSION['role'] == 'admin') {
-                            $dashboard_link = 'admin-dashboard.php';
+                        $dashboard_link = 'profil.php';
+                        if (isset($_SESSION['role'])) {
+                            if ($_SESSION['role'] == 'penjual') {
+                                $dashboard_link = 'penjual-profil.php';
+                            } elseif ($_SESSION['role'] == 'admin') {
+                                $dashboard_link = 'admin-dashboard.php';
+                            }
                         }
+                        $user_initial = isset($_SESSION['nama']) ? substr($_SESSION['nama'], 0, 1) : 'U';
                     ?>
-                        <a href="<?php echo $dashboard_link; ?>" class="btn btn-primary">Dashboard</a>
+                        <a href="<?php echo $dashboard_link; ?>" class="profile-icon" title="Profil Saya">
+                            <div class="avatar-circle"><?php echo strtoupper(htmlspecialchars($user_initial)); ?></div>
+                        </a>
                         <a href="js/php/logout.php" class="btn btn-outline">Keluar</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline">Masuk</a>

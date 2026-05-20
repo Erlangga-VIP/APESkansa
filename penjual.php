@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -28,8 +33,25 @@
                     </ul>
                 </nav>
                 <div class="auth-buttons">
-                    <a href="login.php" class="btn btn-outline">Masuk</a>
-                    <a href="register.php" class="btn btn-primary">Daftar</a>
+                    <?php if (isset($_SESSION['user_id'])):
+                        $dashboard_link = 'profil.php';
+                        if (isset($_SESSION['role'])) {
+                            if ($_SESSION['role'] == 'penjual') {
+                                $dashboard_link = 'penjual-profil.php';
+                            } elseif ($_SESSION['role'] == 'admin') {
+                                $dashboard_link = 'admin-dashboard.php';
+                            }
+                        }
+                        $user_initial = isset($_SESSION['nama']) ? substr($_SESSION['nama'], 0, 1) : 'U';
+                    ?>
+                        <a href="<?php echo $dashboard_link; ?>" class="profile-icon" title="Profil Saya">
+                            <div class="avatar-circle"><?php echo strtoupper(htmlspecialchars($user_initial)); ?></div>
+                        </a>
+                        <a href="js/php/logout.php" class="btn btn-outline">Keluar</a>
+                    <?php else: ?>
+                        <a href="login.php" class="btn btn-outline">Masuk</a>
+                        <a href="register.php" class="btn btn-primary">Daftar</a>
+                    <?php endif; ?>
                 </div>
                 <button class="mobile-menu-toggle">
                     <span class="bar"></span>
