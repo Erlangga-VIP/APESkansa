@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'penjual') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_penjual = $_SESSION['user_id'];
     $nama_produk = $_POST['nama_produk'];
+    $kategori = isset($_POST['kategori']) ? $_POST['kategori'] : 'Lainnya';
     $harga = $_POST['harga'];
     $deskripsi = $_POST['deskripsi'];
     $gambar_info = $_FILES['gambar'];
@@ -34,13 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $target_file = $target_dir . $gambar_nama_unik;
 
     if (move_uploaded_file($gambar_info["tmp_name"], $target_file)) {
-        $sql = "INSERT INTO produk (user_id, nama_produk, harga, deskripsi, gambar) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO produk (user_id, nama_produk, kategori, harga, deskripsi, gambar) VALUES (?, ?, ?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($conn, $sql)) {
-            mysqli_stmt_bind_param($stmt, "isiss", $id_penjual, $nama_produk, $harga, $deskripsi, $gambar_nama_unik);
+            mysqli_stmt_bind_param($stmt, "ississ", $id_penjual, $nama_produk, $kategori, $harga, $deskripsi, $gambar_nama_unik);
 
             if (mysqli_stmt_execute($stmt)) {
-                echo "<script>alert('Produk berhasil ditambahkan!'); window.location='../../penjual-dashboard.php';</script>";
+                echo "<script>alert('Produk berhasil ditambahkan!'); window.location='../../penjual-profil.php?tab=produk';</script>";
             } else {
                 echo "<script>alert('Error: Tidak bisa menyimpan data ke database.'); window.location='../../penjual-tambah-produk.php';</script>";
             }
