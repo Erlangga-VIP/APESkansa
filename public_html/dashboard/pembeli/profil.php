@@ -213,42 +213,4 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
     </div>
 </main>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Tab switcher
-    const tabs = document.querySelectorAll('.profile-tab-btn');
-    const contents = document.querySelectorAll('.profile-tab-content');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetTab = tab.getAttribute('data-tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-            tab.classList.add('active');
-            document.getElementById('tab-' + targetTab).classList.add('active');
-        });
-    });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
-    if (tabParam) {
-        const targetTabBtn = document.querySelector(`.profile-tab-btn[data-tab="${tabParam}"]`);
-        if (targetTabBtn) targetTabBtn.click();
-    }
-
-    // Star rating
-    const stars = document.querySelectorAll('#star-selector i');
-    const ratingInput = document.getElementById('rating-value');
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const value = parseInt(star.getAttribute('data-value'));
-            ratingInput.value = value;
-            stars.forEach((s, idx) => {
-                s.className = idx < value ? 'fas fa-star' : 'far fa-star';
-            });
-        });
-    });
-});
-</script>
-
 <?php require_once __DIR__ . '/../../../includes/footer.php'; ?>

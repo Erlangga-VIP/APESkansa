@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 
 $penjual_id      = isset($_GET['penjual_id']) ? (int) $_GET['penjual_id'] : 0;
 $kategori_filter = trim($_GET['kategori'] ?? '');

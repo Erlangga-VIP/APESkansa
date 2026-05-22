@@ -173,7 +173,7 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
                                             <a href="edit-produk.php?id=<?= (int) $row['produk_id'] ?>" class="btn btn-sm btn-edit" style="background: var(--warning); color: var(--text-dark); border: none; padding: 0.25rem 0.5rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);" title="Edit">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
-                                            <a href="#" onclick="confirmDelete(<?= (int) $row['produk_id'] ?>)" class="btn btn-sm btn-delete" style="background: var(--danger); color: var(--white); border: none; padding: 0.25rem 0.5rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);" title="Hapus">
+                                            <a href="#" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen?') && (window.location.href='../../process/hapus-produk.php?id=<?= (int) $row['produk_id'] ?>')" class="btn btn-sm btn-delete" style="background: var(--danger); color: var(--white); border: none; padding: 0.25rem 0.5rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);" title="Hapus">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </a>
                                         </div>
@@ -304,40 +304,5 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tabs = document.querySelectorAll('.sidebar-menu-item[data-tab]');
-    const contents = document.querySelectorAll('.profile-tab-content');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetTab = tab.getAttribute('data-tab');
-
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-
-            tab.classList.add('active');
-            const activeContent = document.getElementById('tab-' + targetTab);
-            activeContent.classList.add('active');
-            activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
-    if (tabParam) {
-        const targetTabBtn = document.querySelector(`.sidebar-menu-item[data-tab="${tabParam}"]`);
-        if (targetTabBtn) targetTabBtn.click();
-    }
-});
-
-function confirmDelete(produkId) {
-    if (confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen? Tindakan ini tidak dapat dibatalkan.')) {
-        window.location.href = '../../process/hapus-produk.php?id=' + produkId;
-    }
-}
-</script>
 
 <?php require_once __DIR__ . '/../../../includes/footer.php'; ?>
