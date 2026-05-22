@@ -15,7 +15,7 @@
             <a href="index.php"><img src="assets/img/LOGOAPE.png" alt="APEskansa Logo" style="height: 80px !important;"></a>
         </div>
         <h1 class="auth-title">Buat Akun Baru</h1>
-        <form action="process/register.php" method="POST" class="auth-form">
+        <form action = "process/register.php" method="POST" class="auth-form">
             <div class="form-group">
                 <label for="nama">Nama Lengkap</label>
                 <input type="text" id="nama" name="nama" class="form-control" placeholder="Masukkan nama lengkap" required>

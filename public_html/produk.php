@@ -77,7 +77,7 @@ if (isset($_SESSION['user_id'])) {
                                 <div class="avatar-circle"><?php echo strtoupper(htmlspecialchars($current_user_initial)); ?></div>
                             <?php endif; ?>
                         </a>
-                        <a href="process/logout.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Keluar</a>
+                        <a href = "process/logout.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Keluar</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Masuk</a>
                         <a href="register.php" class="btn btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem; border-radius:8px;">Daftar</a>

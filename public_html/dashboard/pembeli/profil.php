@@ -73,7 +73,7 @@ $pesanan_selesai = mysqli_fetch_assoc($pesanan_selesai_q)['total'];
                             <div class="avatar-circle"><?php echo strtoupper(htmlspecialchars($user_initial)); ?></div>
                         <?php endif; ?>
                     </a>
-                    <a href="process/logout.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Keluar</a>
+                    <a href="../../process/logout.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Keluar</a>
                 </div>
                 <button class="mobile-menu-toggle">
                     <span class="bar"></span>
@@ -132,7 +132,7 @@ $pesanan_selesai = mysqli_fetch_assoc($pesanan_selesai_q)['total'];
             <div class="profile-tab-content active" id="tab-profil">
                 <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--dark-text);">Informasi Akun</h3>
                 
-                <form action="process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+                <form action="../../process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
                     <div class="form-group" style="margin-bottom: 1.25rem;">
                         <label for="nama" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display:block;">Nama Lengkap</label>
                         <input type="text" id="nama" name="nama" class="form-control" value="<?php echo htmlspecialchars($user_data['nama']); ?>" required style="border-radius: 8px;">
@@ -234,7 +234,7 @@ $pesanan_selesai = mysqli_fetch_assoc($pesanan_selesai_q)['total'];
                 <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--dark-text);">Beri Testimoni & Penilaian</h3>
                 <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem;">Bagikan pengalaman belanja Anda di APEskansa. Ulasan Anda akan membantu kami meningkatkan layanan dan memotivasi wirausaha siswa!</p>
                 
-                <form action="process/beri-testimoni.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+                <form action="../../process/beri-testimoni.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
                     
                     <!-- Star Rating Selector -->
                     <div class="form-group" style="margin-bottom: 1.5rem;">

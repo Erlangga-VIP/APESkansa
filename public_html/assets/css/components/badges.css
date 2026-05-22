@@ -1,99 +1,26 @@
-/* Badges */
-.badge-status {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    padding: 0.35rem 0.85rem !important;
-    border-radius: 50px !important;
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: var(--fs-xs);
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
-.badge-waiting {
-    background-color: rgba(245, 158, 11, 0.15) !important;
-    color: #d97706 !important;
-}
-.badge-processing {
-    background-color: rgba(59, 130, 246, 0.15) !important;
-    color: #2563eb !important;
-}
-.badge-completed {
-    background-color: rgba(16, 185, 129, 0.15) !important;
-    color: #059669 !important;
-}
-.badge-cancelled {
-    background-color: rgba(239, 68, 68, 0.15) !important;
-    color: #dc2626 !important;
+
+.badge-primary {
+    background: var(--primary-light);
+    color: var(--primary);
 }
 
-/* ==========================================================================
-   MODAL COMPONENT STYLES (v2.0)
-   ========================================================================== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+.badge-status {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
 }
-.modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-.modal-box {
-    background: #ffffff;
-    width: 95%;
-    max-width: 550px;
-    border-radius: 16px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-    transform: scale(0.9);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.modal-overlay.active .modal-box {
-    transform: scale(1);
-}
-.modal-header {
-    background: var(--dark-text);
-    color: #ffffff;
-    padding: 1.25rem 1.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.modal-header h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0;
-}
-.modal-close-btn {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color 0.2s;
-    line-height: 1;
-}
-.modal-close-btn:hover {
-    color: #ffffff;
-}
-.modal-body {
-    padding: 1.75rem;
-}
-.modal-footer {
-    padding: 1.25rem 1.75rem;
-    background: var(--secondary-color);
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-}
+
+.badge-waiting { background: rgba(245,158,11,0.15); color: #d97706; }
+.badge-processing { background: rgba(59,130,246,0.15); color: #2563eb; }
+.badge-completed { background: rgba(16,185,129,0.15); color: #059669; }
+.badge-cancelled { background: rgba(239,68,68,0.15); color: #dc2626; }

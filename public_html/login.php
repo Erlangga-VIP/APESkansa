@@ -15,7 +15,7 @@
             <a href="index.php"><img src="assets/img/LOGOAPE.png" alt="APEskansa Logo" style="height: 80px !important;"></a>
         </div>
         <h1 class="auth-title">Login Akun</h1>
-        <form action="process/login.php" method="POST" class="auth-form">
+        <form action = "process/login.php" method="POST" class="auth-form">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan email Anda" required>

@@ -86,7 +86,7 @@ if (isset($_SESSION['user_id'])) {
                                 <div class="avatar-circle"><?php echo strtoupper(htmlspecialchars($current_user_initial)); ?></div>
                             <?php endif; ?>
                         </a>
-                        <a href="process/logout.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Keluar</a>
+                        <a href = "process/logout.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Keluar</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Masuk</a>
                         <a href="register.php" class="btn btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem; border-radius:8px;">Daftar</a>
@@ -182,7 +182,7 @@ if (isset($_SESSION['user_id'])) {
                 <h3><i class="fas fa-shopping-cart"></i> Konfirmasi Pemesanan</h3>
                 <button class="modal-close-btn" id="close-checkout-btn">&times;</button>
             </div>
-            <form action="process/buat-pesanan.php" method="POST">
+            <form action = "process/buat-pesanan.php" method="POST">
                 <input type="hidden" name="produk_id" value="<?php echo $product_id; ?>">
                 <div class="modal-body">
                     <div style="display:flex; gap:1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom:1.25rem; margin-bottom:1.5rem; align-items:center;">

@@ -77,7 +77,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                     <i class="fas fa-home"></i>
                     <span>Ke Beranda</span>
                 </a>
-                <a href="process/logout.php" class="sidebar-menu-item" style="color: var(--danger-color);">
+                <a href="../../process/logout.php" class="sidebar-menu-item" style="color: var(--danger-color);">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span>
                 </a>
@@ -145,7 +145,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                         <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--dark-text); margin: 0;"><i class="fas fa-user-edit" style="color: var(--primary-color);"></i> Profil & Toko Saya</h2>
                     </div>
                     
-                    <form action="process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+                    <form action="../../process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
                         <div class="form-group" style="margin-bottom: 1.25rem;">
                             <label for="nama" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display:block;">Nama Toko / Penjual</label>
                             <input type="text" id="nama" name="nama" class="form-control" value="<?php echo htmlspecialchars($user_data['nama']); ?>" required style="border-radius: 8px;">
@@ -305,14 +305,14 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                                                     <!-- TOMBOL AKSI DIUBAH MENJADI FORM POST -->
                                                     <?php if ($row['status'] == 'menunggu'): ?>
                                                         <div style="display:flex; gap: 0.25rem;">
-                                                            <form method="POST" action="process/update-status-pesanan.php" style="display:inline;">
+                                                            <form method="POST" action="../../process/update-status-pesanan.php" style="display:inline;">
                                                                 <input type="hidden" name="pesanan_id" value="<?php echo $row['pesanan_id']; ?>">
                                                                 <input type="hidden" name="status" value="diproses">
                                                                 <button type="submit" class="btn btn-sm btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight:600;">
                                                                     <i class="fas fa-check"></i> Proses
                                                                 </button>
                                                             </form>
-                                                            <form method="POST" action="process/update-status-pesanan.php" style="display:inline;">
+                                                            <form method="POST" action="../../process/update-status-pesanan.php" style="display:inline;">
                                                                 <input type="hidden" name="pesanan_id" value="<?php echo $row['pesanan_id']; ?>">
                                                                 <input type="hidden" name="status" value="dibatalkan">
                                                                 <button type="submit" class="btn btn-sm btn-delete" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight:600; color:white;">
@@ -321,7 +321,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                                                             </form>
                                                         </div>
                                                     <?php elseif ($row['status'] == 'diproses'): ?>
-                                                        <form method="POST" action="process/update-status-pesanan.php" style="display:inline;">
+                                                        <form method="POST" action="../../process/update-status-pesanan.php" style="display:inline;">
                                                             <input type="hidden" name="pesanan_id" value="<?php echo $row['pesanan_id']; ?>">
                                                             <input type="hidden" name="status" value="selesai">
                                                             <button type="submit" class="btn btn-sm" style="background-color: var(--success-color); color:white; padding: 0.35rem 0.75rem; font-size:0.75rem; font-weight:600; border-radius:6px;">
@@ -388,7 +388,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
         // Konfirmasi Hapus Produk (path diperbaiki)
         function confirmDelete(produkId) {
             if (confirm("Apakah Anda yakin ingin menghapus produk ini secara permanen? Tindakan ini tidak dapat dibatalkan.")) {
-                window.location.href = "process/hapus-produk.php?id=" + produkId;
+                window.location.href = "../../process/hapus-produk.php?id=" + produkId;
             }
         }
     </script>

@@ -71,7 +71,7 @@ $produk_data = mysqli_fetch_assoc($produk_query);
                     <i class="fas fa-home"></i>
                     <span>Ke Beranda</span>
                 </a>
-                <a href="process/logout.php" class="sidebar-menu-item" style="color: var(--danger-color);">
+                <a href="../../process/logout.php" class="sidebar-menu-item" style="color: var(--danger-color);">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span>
                 </a>
@@ -104,7 +104,7 @@ $produk_data = mysqli_fetch_assoc($produk_query);
                     <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--dark-text); margin: 0;"><i class="fas fa-edit" style="color: var(--primary-color);"></i> Ubah Informasi Produk</h2>
                 </div>
                 
-                <form action="process/update-produk.php" method="POST" enctype="multipart/form-data" class="product-form" style="max-width: 600px;">
+                <form action="../../process/update-produk.php" method="POST" enctype="multipart/form-data" class="product-form" style="max-width: 600px;">
                     <input type="hidden" name="produk_id" value="<?php echo $produk_id; ?>">
                     
                     <div class="form-group" style="margin-bottom: 1.25rem;">

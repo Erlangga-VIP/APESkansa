@@ -55,7 +55,7 @@ $foto_profil = $user_data['foto_profil'] ? 'uploads/' . htmlspecialchars($user_d
                     <i class="fas fa-home"></i>
                     <span>Ke Beranda</span>
                 </a>
-                <a href="process/logout.php" class="sidebar-menu-item" style="color: var(--danger-color);">
+                <a href="../../process/logout.php" class="sidebar-menu-item" style="color: var(--danger-color);">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span>
                 </a>
@@ -87,7 +87,7 @@ $foto_profil = $user_data['foto_profil'] ? 'uploads/' . htmlspecialchars($user_d
                 <div class="card-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
                     <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--dark-text); margin: 0;"><i class="fas fa-plus-circle" style="color: var(--primary-color);"></i> Detail Informasi Produk</h2>
                 </div>
-                <form action="process/tambah-produk.php" method="POST" enctype="multipart/form-data" class="product-form" style="max-width: 600px;">
+                <form action="../../process/tambah-produk.php" method="POST" enctype="multipart/form-data" class="product-form" style="max-width: 600px;">
                     <div class="form-group" style="margin-bottom: 1.25rem;">
                         <label for="nama_produk" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display:block;">Nama Produk</label>
                         <input type="text" id="nama_produk" name="nama_produk" class="form-control" placeholder="Contoh: Brownies Coklat Keju" required style="border-radius: 8px;">
