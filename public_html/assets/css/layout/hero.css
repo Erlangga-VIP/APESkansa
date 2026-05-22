@@ -1,3 +1,6 @@
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
 .hero {
     background: var(--gradient-hero);
     padding: var(--space-3xl) 0;
@@ -6,60 +9,76 @@
 
 .hero-badge {
     background: var(--primary-light);
-    color: var(--primary);
-    padding: var(--space-xs) var(--space-lg);
     border-radius: 50px;
-    font-weight: 600;
-    font-size: var(--fs-sm);
+    color: var(--primary);
     display: inline-block;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    letter-spacing: 0.05em;
     margin-bottom: var(--space-lg);
+    padding: var(--space-xs) var(--space-lg);
 }
 
 .hero-title {
+    color: var(--text-dark);
     font-size: var(--fs-4xl);
     font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: var(--space-lg);
     line-height: 1.2;
+    margin-bottom: var(--space-lg);
 }
 
-.hero-title span { color: var(--primary); }
+.hero-title span {
+    color: var(--primary);
+}
 
 .hero-desc {
-    font-size: var(--fs-lg);
     color: var(--text);
-    margin-bottom: var(--space-xl);
+    font-size: var(--fs-lg);
+    margin: 0 auto var(--space-xl);
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .hero-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--space-md);
     justify-content: center;
-    flex-wrap: wrap;
 }
 
 .hero-image img {
+    animation: float 4s ease-in-out infinite;
     margin-top: var(--space-xl);
     max-height: 300px;
-    animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
-/* Desktop */
+/* ---------- Desktop (≥ 992px) ---------- */
 @media (min-width: 992px) {
     .hero-content {
-        display: flex;
         align-items: center;
+        display: flex;
         gap: var(--space-2xl);
     }
-    .hero-text { flex: 1; text-align: left; }
-    .hero-image { flex: 1; }
-    .hero-image img { max-height: 400px; }
+
+    .hero-text {
+        flex: 1;
+        text-align: left;
+    }
+
+    .hero-image {
+        flex: 1;
+    }
+
+    .hero-image img {
+        max-height: 400px;
+    }
 }

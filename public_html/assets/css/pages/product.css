@@ -1,9 +1,13 @@
-/* Filter Chips */
+/* ============================================================
+   PRODUCT PAGE
+   ============================================================ */
+
+/* ---------- Filter Chips ---------- */
 .filter-chips {
-    display: flex;
-    gap: var(--space-xs);
-    flex-wrap: wrap;
     align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
 }
 
 .filter-chips .btn {

@@ -1,11 +1,14 @@
+/* ============================================================
+   PRODUCT DETAIL PAGE
+   ============================================================ */
 .product-detail-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-    padding: var(--space-xl);
     background: var(--white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
+    display: grid;
+    gap: var(--space-2xl);
+    grid-template-columns: 1fr;
+    padding: var(--space-xl);
 }
 
 @media (min-width: 768px) {
@@ -15,10 +18,10 @@
 }
 
 .product-detail-image img {
-    border-radius: var(--radius-md);
-    width: 100%;
     aspect-ratio: 1 / 1;
+    border-radius: var(--radius-md);
     object-fit: cover;
+    width: 100%;
 }
 
 .product-detail-info h1 {
@@ -28,20 +31,20 @@
 }
 
 .product-detail-price {
+    color: var(--primary);
     font-size: var(--fs-2xl);
     font-weight: 700;
-    color: var(--primary);
     margin-bottom: var(--space-lg);
 }
 
 .product-detail-seller {
-    display: flex;
     align-items: center;
+    background: var(--accent);
+    border-radius: var(--radius-md);
+    display: flex;
     gap: var(--space-md);
     margin-bottom: var(--space-lg);
     padding: var(--space-md);
-    background: var(--accent);
-    border-radius: var(--radius-md);
 }
 
 .product-detail-description {
@@ -50,6 +53,6 @@
 
 .product-detail-buttons {
     display: flex;
-    gap: var(--space-md);
     flex-wrap: wrap;
+    gap: var(--space-md);
 }

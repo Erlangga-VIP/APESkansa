@@ -1,49 +1,65 @@
-/* Product Grid */
+/* ============================================================
+   GRID SYSTEM & FLEX HELPERS
+   Mobile‑first, semua aturan mengikuti urutan properti yang
+   konsisten (display → gap → grid‑template → lalu sisanya).
+   ============================================================ */
+
+/* ---------- Product Grid ---------- */
 .products-grid {
     display: grid;
-    grid-template-columns: 1fr;
     gap: var(--space-lg);
+    grid-template-columns: 1fr;
 }
 
 @media (min-width: 576px) {
-    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (min-width: 992px) {
-    .products-grid { grid-template-columns: repeat(3, 1fr); }
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (min-width: 1200px) {
-    .products-grid { grid-template-columns: repeat(4, 1fr); }
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
-/* Stats Grid */
+/* ---------- Stats Grid ---------- */
 .stats-grid {
     display: grid;
-    grid-template-columns: 1fr;
     gap: var(--space-md);
+    grid-template-columns: 1fr;
 }
 
 @media (min-width: 576px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (min-width: 768px) {
-    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-/* Flex Helpers */
+/* ---------- Flex Helpers ---------- */
 .flex-between {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
+    display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
+    justify-content: space-between;
 }
 
 .flex-center {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: var(--space-md);
 }
 

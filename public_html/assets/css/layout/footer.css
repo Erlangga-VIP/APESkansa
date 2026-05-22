@@ -1,31 +1,45 @@
+/* ============================================================
+   FOOTER
+   ============================================================ */
 .footer {
     background: var(--text-dark);
     color: var(--text-light);
-    padding: var(--space-2xl) 0 var(--space-lg);
     margin-top: var(--space-3xl);
+    padding: var(--space-2xl) 0 var(--space-lg);
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: 1fr;
     gap: var(--space-xl);
+    grid-template-columns: 1fr;
 }
 
 @media (min-width: 576px) {
-    .footer-content { grid-template-columns: 1fr 1fr; }
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (min-width: 992px) {
-    .footer-content { grid-template-columns: 2fr 1fr 1fr 1fr; }
+    .footer-content {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
 }
 
-.footer-logo img { height: 50px !important; margin-bottom: var(--space-sm); }
-.footer-logo p { font-size: var(--fs-sm); margin-top: var(--space-xs); }
+.footer-logo img {
+    height: 50px !important;
+    margin-bottom: var(--space-sm);
+}
+
+.footer-logo p {
+    font-size: var(--fs-sm);
+    margin-top: var(--space-xs);
+}
 
 .footer h3 {
     color: var(--white);
-    font-weight: 600;
     font-size: var(--fs-base);
+    font-weight: 600;
     margin-bottom: var(--space-md);
 }
 
@@ -38,14 +52,17 @@
     transition: color var(--transition);
 }
 
-.footer ul li a:hover { color: var(--white); }
+.footer ul li a:hover {
+    color: var(--white);
+}
 
 .footer ul li i {
     color: var(--primary);
-    width: 20px;
     margin-right: var(--space-xs);
+    width: 20px;
 }
 
+/* ---------- Social Icons ---------- */
 .social-icons {
     display: flex;
     gap: var(--space-sm);
@@ -53,23 +70,26 @@
 }
 
 .social-icons a {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-full);
-    background: rgba(255,255,255,0.1);
-    display: flex;
     align-items: center;
-    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
     color: var(--white);
+    display: flex;
+    height: 40px;
+    justify-content: center;
     transition: background var(--transition);
+    width: 40px;
 }
 
-.social-icons a:hover { background: var(--primary); }
+.social-icons a:hover {
+    background: var(--primary);
+}
 
+/* ---------- Footer Bottom ---------- */
 .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
-    padding-top: var(--space-lg);
-    margin-top: var(--space-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: var(--fs-sm);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    text-align: center;
 }

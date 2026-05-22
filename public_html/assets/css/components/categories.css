@@ -1,48 +1,39 @@
-/* Categories Scroll & Buttons */
+/* ============================================================
+   CATEGORIES SCROLL
+   ============================================================ */
 .categories-scroll {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-sm);
     overflow-x: auto;
-    padding: 0.5rem 0.25rem 1.5rem 0.25rem;
-    scrollbar-width: thin;
+    padding-bottom: var(--space-sm);
+    -webkit-overflow-scrolling: touch;
 }
-.category-btn {
+
+.categories-scroll .btn {
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   SELLER LIST
+   ============================================================ */
+.seller-list {
+    background: var(--secondary);
+    border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+}
+
+.seller-item {
     align-items: center;
-    justify-content: center;
-    min-width: 110px;
-    padding: 1.25rem 1rem;
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: var(--space-sm);
 }
-.category-btn i {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-    transition: transform 0.3s ease;
+
+.seller-item:last-child {
+    border-bottom: none;
 }
-.category-btn span {
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: var(--text-color);
-}
-.category-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-.category-btn:hover i {
-    transform: scale(1.15);
-}
-.category-btn.active {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-}
-.category-btn.active i, .category-btn.active span {
-    color: white;
-}
+

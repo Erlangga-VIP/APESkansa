@@ -1,20 +1,25 @@
+/* ============================================================
+   SIDEBAR DASHBOARD (MOBILE‑FIRST)
+   ============================================================ */
 .sidebar {
-    width: 250px;
     background: var(--text-dark);
     color: var(--white);
-    padding: var(--space-xl) 0;
-    position: fixed;
     height: 100vh;
     overflow-y: auto;
+    padding: var(--space-xl) 0;
+    position: fixed;
+    width: 250px;
     z-index: 90;
 }
 
 .sidebar-logo {
-    text-align: center;
     margin-bottom: var(--space-xl);
+    text-align: center;
 }
 
-.sidebar-logo img { height: 50px !important; }
+.sidebar-logo img {
+    height: 50px !important;
+}
 
 .sidebar-menu {
     display: flex;
@@ -22,30 +27,33 @@
 }
 
 .sidebar-menu-item {
-    padding: var(--space-sm) var(--space-xl);
-    display: flex;
     align-items: center;
-    gap: var(--space-sm);
     color: var(--text-light);
-    transition: all var(--transition);
+    display: flex;
     font-size: var(--fs-sm);
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-xl);
+    transition: background var(--transition), color var(--transition);
 }
 
 .sidebar-menu-item:hover,
 .sidebar-menu-item.active {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: var(--white);
 }
 
-.sidebar-menu-item i { width: 20px; }
+.sidebar-menu-item i {
+    width: 20px;
+}
 
-/* Mobile */
+/* ---------- Mobile (≤ 992px) ---------- */
 @media (max-width: 992px) {
     .sidebar {
-        width: 100%;
         height: auto;
         position: relative;
+        width: 100%;
     }
+
     .sidebar-menu {
         flex-direction: row;
         flex-wrap: wrap;

@@ -1,9 +1,12 @@
+/* ============================================================
+   WELCOME BANNER
+   ============================================================ */
 .welcome-banner {
     background: var(--gradient-primary);
-    color: var(--white);
-    padding: var(--space-2xl);
     border-radius: var(--radius-lg);
+    color: var(--white);
     margin-bottom: var(--space-2xl);
+    padding: var(--space-2xl);
 }
 
 .welcome-banner h1 {

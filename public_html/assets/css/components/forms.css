@@ -1,34 +1,37 @@
+/* ============================================================
+   FORMS
+   ============================================================ */
 .form-group {
     margin-bottom: var(--space-lg);
 }
 
 .form-group label {
-    display: block;
-    font-weight: 600;
-    font-size: var(--fs-sm);
-    margin-bottom: var(--space-xs);
     color: var(--text-dark);
+    display: block;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
 }
 
 .form-control {
-    width: 100%;
-    padding: var(--space-sm) var(--space-md);
+    background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
+    color: var(--text);
     font-family: var(--font);
     font-size: var(--fs-base);
-    color: var(--text);
-    background: var(--white);
-    transition: border-color var(--transition);
+    padding: var(--space-sm) var(--space-md);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    width: 100%;
 }
 
 .form-control:focus {
-    outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    outline: none;
 }
 
 textarea.form-control {
-    resize: vertical;
     min-height: 100px;
+    resize: vertical;
 }

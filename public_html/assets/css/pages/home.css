@@ -1,4 +1,8 @@
-/* Stats Section */
+/* ============================================================
+   HOME PAGE
+   ============================================================ */
+
+/* ---------- Stats Section ---------- */
 .stats-section {
     margin-top: -40px;
     padding: 0 var(--space-md);
@@ -8,15 +12,15 @@
 
 .stats-card {
     background: var(--white);
-    padding: var(--space-xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+    padding: var(--space-xl);
 }
 
 .stats-card h3 {
+    color: var(--primary);
     font-size: var(--fs-3xl);
     font-weight: 700;
-    color: var(--primary);
 }
 
 .stats-card p {
@@ -24,65 +28,31 @@
     font-weight: 500;
 }
 
-/* Features */
+/* ---------- Features ---------- */
 .features {
     padding: var(--space-3xl) 0;
 }
 
 .features-title {
-    text-align: center;
+    color: var(--text-dark);
     font-size: var(--fs-3xl);
     font-weight: 700;
     margin-bottom: var(--space-2xl);
-    color: var(--text-dark);
-}
-
-.feature-card {
     text-align: center;
-    padding: var(--space-xl);
-    background: var(--secondary);
-    border-radius: var(--radius-md);
-    transition: transform var(--transition);
 }
 
-.feature-card:hover {
-    transform: translateY(-5px);
-}
-
-.feature-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--primary-light);
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto var(--space-lg);
-    font-size: 1.5rem;
-    color: var(--primary);
-}
-
-.feature-card h3 {
-    font-weight: 600;
-    margin-bottom: var(--space-sm);
-}
-
-.feature-card p {
-    color: var(--text-light);
-    font-size: var(--fs-sm);
-}
-
-/* Testimonials */
+/* ---------- Testimonials ---------- */
 .testimonials {
     background: var(--gradient-testimonial);
     padding: var(--space-3xl) 0;
 }
 
 .testimonials-title {
-    text-align: center;
+    color: var(--text-dark);
     font-size: var(--fs-3xl);
     font-weight: 700;
     margin-bottom: var(--space-2xl);
+    text-align: center;
 }
 
 .testimonials-slider {
@@ -93,91 +63,66 @@
     -webkit-overflow-scrolling: touch;
 }
 
-.testimonial-card {
-    min-width: 280px;
-    background: var(--white);
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    flex-shrink: 0;
-}
-
-.testimonial-stars {
-    color: var(--warning);
-    margin-bottom: var(--space-sm);
-}
-
-.testimonial-text {
-    font-style: italic;
-    margin-bottom: var(--space-lg);
-}
-
-.testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-}
-
-/* Search Bar */
+/* ---------- Search Bar ---------- */
 .search-bar {
     background: var(--secondary);
-    padding: var(--space-lg);
     border-radius: var(--radius-md);
-    margin-bottom: var(--space-2xl);
     display: flex;
-    gap: var(--space-sm);
     flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
 }
 
 .search-bar .form-control {
     flex: 1;
-    min-width: 200px;
     height: 48px;
+    min-width: 200px;
 }
 
-/* Section Heading */
+/* ---------- Section Heading ---------- */
 .section-heading {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: var(--space-lg);
 }
 
 .section-heading h2 {
+    color: var(--text-dark);
     font-size: var(--fs-2xl);
     font-weight: 600;
-    color: var(--text-dark);
 }
 
 .section-heading a {
     color: var(--primary);
-    font-weight: 600;
     font-size: var(--fs-sm);
+    font-weight: 600;
 }
 
-/* Table */
+/* ---------- Table ---------- */
 .table-responsive {
     overflow-x: auto;
 }
 
 .table {
-    width: 100%;
     border-collapse: collapse;
     font-size: var(--fs-sm);
+    width: 100%;
 }
 
 .table th {
     background: var(--secondary);
-    font-weight: 600;
-    text-align: left;
-    padding: var(--space-sm) var(--space-md);
-    color: var(--text-dark);
     border-bottom: 2px solid var(--border);
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-md);
+    text-align: left;
 }
 
 .table td {
-    padding: var(--space-sm) var(--space-md);
     border-bottom: 1px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
     vertical-align: middle;
 }
 

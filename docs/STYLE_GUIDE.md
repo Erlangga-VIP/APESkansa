@@ -1,32 +1,74 @@
+```markdown
 # APEskansa Style Guide
 
-Panduan lengkap untuk pengembangan tampilan APEskansa. Framework CSS ini dibangun dengan pendekatan **mobile‑first**, **modular**, dan **variabel‑based**.
+Panduan lengkap untuk pengembangan tampilan APEskansa. Framework CSS ini dibangun dengan pendekatan **mobile‑first**, **modular**, dan **variabel‑based**. Semua aturan CSS mengikuti urutan properti yang konsisten untuk memudahkan pemeliharaan.
 
 ---
 
 ## Daftar Isi
 
-1. [Variabel Global](#variabel-global)
-2. [Utilitas (Layout)](#utilitas-layout)
-3. [Komponen](#komponen)
+1. [Struktur Folder CSS](#struktur-folder-css)
+2. [Variabel Global](#variabel-global)
+3. [Reset & Tipografi](#reset--tipografi)
+4. [Utilitas (Layout)](#utilitas-layout)
+5. [Komponen](#komponen)
    - [Tombol (Buttons)](#tombol-buttons)
-   - [Kartu Produk (Cards)](#kartu-produk-cards)
+   - [Kartu (Cards)](#kartu-cards)
    - [Badge Status](#badge-status)
    - [Tab Navigasi](#tab-navigasi)
    - [Form Input](#form-input)
    - [Modal](#modal)
+   - [Kategori Scroll](#kategori-scroll)
+   - [Daftar Penjual (Seller List)](#daftar-penjual-seller-list)
    - [Banner Selamat Datang](#banner-selamat-datang)
    - [Pagination](#pagination)
-4. [Layout Halaman](#layout-halaman)
+6. [Layout Halaman](#layout-halaman)
    - [Header & Navigasi](#header--navigasi)
    - [Hero Section](#hero-section)
    - [Footer](#footer)
    - [Sidebar Dashboard](#sidebar-dashboard)
-5. [Halaman Spesifik](#halaman-spesifik)
+7. [Halaman Spesifik](#halaman-spesifik)
    - [Beranda (Home)](#beranda-home)
    - [Katalog Produk](#katalog-produk)
    - [Detail Produk](#detail-produk)
    - [Login / Register](#login--register)
+8. [Aturan Penulisan CSS](#aturan-penulisan-css)
+9. [Responsive Breakpoints](#responsive-breakpoints)
+
+---
+
+## Struktur Folder CSS
+
+```
+public_html/assets/css/
+├── base/
+│   ├── variables.css      # Variabel global (warna, spasi, font)
+│   ├── reset.css          # Reset & tipografi dasar
+│   └── responsive.css     # Aturan max‑width untuk backward compatibility
+├── layout/
+│   ├── grid.css           # Grid system & flex helpers
+│   ├── header.css         # Navigasi & header
+│   ├── hero.css           # Hero section
+│   ├── footer.css         # Footer
+│   └── sidebar.css        # Sidebar dashboard
+├── components/
+│   ├── buttons.css        # Tombol
+│   ├── cards.css          # Kartu produk, fitur, testimoni
+│   ├── badges.css         # Badge status
+│   ├── tabs.css           # Tab navigasi
+│   ├── forms.css          # Form input
+│   ├── modal.css          # Modal popup
+│   ├── categories.css     # Kategori scroll
+│   ├── seller.css         # Daftar penjual
+│   ├── welcome.css        # Banner selamat datang
+│   └── pagination.css     # Paginasi
+├── pages/
+│   ├── home.css           # Halaman beranda
+│   ├── product.css        # Halaman katalog produk
+│   ├── product-detail.css # Halaman detail produk
+│   └── auth.css           # Halaman login/register
+└── style.css              # Master impor
+```
 
 ---
 
@@ -73,9 +115,9 @@ Semua variabel didefinisikan di `base/variables.css`.
     --radius-full: 50%;
 
     /* Shadow */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
 
     /* Font */
     --font: 'Poppins', system-ui, -apple-system, sans-serif;
@@ -95,53 +137,56 @@ Semua variabel didefinisikan di `base/variables.css`.
 }
 ```
 
-**Cara pakai:**
-```css
-.element {
-    color: var(--primary);
-    padding: var(--space-md);
-    border-radius: var(--radius-sm);
-}
-```
+---
+
+## Reset & Tipografi
+
+File: `base/reset.css`
+
+- Semua elemen dimulai dengan `margin: 0; padding: 0; box-sizing: border-box;`
+- `body` menggunakan font `Poppins`, warna teks `var(--text)`, background `var(--white)`
+- Tautan tidak memiliki dekorasi dan mewarisi warna
+- Gambar bersifat block‑level dengan max‑width 100%
+- `.container` membatasi lebar ke `1200px` dan memberikan padding horizontal
 
 ---
 
 ## Utilitas (Layout)
 
+File: `layout/grid.css`
+
 ### Container
 ```html
 <div class="container">...</div>
 ```
-- `max-width: 1200px`
-- `padding` kiri‑kanan `1rem`
 
 ### Grid Produk
 ```html
 <div class="products-grid">
     <div class="product-card">...</div>
-    ...
 </div>
 ```
 - Mobile: 1 kolom
-- ≥576px: 2 kolom
-- ≥992px: 3 kolom
-- ≥1200px: 4 kolom
+- ≥ 576px: 2 kolom
+- ≥ 992px: 3 kolom
+- ≥ 1200px: 4 kolom
 
 ### Stats Grid
 ```html
 <div class="stats-grid">
     <div>...</div>
-    ...
 </div>
 ```
 - Mobile: 1 kolom
-- ≥576px: 2 kolom
-- ≥768px: 3 kolom
+- ≥ 576px: 2 kolom
+- ≥ 768px: 3 kolom
 
-### Flex Helper
+### Flex Helpers
 ```html
 <div class="flex-between">...</div>   <!-- justify-between + align-center -->
 <div class="flex-center">...</div>    <!-- align-center + gap -->
+<div class="row">...</div>            <!-- flex wrap -->
+<div class="col">...</div>            <!-- flex: 1 1 250px -->
 ```
 
 ---
@@ -165,18 +210,13 @@ File: `components/buttons.css`
 <button class="btn btn-primary btn-block">Lebar Penuh</button>
 ```
 
-**Kategori aktif:**
-```html
-<a href="#" class="btn btn-primary">Kategori Terpilih</a>
-<a href="#" class="btn btn-outline">Kategori Lain</a>
-```
-
 ---
 
-### Kartu Produk (Cards)
+### Kartu (Cards)
 
 File: `components/cards.css`
 
+**Kartu Produk:**
 ```html
 <div class="product-card">
     <div class="product-image">
@@ -185,10 +225,28 @@ File: `components/cards.css`
     </div>
     <div class="product-info">
         <h3 class="product-title">Nama Produk</h3>
-        <p class="product-seller"><i class="fas fa-store"></i> Nama Penjual</p>
+        <p class="product-seller"><i class="fas fa-store"></i> Penjual</p>
         <p class="product-price">Rp 15.000</p>
         <a href="#" class="btn btn-primary btn-sm btn-block">Beli</a>
     </div>
+</div>
+```
+
+**Kartu Fitur:**
+```html
+<div class="feature-card">
+    <div class="feature-icon"><i class="fas fa-store"></i></div>
+    <h3>Judul</h3>
+    <p>Deskripsi</p>
+</div>
+```
+
+**Kartu Testimoni:**
+```html
+<div class="testimonial-card">
+    <div class="testimonial-stars">...</div>
+    <p class="testimonial-text">"..."</p>
+    <div class="testimonial-author">...</div>
 </div>
 ```
 
@@ -251,13 +309,39 @@ File: `components/modal.css`
             <h3>Judul</h3>
             <button class="modal-close-btn">&times;</button>
         </div>
-        <div class="modal-body">
-            <p>Isi konten...</p>
-        </div>
+        <div class="modal-body">...</div>
         <div class="modal-footer">
             <button class="btn btn-outline">Batal</button>
             <button class="btn btn-primary">Konfirmasi</button>
         </div>
+    </div>
+</div>
+```
+
+---
+
+### Kategori Scroll
+
+File: `components/categories.css`
+
+```html
+<div class="categories-scroll">
+    <a href="#" class="btn btn-primary">Semua</a>
+    <a href="#" class="btn btn-outline">Makanan</a>
+    ...
+</div>
+```
+
+---
+
+### Daftar Penjual (Seller List)
+
+File: `components/seller.css`
+
+```html
+<div class="seller-list">
+    <div class="seller-item">
+        ...
     </div>
 </div>
 ```
@@ -270,7 +354,7 @@ File: `components/welcome.css`
 
 ```html
 <div class="welcome-banner">
-    <h1>Halo, Nama!</h1>
+    <h1>Halo, Nama! 👋</h1>
     <p>Selamat datang kembali...</p>
 </div>
 ```
@@ -286,7 +370,6 @@ File: `components/pagination.css`
     <a href="#">«</a>
     <a href="#" class="active">1</a>
     <a href="#">2</a>
-    <a href="#">3</a>
     <a href="#">»</a>
 </div>
 ```
@@ -299,8 +382,8 @@ File: `components/pagination.css`
 
 File: `layout/header.css`
 
-- Mobile: *hamburger menu*.
-- Desktop: *horizontal menu* penuh.
+- Mobile: hamburger menu
+- Desktop (≥ 992px): menu horizontal penuh
 
 ```html
 <header class="header">
@@ -309,7 +392,6 @@ File: `layout/header.css`
         <nav class="nav">
             <ul class="nav-list">
                 <li><a href="#" class="nav-link active">Beranda</a></li>
-                <li><a href="#" class="nav-link">Produk</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
@@ -332,15 +414,12 @@ File: `layout/hero.css`
         <div class="hero-text">
             <span class="hero-badge">Label</span>
             <h1 class="hero-title">Judul <span>Sorotan</span></h1>
-            <p class="hero-desc">Deskripsi singkat...</p>
+            <p class="hero-desc">Deskripsi...</p>
             <div class="hero-buttons">
-                <a href="#" class="btn btn-primary btn-lg">CTA 1</a>
-                <a href="#" class="btn btn-secondary btn-lg">CTA 2</a>
+                <a href="#" class="btn btn-primary btn-lg">CTA</a>
             </div>
         </div>
-        <div class="hero-image">
-            <img src="..." alt="...">
-        </div>
+        <div class="hero-image"><img src="..." alt="..."></div>
     </div>
 </section>
 ```
@@ -356,11 +435,11 @@ File: `layout/footer.css`
     <div class="container">
         <div class="footer-content">
             <div class="footer-logo">...</div>
-            <div><h3>Navigasi</h3><ul>...</ul></div>
-            <div><h3>Kontak</h3><ul>...</ul></div>
-            <div><h3>Media Sosial</h3><div class="social-icons">...</div></div>
+            <div><h3>Navigasi</h3>...</div>
+            <div><h3>Kontak</h3>...</div>
+            <div><h3>Media Sosial</h3>...</div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 APEskansa</p></div>
+        <div class="footer-bottom"><p>&copy; 2026</p></div>
     </div>
 </footer>
 ```
@@ -375,8 +454,10 @@ File: `layout/sidebar.css`
 <div class="sidebar">
     <div class="sidebar-logo"><img src="..." alt="..."></div>
     <div class="sidebar-menu">
-        <a href="#" class="sidebar-menu-item active"><i class="fas fa-store"></i> Toko</a>
-        <a href="#" class="sidebar-menu-item"><i class="fas fa-box"></i> Produk</a>
+        <a href="#" class="sidebar-menu-item active">
+            <i class="fas fa-store"></i>
+            <span>Toko</span>
+        </a>
     </div>
 </div>
 ```
@@ -428,12 +509,24 @@ File: `pages/auth.css`
 
 ---
 
-## Tips Pengembangan
+## Aturan Penulisan CSS
 
-1. **Selalu gunakan variabel** – jangan *hardcode* warna atau ukuran.
-2. **Mobile‑first** – tulis style untuk layar kecil dulu, lalu tambahkan `@media (min-width: ...)`.
-3. **Satu file, satu komponen** – jangan gabung dua komponen berbeda dalam satu file.
-4. **Gunakan class, bukan inline style** – kecuali untuk posisi (contoh: `style="position:absolute;"`).
-```
+1. **Urutan properti yang konsisten**: `display` → `position` → `width/height` → `margin/padding` → `border` → `font` → `color` → `background` → `transition/animation` → sisanya.
+2. **Gunakan variabel** untuk warna, spasi, ukuran font.
+3. **Mobile‑first**: tulis aturan dasar untuk mobile, tambahkan `@media (min-width: ...)` untuk layar lebih besar.
+4. **Satu file, satu komponen** – jangan campur komponen berbeda.
+5. **Hindari inline style** – gunakan class yang sudah didefinisikan.
+6. **Komentar pemisah** untuk setiap bagian dengan format `/* ---------- Nama Bagian ---------- */`.
 
 ---
+
+## Responsive Breakpoints
+
+| Lebar Layar | Keterangan |
+|-------------|------------|
+| Default | Mobile (< 576px) |
+| 576px | Tablet kecil |
+| 768px | Tablet |
+| 992px | Desktop kecil / laptop |
+| 1200px | Desktop besar |
+```

@@ -1,59 +1,59 @@
-/* Login & Register Pages */
+/* ============================================================
+   AUTH PAGE (LOGIN / REGISTER)
+   ============================================================ */
 .auth-page {
-    min-height: 100vh;
-    display: flex;
     align-items: center;
+    background: var(--secondary);
+    display: flex;
     justify-content: center;
-    background-color: var(--secondary-color);
-    padding: 2rem 0;
+    min-height: 100vh;
+    padding: var(--space-lg);
 }
 
 .auth-container {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    max-width: 420px;
+    padding: var(--space-2xl);
     width: 100%;
-    max-width: 400px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
 }
 
 .auth-logo {
+    margin-bottom: var(--space-xl);
     text-align: center;
-    margin-bottom: 2rem;
 }
 
 .auth-logo img {
-    height: 80px !important;
+    height: 70px !important;
 }
 
 .auth-title {
+    color: var(--text-dark);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    margin-bottom: var(--space-xl);
     text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
 }
 
 .auth-form .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-lg);
 }
 
 .auth-form .btn {
+    font-size: var(--fs-base);
+    padding: var(--space-md);
     width: 100%;
-    padding: 1rem;
 }
 
 .auth-links {
+    font-size: var(--fs-sm);
+    margin-top: var(--space-lg);
     text-align: center;
-    margin-top: 1.5rem;
 }
 
 .auth-links a {
-    color: var(--primary-color);
+    color: var(--primary);
+    font-weight: 600;
     text-decoration: underline;
 }
-
-/* Login/Register responsif */
-.auth-container {
-        width: 90%;
-        padding: 20px;
-    }

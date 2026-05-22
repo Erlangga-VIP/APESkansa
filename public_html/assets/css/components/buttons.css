@@ -1,40 +1,66 @@
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 .btn {
-    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: var(--space-xs);
-    padding: var(--space-sm) var(--space-lg);
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    font-size: var(--fs-sm);
-    transition: all var(--transition);
+    background: transparent;
     border: 2px solid transparent;
+    border-radius: var(--radius-sm);
     cursor: pointer;
+    display: inline-flex;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    gap: var(--space-xs);
+    justify-content: center;
+    padding: var(--space-sm) var(--space-lg);
     text-align: center;
+    transition: background var(--transition), border-color var(--transition),
+                color var(--transition);
     white-space: nowrap;
 }
 
 .btn-primary {
     background: var(--primary);
-    color: var(--white);
     border-color: var(--primary);
+    color: var(--white);
 }
-.btn-primary:hover { background: var(--primary-dark); }
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
 
 .btn-outline {
     background: transparent;
-    color: var(--primary);
     border-color: var(--primary);
+    color: var(--primary);
 }
-.btn-outline:hover { background: var(--primary); color: var(--white); }
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: var(--white);
+}
 
 .btn-secondary {
     background: var(--white);
-    color: var(--primary);
     border-color: var(--border);
+    color: var(--primary);
 }
-.btn-secondary:hover { background: var(--primary-light); }
 
-.btn-sm { padding: 0.25rem 0.75rem; font-size: var(--fs-xs); }
-.btn-lg { padding: var(--space-md) var(--space-xl); font-size: var(--fs-base); }
-.btn-block { width: 100%; }
+.btn-secondary:hover {
+    background: var(--primary-light);
+}
+
+/* ---------- Ukuran ---------- */
+.btn-sm {
+    font-size: var(--fs-xs);
+    padding: 0.25rem 0.75rem;
+}
+
+.btn-lg {
+    font-size: var(--fs-base);
+    padding: var(--space-md) var(--space-xl);
+}
+
+.btn-block {
+    width: 100%;
+}
