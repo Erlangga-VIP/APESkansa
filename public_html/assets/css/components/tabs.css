@@ -1,50 +1,45 @@
-/* Modern Tab Navigation */
 .profile-tabs {
     display: flex;
-    gap: 0.5rem;
-    border-bottom: 2px solid var(--border-color);
-    margin-bottom: 2rem;
-    padding-bottom: 0.25rem;
+    gap: var(--space-sm);
+    border-bottom: 2px solid var(--border);
+    margin-bottom: var(--space-xl);
     overflow-x: auto;
 }
+
 .profile-tab-btn {
     background: none;
     border: none;
-    font-size: 1rem;
     font-weight: 600;
-    color: #64748b;
+    font-size: var(--fs-sm);
+    color: var(--text-light);
     cursor: pointer;
-    padding: 0.75rem 1.25rem;
+    padding: var(--space-sm) var(--space-md);
     position: relative;
     white-space: nowrap;
-    transition: all 0.3s ease;
-    border-radius: 6px 6px 0 0;
 }
-.profile-tab-btn:hover {
-    color: var(--primary-color);
-    background-color: var(--accent-color);
-}
-.profile-tab-btn.active {
-    color: var(--primary-color);
-}
+
+.profile-tab-btn:hover { color: var(--primary); }
+.profile-tab-btn.active { color: var(--primary); }
+
 .profile-tab-btn.active::after {
     content: '';
     position: absolute;
-    bottom: -6px;
+    bottom: -2px;
     left: 0;
     width: 100%;
     height: 3px;
-    background-color: var(--primary-color);
+    background: var(--primary);
     border-radius: 3px;
 }
+
 .profile-tab-content {
     display: none;
-    animation: tabFadeIn 0.4s ease;
+    animation: fadeIn 0.3s ease;
 }
-.profile-tab-content.active {
-    display: block;
-}
-@keyframes tabFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+
+.profile-tab-content.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }

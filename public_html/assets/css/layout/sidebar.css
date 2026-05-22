@@ -1,288 +1,54 @@
-/* Dashboard Styles */
-.dashboard {
-    display: flex;
-    min-height: 100vh;
-}
-
 .sidebar {
     width: 250px;
-    background-color: var(--primary-color);
-    color: var(--light-text);
-    padding: 2rem 0;
+    background: var(--text-dark);
+    color: var(--white);
+    padding: var(--space-xl) 0;
     position: fixed;
     height: 100vh;
     overflow-y: auto;
+    z-index: 90;
 }
 
 .sidebar-logo {
     text-align: center;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
+    margin-bottom: var(--space-xl);
 }
 
-.sidebar-logo img {
-    height: 60px !important;
-}
+.sidebar-logo img { height: 50px !important; }
 
 .sidebar-menu {
-    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-menu-item {
-    padding: 0.75rem 1.5rem;
+    padding: var(--space-sm) var(--space-xl);
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    transition: all 0.3s ease;
+    gap: var(--space-sm);
+    color: var(--text-light);
+    transition: all var(--transition);
+    font-size: var(--fs-sm);
 }
 
-.sidebar-menu-item:hover, .sidebar-menu-item.active {
-    background-color: rgba(255, 255, 255, 0.1);
+.sidebar-menu-item:hover,
+.sidebar-menu-item.active {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
 }
 
-.sidebar-menu-item i {
-    width: 20px;
-}
+.sidebar-menu-item i { width: 20px; }
 
-.main-content {
-    flex: 1;
-    margin-left: 250px;
-    padding: 2rem;
-}
-
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.dashboard-title {
-    font-size: 1.8rem;
-    color: var(--primary-color);
-}
-
-.dashboard-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
-    margin-bottom: 2rem;
-}
-
-.dashboard-card-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.stat-card {
-    background-color: var(--secondary-color);
-    border-radius: 10px;
-    padding: 1.5rem;
-    text-align: center;
-}
-
-.stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-size: 1rem;
-    color: #6c757d;
-}
-
-.table-responsive {
-    overflow-x: auto;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table th, .table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.table th {
-    background-color: var(--secondary-color);
-    font-weight: 600;
-}
-
-.table tr:hover {
-    background-color: var(--accent-color);
-}
-
-.status-badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.status-active {
-    background-color: rgba(40, 167, 69, 0.1);
-    color: var(--success-color);
-}
-
-.status-inactive {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: var(--danger-color);
-}
-
-.action-buttons {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-}
-
-.btn-edit {
-    background-color: var(--warning-color);
-    color: var(--dark-text);
-    border: none;
-}
-
-.btn-delete {
-    background-color: var(--danger-color);
-    color: var(--light-text);
-    border: none;
-}
-
-/* Responsive Dashboard */
+/* Mobile */
 @media (max-width: 992px) {
     .sidebar {
-        width: 70px;
-    }
-    
-    .sidebar-logo {
-        padding: 0 0.5rem;
-    }
-    
-    .sidebar-menu-item span {
-        display: none;
-    }
-    
-    .main-content {
-        margin-left: 70px;
-    }
-}
-
-@media (max-width: 768px) {
-    .dashboard {
-        flex-direction: column;
-    }
-    
-    .sidebar {
         width: 100%;
         height: auto;
         position: relative;
-        padding: 1rem 0;
     }
-    
     .sidebar-menu {
-        display: flex;
-        overflow-x: auto;
-        margin-top: 1rem;
-    }
-    
-    .sidebar-menu-item {
-        padding: 0.5rem 1rem;
-    }
-    
-    .sidebar-menu-item span {
-        display: inline;
-    }
-    
-    .main-content {
-        margin-left: 0;
-    }
-    
-    .product-detail-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ==========================================================================
-   PREMIUM & MODERN WEB ENHANCEMENTS BY ANTIGRAVITY (v2.0)
-   ========================================================================== */
-
-/* TODO: Periksa apakah aturan berikut perlu media query */
-/* Dashboard Responsif */
-.dashboard {
-        flex-direction: column;
-    }
-/* TODO: Periksa apakah aturan berikut perlu media query */
-.sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-/* TODO: Periksa apakah aturan berikut perlu media query */
-.sidebar-menu {
-        display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
     }
-/* TODO: Periksa apakah aturan berikut perlu media query */
-.sidebar-menu-item {
-        padding: 10px 15px;
-        margin: 5px;
-    }
-/* TODO: Periksa apakah aturan berikut perlu media query */
-.main-content {
-        margin-left: 0;
-        width: 100%;
-    }
-/* TODO: Periksa apakah aturan berikut perlu media query */
-.form-row {
-        flex-direction: column;
-    }
-/* TODO: Periksa apakah aturan berikut perlu media query */
-.form-group {
-        width: 100%;
-    }
-/* Responsif untuk tabel */
-.table-responsive {
-        overflow-x: auto;
-    }
-.admin-table th, .admin-table td {
-        padding: 8px;
-    }
-.card-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-.card-actions {
-        margin-top: 10px;
-        width: 100%;
-    }
-.search-box {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-/* TODO: Periksa apakah aturan berikut perlu media query */
-.dashboard-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-.admin-profile {
-        margin-top: 10px;
-    }
+}

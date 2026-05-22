@@ -12,7 +12,6 @@
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
-    background: transparent;
 }
 
 .btn-primary {
@@ -39,16 +38,3 @@
 .btn-sm { padding: 0.25rem 0.75rem; font-size: var(--fs-xs); }
 .btn-lg { padding: var(--space-md) var(--space-xl); font-size: var(--fs-base); }
 .btn-block { width: 100%; }
-
-/* Kategori */
-.categories-scroll {
-    display: flex;
-    gap: var(--space-sm);
-    overflow-x: auto;
-    padding-bottom: var(--space-sm);
-    -webkit-overflow-scrolling: touch;
-}
-
-.categories-scroll .btn {
-    flex-shrink: 0;
-}

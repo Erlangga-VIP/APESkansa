@@ -1,43 +1,3 @@
-/* Welcome Banner */
-.welcome-banner {
-    background: var(--gradient-primary);
-    color: var(--white);
-    padding: var(--space-2xl);
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--space-2xl);
-}
-
-.welcome-banner h1 {
-    font-size: var(--fs-3xl);
-    font-weight: 700;
-}
-
-.welcome-banner p {
-    margin-top: var(--space-sm);
-    opacity: 0.9;
-}
-
-/* Search Bar */
-.search-bar {
-    background: var(--secondary);
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-2xl);
-    display: flex;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
-}
-
-.search-bar .form-control {
-    flex: 1;
-    min-width: 200px;
-    height: 48px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0 var(--space-md);
-    font-size: var(--fs-base);
-}
-
 /* Stats Section */
 .stats-section {
     margin-top: -40px;
@@ -158,6 +118,23 @@
     gap: var(--space-md);
 }
 
+/* Search Bar */
+.search-bar {
+    background: var(--secondary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-2xl);
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.search-bar .form-control {
+    flex: 1;
+    min-width: 200px;
+    height: 48px;
+}
+
 /* Section Heading */
 .section-heading {
     display: flex;
@@ -178,20 +155,32 @@
     font-size: var(--fs-sm);
 }
 
-/* Seller List */
-.seller-list {
-    background: var(--secondary);
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
+/* Table */
+.table-responsive {
+    overflow-x: auto;
 }
 
-.seller-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: var(--space-sm);
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+}
+
+.table th {
+    background: var(--secondary);
+    font-weight: 600;
+    text-align: left;
+    padding: var(--space-sm) var(--space-md);
+    color: var(--text-dark);
+    border-bottom: 2px solid var(--border);
+}
+
+.table td {
+    padding: var(--space-sm) var(--space-md);
     border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.table tr:hover td {
+    background: var(--accent);
 }
