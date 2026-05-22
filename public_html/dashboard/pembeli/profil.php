@@ -21,7 +21,7 @@ mysqli_stmt_close($stmt);
 
 $user_initial = mb_substr($user_data['nama'] ?? '', 0, 1);
 $foto_profil = !empty($user_data['foto_profil'])
-    ? 'uploads/' . htmlspecialchars($user_data['foto_profil'], ENT_QUOTES, 'UTF-8')
+    ? upload_url($user_data['foto_profil'])
     : null;
 $no_hp = htmlspecialchars($user_data['no_hp'] ?? '', ENT_QUOTES, 'UTF-8');
 
@@ -31,10 +31,10 @@ $pesanan_proses = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) 
 $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM pesanan WHERE pembeli_id = $user_id AND status = 'selesai'"))['total'];
 ?>
 
-<main class="container" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
+<main class="container page-section">
 
     <!-- Profile Header -->
-    <div class="flex-between" style="background: var(--white); padding: var(--space-xl); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: var(--space-xl); flex-wrap: wrap; gap: var(--space-lg);">
+    <div class="dashboard-header glass-card" style="margin-bottom: var(--space-xl);">
         <div class="flex-center">
             <?php if ($foto_profil): ?>
                 <img src="<?= $foto_profil ?>" alt="Foto Profil" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary);">
@@ -44,13 +44,11 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
                 </div>
             <?php endif; ?>
             <div>
-                <h1 style="font-size: var(--fs-2xl); font-weight: 700;">
-                    <?= htmlspecialchars($user_data['nama'] ?? '', ENT_QUOTES, 'UTF-8') ?>
-                </h1>
-                <p style="color: var(--text-light);">
+                <h1 class="dashboard-title"><?= htmlspecialchars($user_data['nama'] ?? '', ENT_QUOTES, 'UTF-8') ?></h1>
+                <p class="dashboard-subtitle">
                     <i class="fas fa-envelope"></i> <?= htmlspecialchars($user_data['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>
                 </p>
-                <span class="badge badge-primary">
+                <span class="badge badge-primary" style="margin-top: var(--space-sm);">
                     <i class="fas fa-user-check"></i> <?= ucfirst($user_data['role'] ?? 'pembeli') ?>
                 </span>
             </div>
@@ -85,6 +83,7 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
         <div class="profile-tab-content active" id="tab-profil">
             <h3 style="font-size: var(--fs-xl); font-weight: 600; margin-bottom: var(--space-lg);">Informasi Akun</h3>
             <form action="<?= BASE_URL ?>process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+                <?= csrf_field() ?>
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" id="nama" name="nama" class="form-control"
@@ -151,7 +150,7 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
                             <tr>
                                 <td>
                                     <div class="flex-center">
-                                        <img src="uploads/<?= htmlspecialchars($row['gambar'], ENT_QUOTES, 'UTF-8') ?>"
+                                        <img src="<?= upload_url($row['gambar']) ?>"
                                              width="50" height="50" style="object-fit:cover; border-radius: var(--radius-sm);" alt="Gambar">
                                         <span style="font-weight: 600;"><?= htmlspecialchars($row['nama_produk'], ENT_QUOTES, 'UTF-8') ?></span>
                                     </div>
@@ -187,6 +186,7 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
                 Bagikan pengalaman belanja Anda di APEskansa.
             </p>
             <form action="<?= BASE_URL ?>process/beri-testimoni.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+                <?= csrf_field() ?>
                 <div class="form-group">
                     <label>Nilai Kualitas Pelayanan / Aplikasi</label>
                     <div style="display: flex; gap: var(--space-xs); font-size: 1.75rem; color: var(--warning);" id="star-selector">

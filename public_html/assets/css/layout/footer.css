@@ -1,11 +1,19 @@
-/* ============================================================
-   FOOTER
-   ============================================================ */
 .footer {
-    background: var(--text-dark);
-    color: var(--text-light);
+    background: var(--gradient-footer);
+    color: rgba(255, 255, 255, 0.85);
     margin-top: var(--space-3xl);
-    padding: var(--space-2xl) 0 var(--space-lg);
+    padding: var(--space-3xl) 0 var(--space-xl);
+    position: relative;
+}
+
+.footer::before {
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+    content: '';
+    height: 4px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .footer-content {
@@ -22,34 +30,33 @@
 
 @media (min-width: 992px) {
     .footer-content {
-        grid-template-columns: 2fr 1fr 1fr 1fr;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
     }
 }
 
 .footer-logo img {
-    height: 50px !important;
-    margin-bottom: var(--space-sm);
+    height: 56px !important;
+    margin-bottom: var(--space-md);
+    width: auto;
 }
 
 .footer-logo p {
     font-size: var(--fs-sm);
-    margin-top: var(--space-xs);
+    line-height: 1.7;
+    max-width: 280px;
+    opacity: 0.9;
 }
 
 .footer h3 {
     color: var(--white);
     font-size: var(--fs-base);
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: var(--space-md);
 }
 
 .footer ul li {
+    font-size: var(--fs-sm);
     margin-bottom: var(--space-sm);
-}
-
-.footer ul li a {
-    color: var(--text-light);
-    transition: color var(--transition);
 }
 
 .footer ul li a:hover {
@@ -57,16 +64,14 @@
 }
 
 .footer ul li i {
-    color: var(--primary);
+    color: #5eead4;
     margin-right: var(--space-xs);
-    width: 20px;
+    width: 18px;
 }
 
-/* ---------- Social Icons ---------- */
 .social-icons {
     display: flex;
     gap: var(--space-sm);
-    margin-top: var(--space-sm);
 }
 
 .social-icons a {
@@ -75,21 +80,22 @@
     border-radius: var(--radius-full);
     color: var(--white);
     display: flex;
-    height: 40px;
+    height: 44px;
     justify-content: center;
-    transition: background var(--transition);
-    width: 40px;
+    transition: background var(--transition), transform var(--transition);
+    width: 44px;
 }
 
 .social-icons a:hover {
     background: var(--primary);
+    transform: translateY(-2px);
 }
 
-/* ---------- Footer Bottom ---------- */
 .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
     font-size: var(--fs-sm);
-    margin-top: var(--space-xl);
+    margin-top: var(--space-2xl);
+    opacity: 0.75;
     padding-top: var(--space-lg);
     text-align: center;
 }

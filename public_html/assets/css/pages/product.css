@@ -1,15 +1,51 @@
-/* ============================================================
-   PRODUCT PAGE
-   ============================================================ */
+.filter-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
+}
 
-/* ---------- Filter Chips ---------- */
 .filter-chips {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-xs);
+    margin-top: var(--space-md);
 }
 
-.filter-chips .btn {
-    flex-shrink: 0;
+.filter-chips > span {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .filter-chips > span {
+        width: auto;
+    }
+}
+
+.product-search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    width: 100%;
+}
+
+.product-search-form .form-control {
+    flex: 1 1 200px;
+    min-height: 50px;
+}
+
+.product-search-form .btn {
+    min-height: 50px;
+}
+
+@media (min-width: 768px) {
+    .product-search-form .btn {
+        flex: 0 0 auto;
+    }
 }

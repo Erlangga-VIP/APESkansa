@@ -15,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+csrf_require();
+
+$user_id = (int) $_SESSION['user_id'];
 $isi     = trim($_POST['isi'] ?? '');
 $rating  = (int) ($_POST['rating'] ?? 5);
 
@@ -56,7 +58,12 @@ if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
         mkdir($target_dir, 0755, true);
     }
 
-    $ext         = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $ext = allowed_image_extension($file_type);
+    if ($ext === null) {
+        $_SESSION['error'] = 'Tipe file tidak valid (JPG, PNG, GIF, WEBP).';
+        header('Location: ../dashboard/pembeli/profil.php?tab=testimoni');
+        exit;
+    }
     $gambar_nama = 'testi_' . $user_id . '_' . time() . '.' . $ext;
     $target_file = $target_dir . $gambar_nama;
 

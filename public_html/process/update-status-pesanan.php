@@ -6,14 +6,20 @@ session_start();
 require_once __DIR__ . '/../../config/config.php';
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'penjual' && $_SESSION['role'] !== 'admin')) {
-    header('Location: ../login.php');
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
+$redirect_pesanan = ($_SESSION['role'] === 'admin')
+    ? BASE_URL . 'dashboard/admin/dashboard.php?tab=pesanan'
+    : BASE_URL . 'dashboard/penjual/pesanan.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../dashboard/penjual/profil.php');
+    header('Location: ' . $redirect_pesanan);
     exit;
 }
+
+csrf_require();
 
 $pesanan_id = (int) ($_POST['pesanan_id'] ?? 0);
 $status     = trim($_POST['status'] ?? '');
@@ -22,7 +28,7 @@ $valid_statuses = ['menunggu', 'diproses', 'selesai', 'dibatalkan'];
 
 if ($pesanan_id <= 0 || !in_array($status, $valid_statuses, true)) {
     $_SESSION['error'] = 'Data tidak valid.';
-    header('Location: ../dashboard/penjual/profil.php');
+    header('Location: ' . $redirect_pesanan);
     exit;
 }
 
@@ -34,7 +40,7 @@ if ($_SESSION['role'] === 'penjual') {
     $result = mysqli_stmt_get_result($stmt);
     if (mysqli_num_rows($result) === 0) {
         $_SESSION['error'] = 'Anda tidak memiliki akses ke pesanan ini.';
-        header('Location: ../dashboard/penjual/profil.php');
+        header('Location: ' . $redirect_pesanan);
         exit;
     }
     mysqli_stmt_close($stmt);
@@ -52,5 +58,5 @@ if (mysqli_stmt_execute($stmt)) {
 }
 mysqli_stmt_close($stmt);
 
-header('Location: ../dashboard/penjual/profil.php?tab=pesanan');
+header('Location: ' . $redirect_pesanan);
 exit;

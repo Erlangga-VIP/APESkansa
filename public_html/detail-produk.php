@@ -8,7 +8,9 @@ require_once __DIR__ . '/../includes/header.php';
 $product_id = (int) ($_GET['id'] ?? 0);
 
 if ($product_id <= 0) {
-    die('Error: Produk tidak valid.');
+    $_SESSION['error'] = 'Produk tidak valid.';
+    header('Location: ' . BASE_URL . 'produk.php');
+    exit;
 }
 
 // Query detail produk
@@ -24,7 +26,9 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 if (mysqli_num_rows($result) !== 1) {
-    die('Produk tidak ditemukan.');
+    $_SESSION['error'] = 'Produk tidak ditemukan.';
+    header('Location: ' . BASE_URL . 'produk.php');
+    exit;
 }
 
 $product = mysqli_fetch_assoc($result);
@@ -47,18 +51,25 @@ if ($no_hp !== '') {
 }
 ?>
 
-<main class="container" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
+<main class="container page-section">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="<?= page_url('index.php') ?>">Beranda</a>
+        <span>/</span>
+        <a href="<?= page_url('produk.php') ?>">Produk</a>
+        <span>/</span>
+        <span><?= htmlspecialchars($product['nama_produk'], ENT_QUOTES, 'UTF-8') ?></span>
+    </nav>
     <div class="product-detail-container">
         <!-- Gambar -->
         <div class="product-detail-image">
-            <img src="uploads/<?= htmlspecialchars($product['gambar'], ENT_QUOTES, 'UTF-8') ?>"
+            <img src="<?= upload_url($product['gambar']) ?>"
                  alt="<?= htmlspecialchars($product['nama_produk'], ENT_QUOTES, 'UTF-8') ?>">
         </div>
 
         <!-- Info -->
         <div class="product-detail-info">
             <span class="badge badge-primary">
-                <?= htmlspecialchars($product['kategori'] ?: 'Lainnya', ENT_QUOTES, 'UTF-8') ?>
+                <?= htmlspecialchars(kategori_label($product['kategori'] ?: 'lainnya'), ENT_QUOTES, 'UTF-8') ?>
             </span>
 
             <h1><?= htmlspecialchars($product['nama_produk'], ENT_QUOTES, 'UTF-8') ?></h1>
@@ -69,20 +80,14 @@ if ($no_hp !== '') {
 
             <!-- Info Penjual -->
             <div class="product-detail-seller">
-                <div class="flex-center">
-                    <?php if (!empty($product['foto_penjual'])): ?>
-                        <img src="uploads/<?= htmlspecialchars($product['foto_penjual'], ENT_QUOTES, 'UTF-8') ?>"
-                             alt="Foto Penjual"
-                             style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);">
-                    <?php else: ?>
-                        <div class="avatar-circle" style="width:48px; height:48px;">
-                            <?= strtoupper(mb_substr($product['nama_penjual'], 0, 1)) ?>
-                        </div>
-                    <?php endif; ?>
-                    <div>
-                        <p style="font-size: var(--fs-xs); color: var(--text-light);">Penjual / Toko</p>
-                        <h3 style="font-weight: 600;"><?= htmlspecialchars($product['nama_penjual'], ENT_QUOTES, 'UTF-8') ?></h3>
-                    </div>
+                <?php if (!empty($product['foto_penjual'])): ?>
+                    <img src="<?= upload_url($product['foto_penjual']) ?>" alt="Foto Penjual" class="seller-avatar">
+                <?php else: ?>
+                    <div class="avatar-circle seller-avatar"><?= strtoupper(mb_substr($product['nama_penjual'], 0, 1)) ?></div>
+                <?php endif; ?>
+                <div>
+                    <p class="product-detail-seller-label">Penjual / Toko</p>
+                    <p class="product-detail-seller-name"><?= htmlspecialchars($product['nama_penjual'], ENT_QUOTES, 'UTF-8') ?></p>
                 </div>
             </div>
 
@@ -101,7 +106,7 @@ if ($no_hp !== '') {
                 <?php endif; ?>
 
                 <?php if ($has_wa): ?>
-                    <a href="<?= $wa_link ?>" target="_blank" rel="noopener" class="btn btn-outline btn-lg">
+                    <a href="<?= $wa_link ?>" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
                         <i class="fab fa-whatsapp"></i> Hubungi Penjual
                     </a>
                 <?php else: ?>
@@ -111,13 +116,13 @@ if ($no_hp !== '') {
                 <?php endif; ?>
 
                 <?php if (!isset($_SESSION['user_id'])): ?>
-                    <a href="login.php" class="btn btn-primary btn-lg">
+                    <a href="<?= page_url('login.php') ?>" class="btn btn-primary btn-lg">
                         <i class="fas fa-sign-in-alt"></i> Login untuk Memesan
                     </a>
                 <?php elseif ($_SESSION['role'] !== 'pembeli'): ?>
-                    <p style="color: var(--text-light); font-style: italic;">
+                    <p class="product-detail-notice">
                         <i class="fas fa-info-circle"></i>
-                        Anda masuk sebagai <?= $_SESSION['role'] ?>.
+                        Anda masuk sebagai <?= htmlspecialchars($_SESSION['role'], ENT_QUOTES, 'UTF-8') ?>.
                         Fitur pemesanan hanya untuk pembeli.
                     </p>
                 <?php endif; ?>
@@ -133,32 +138,25 @@ if ($no_hp !== '') {
             <h3><i class="fas fa-shopping-cart"></i> Konfirmasi Pemesanan</h3>
             <button class="modal-close-btn" id="close-checkout-btn">&times;</button>
         </div>
-        <form action="process/buat-pesanan.php" method="POST">
+        <form action="<?= BASE_URL ?>process/buat-pesanan.php" method="POST">
+            <?= csrf_field() ?>
             <input type="hidden" name="produk_id" value="<?= $product_id ?>">
             <div class="modal-body">
-                <div class="flex-center" style="gap: var(--space-md); border-bottom: 1px solid var(--border); padding-bottom: var(--space-md); margin-bottom: var(--space-md);">
-                    <img src="uploads/<?= htmlspecialchars($product['gambar'], ENT_QUOTES, 'UTF-8') ?>"
-                         alt="Produk"
-                         style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm);">
+                <div class="modal-product-preview">
+                    <img src="<?= upload_url($product['gambar']) ?>" alt="Produk">
                     <div>
-                        <h4 style="font-weight: 600;"><?= htmlspecialchars($product['nama_produk'], ENT_QUOTES, 'UTF-8') ?></h4>
-                        <p style="color: var(--primary); font-weight: 700;">
-                            Rp <?= number_format((int) $product['harga'], 0, ',', '.') ?>
-                        </p>
-                        <p style="font-size: var(--fs-xs); color: var(--text-light);">
-                            <i class="fas fa-store"></i> <?= htmlspecialchars($product['nama_penjual'], ENT_QUOTES, 'UTF-8') ?>
-                        </p>
+                        <h4><?= htmlspecialchars($product['nama_produk'], ENT_QUOTES, 'UTF-8') ?></h4>
+                        <p class="product-price" style="margin: 0;">Rp <?= number_format((int) $product['harga'], 0, ',', '.') ?></p>
+                        <p class="product-seller"><i class="fas fa-store"></i> <?= htmlspecialchars($product['nama_penjual'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="jumlah">Jumlah Pembelian</label>
-                    <div class="flex-center" style="gap: var(--space-sm);">
-                        <button type="button" id="btn-minus" class="btn btn-outline btn-sm">-</button>
-                        <input type="number" id="jumlah" name="jumlah" value="1" min="1"
-                               class="form-control" style="max-width: 80px; text-align: center;"
-                               readonly>
-                        <button type="button" id="btn-plus" class="btn btn-outline btn-sm">+</button>
+                    <div class="qty-control">
+                        <button type="button" id="btn-minus" class="btn btn-outline btn-sm" aria-label="Kurangi">-</button>
+                        <input type="number" id="jumlah" name="jumlah" value="1" min="1" class="form-control" readonly>
+                        <button type="button" id="btn-plus" class="btn btn-outline btn-sm" aria-label="Tambah">+</button>
                     </div>
                 </div>
 
@@ -168,11 +166,9 @@ if ($no_hp !== '') {
                               placeholder="Contoh: COD di Kelas XI RPL 2 jam istirahat pertama, atau varian rasa..."></textarea>
                 </div>
 
-                <div style="background: var(--primary-light); padding: var(--space-md); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-weight: 600; color: var(--text);">Total Pembayaran:</span>
-                    <span style="font-size: var(--fs-xl); font-weight: 700; color: var(--primary);" id="total-bayar-display">
-                        Rp <?= number_format((int) $product['harga'], 0, ',', '.') ?>
-                    </span>
+                <div class="modal-total-box">
+                    <span>Total Pembayaran</span>
+                    <strong id="total-bayar-display">Rp <?= number_format((int) $product['harga'], 0, ',', '.') ?></strong>
                 </div>
             </div>
             <div class="modal-footer">

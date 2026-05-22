@@ -10,6 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+csrf_require();
+
 $email    = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
@@ -36,6 +38,8 @@ if (!password_verify($password, $row['password'])) {
     exit;
 }
 
+session_regenerate_id(true);
+
 $_SESSION['user_id'] = $row['user_id'];
 $_SESSION['nama']    = $row['nama'];
 $_SESSION['email']   = $row['email'];
@@ -46,7 +50,7 @@ switch ($row['role']) {
         header('Location: ../dashboard/admin/dashboard.php');
         break;
     case 'penjual':
-        header('Location: ../dashboard/penjual/profil.php');
+        header('Location: ../dashboard/penjual/index.php');
         break;
     default:
         header('Location: ../index.php');

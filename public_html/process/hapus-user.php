@@ -5,23 +5,28 @@ declare(strict_types=1);
 session_start();
 require_once __DIR__ . '/../../config/config.php';
 
-// Hanya admin yang bisa menghapus user
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../login.php');
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
-$user_id = (int) ($_GET['id'] ?? 0);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ' . BASE_URL . 'dashboard/admin/dashboard.php?tab=users');
+    exit;
+}
+
+csrf_require();
+
+$user_id = (int) ($_POST['user_id'] ?? 0);
 
 if ($user_id <= 0) {
-    header('Location: ../dashboard/admin/dashboard.php?tab=users');
+    header('Location: ' . BASE_URL . 'dashboard/admin/dashboard.php?tab=users');
     exit;
 }
 
-// Admin tidak boleh menghapus dirinya sendiri
-if ($user_id === $_SESSION['user_id']) {
+if ($user_id === (int) $_SESSION['user_id']) {
     $_SESSION['error'] = 'Anda tidak dapat menghapus akun Anda sendiri.';
-    header('Location: ../dashboard/admin/dashboard.php?tab=users');
+    header('Location: ' . BASE_URL . 'dashboard/admin/dashboard.php?tab=users');
     exit;
 }
 
@@ -35,5 +40,5 @@ if (mysqli_stmt_execute($stmt)) {
 }
 
 mysqli_stmt_close($stmt);
-header('Location: ../dashboard/admin/dashboard.php?tab=users');
+header('Location: ' . BASE_URL . 'dashboard/admin/dashboard.php?tab=users');
 exit;

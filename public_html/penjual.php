@@ -15,40 +15,35 @@ mysqli_stmt_execute($stmt);
 $penjual_list = mysqli_stmt_get_result($stmt);
 ?>
 
-<main class="container" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
-    <h1 style="font-size: var(--fs-3xl); font-weight: 700; margin-bottom: var(--space-2xl); color: var(--text-dark);">
-        Wirausaha Siswa Skansa
-    </h1>
+<main class="container page-section">
+    <h1 class="page-title">Wirausaha Siswa Skansa</h1>
+    <p class="page-subtitle">Temukan toko dan produk dari siswa penjual di SMKN 1 Bawang.</p>
 
     <div class="products-grid">
         <?php if (mysqli_num_rows($penjual_list) > 0): ?>
             <?php while ($row = mysqli_fetch_assoc($penjual_list)): ?>
-                <div class="product-card" style="text-align: center; padding: var(--space-xl);">
+                <div class="product-card seller-card">
                     <?php if (!empty($row['foto_profil'])): ?>
-                        <img src="uploads/<?= htmlspecialchars($row['foto_profil'], ENT_QUOTES, 'UTF-8') ?>"
-                             alt="Foto Toko"
-                             style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto var(--space-md); border: 2px solid var(--primary);">
+                        <img src="<?= upload_url($row['foto_profil']) ?>" alt="Foto Toko" class="seller-card-avatar">
                     <?php else: ?>
-                        <div class="avatar-circle" style="width: 80px; height: 80px; font-size: var(--fs-2xl); margin: 0 auto var(--space-md);">
+                        <div class="avatar-circle">
                             <?= strtoupper(mb_substr($row['nama'], 0, 1)) ?>
                         </div>
                     <?php endif; ?>
 
-                    <h3 style="font-weight: 700; font-size: var(--fs-lg); margin-bottom: var(--space-xs);">
-                        <?= htmlspecialchars($row['nama'], ENT_QUOTES, 'UTF-8') ?>
-                    </h3>
-                    <p style="color: var(--text-light); font-size: var(--fs-sm); margin-bottom: var(--space-md);">
+                    <h3 class="seller-card-name"><?= htmlspecialchars($row['nama'], ENT_QUOTES, 'UTF-8') ?></h3>
+                    <p class="seller-card-email">
                         <i class="fas fa-envelope"></i> <?= htmlspecialchars($row['email'], ENT_QUOTES, 'UTF-8') ?>
                     </p>
 
-                    <a href="produk.php?penjual_id=<?= (int) $row['user_id'] ?>" class="btn btn-primary btn-block btn-sm">
+                    <a href="<?= page_url('produk.php?penjual_id=' . (int) $row['user_id']) ?>" class="btn btn-primary btn-block btn-sm">
                         <i class="fas fa-store"></i> Lihat Produk
                     </a>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p style="grid-column: 1/-1; text-align: center; color: var(--text-light); padding: var(--space-3xl);">
-                <i class="fas fa-store-slash" style="font-size: 3rem; display: block; margin-bottom: var(--space-md); opacity: 0.3;"></i>
+            <p class="empty-state" style="grid-column: 1 / -1;">
+                <i class="fas fa-store-slash" aria-hidden="true"></i>
                 Belum ada wirausaha siswa terdaftar.
             </p>
         <?php endif; ?>

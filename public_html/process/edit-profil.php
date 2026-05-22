@@ -15,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+csrf_require();
+
+$user_id = (int) $_SESSION['user_id'];
 $nama    = trim($_POST['nama'] ?? '');
 $email   = trim($_POST['email'] ?? '');
 $no_hp   = trim($_POST['no_hp'] ?? '');
@@ -101,7 +103,15 @@ if (isset($_FILES['foto_profil']) && $_FILES['foto_profil']['error'] === UPLOAD_
     }
     mysqli_stmt_close($stmt);
 
-    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $ext = allowed_image_extension($file_type);
+    if ($ext === null) {
+        $_SESSION['error'] = 'Tipe file tidak valid (JPG, PNG, GIF, WEBP).';
+        $redirect = ($_SESSION['role'] === 'penjual')
+            ? '../dashboard/penjual/profil.php'
+            : '../dashboard/pembeli/profil.php';
+        header('Location: ' . $redirect);
+        exit;
+    }
     $foto_baru = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
     if (!move_uploaded_file($file['tmp_name'], $target_dir . $foto_baru)) {
         $_SESSION['error'] = 'Gagal mengunggah foto.';

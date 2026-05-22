@@ -1,39 +1,96 @@
-/* ============================================================
-   CATEGORIES SCROLL
-   ============================================================ */
 .categories-scroll {
     display: flex;
     gap: var(--space-sm);
     overflow-x: auto;
-    padding-bottom: var(--space-sm);
+    padding-bottom: var(--space-xs);
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
 }
 
-.categories-scroll .btn {
-    flex-shrink: 0;
+.categories-scroll::-webkit-scrollbar {
+    height: 4px;
 }
 
-/* ============================================================
-   SELLER LIST
-   ============================================================ */
+.categories-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: var(--radius-full);
+}
+
+.search-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-md);
+}
+
+.search-input-wrap {
+    flex: 1 1 200px;
+    min-width: 0;
+    position: relative;
+}
+
+.search-input-icon {
+    color: var(--text-muted);
+    left: 1rem;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search-input-field {
+    min-height: 50px;
+    padding-left: 2.75rem;
+    width: 100%;
+}
+
+.search-bar .btn-lg {
+    min-height: 50px;
+}
+
 .seller-list {
-    background: var(--secondary);
-    border-radius: var(--radius-md);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    padding: var(--space-lg);
+    gap: 0;
+    overflow: hidden;
 }
 
 .seller-item {
     align-items: center;
     border-bottom: 1px solid var(--border);
     display: flex;
+    gap: var(--space-md);
     justify-content: space-between;
-    padding-bottom: var(--space-sm);
+    padding: var(--space-md);
+    transition: background var(--transition);
 }
 
 .seller-item:last-child {
     border-bottom: none;
 }
 
+@media (hover: hover) {
+    .seller-item:hover {
+        background: var(--primary-muted);
+    }
+}
+
+.seller-item h4 {
+    color: var(--text-dark);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+}
+
+.seller-item p {
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+}

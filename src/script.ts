@@ -1,11 +1,11 @@
 /**
- * APEskansa – Main Script (TypeScript 2026‑ready)
- * Menangani: Mobile Menu, Tab Switcher, Modal, Star Rating,
- *            Quantity Selector
+ * APEskansa – Main Script (TypeScript)
+ * Mobile menu, tabs, modal, star rating, quantity
  */
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+    initHeaderScroll();
     initMobileMenu();
     initTabSwitchers();
     initStarRating();
@@ -14,19 +14,63 @@ document.addEventListener('DOMContentLoaded', () => {
     initQuantitySelector();
 });
 
+function initHeaderScroll(): void {
+    const header = document.getElementById('siteHeader');
+    if (!header) return;
+
+    const onScroll = (): void => {
+        header.classList.toggle('is-scrolled', window.scrollY > 8);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+}
+
 function initMobileMenu(): void {
     const toggle = document.getElementById('mobileMenuToggle');
-    const nav = document.getElementById('mainNav');
-    if (!toggle || !nav) return;
+    const panel = document.getElementById('headerCollapse');
+    if (!toggle || !panel) return;
+
+    const closeMenu = (): void => {
+        panel.classList.remove('active');
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+    };
+
+    const openMenu = (): void => {
+        panel.classList.add('active');
+        toggle.classList.add('active');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-open');
+    };
 
     toggle.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        toggle.classList.toggle('active');
+        if (panel.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+    panel.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => closeMenu());
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 992) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMenu();
+        }
     });
 }
 
 function initTabSwitchers(): void {
-    // Gunakan event delegation pada document
     document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const tab = target.closest('.profile-tab-btn, .sidebar-menu-item[data-tab]');
@@ -36,33 +80,33 @@ function initTabSwitchers(): void {
         const targetTab = tab.getAttribute('data-tab');
         if (!targetTab) return;
 
-        // Nonaktifkan semua tab dan konten dalam satu halaman
-        const allTabs = document.querySelectorAll('.profile-tab-btn, .sidebar-menu-item[data-tab]');
-        const allContents = document.querySelectorAll('.profile-tab-content');
+        const scope = tab.closest('.dashboard, main') ?? document;
+        const allTabs = scope.querySelectorAll('.profile-tab-btn, .sidebar-menu-item[data-tab]');
+        const allContents = scope.querySelectorAll('.profile-tab-content');
 
-        allTabs.forEach(t => t.classList.remove('active'));
-        allContents.forEach(c => c.classList.remove('active'));
+        allTabs.forEach((t) => t.classList.remove('active'));
+        allContents.forEach((c) => c.classList.remove('active'));
 
-        // Aktifkan tab yang diklik
         tab.classList.add('active');
 
         const activeContent = document.getElementById('tab-' + targetTab);
         if (activeContent) {
             activeContent.classList.add('active');
-            // Scroll untuk dashboard penjual
             if (tab.classList.contains('sidebar-menu-item')) {
                 activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
     });
 
-    // Aktifkan tab dari URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
     if (tabParam) {
-        const targetBtn = document.querySelector(`.profile-tab-btn[data-tab="${tabParam}"]`)
-                       ?? document.querySelector(`.sidebar-menu-item[data-tab="${tabParam}"]`);
-        if (targetBtn) (targetBtn as HTMLElement).click();
+        const targetBtn =
+            document.querySelector(`.profile-tab-btn[data-tab="${tabParam}"]`) ??
+            document.querySelector(`.sidebar-menu-item[data-tab="${tabParam}"]`);
+        if (targetBtn) {
+            (targetBtn as HTMLElement).click();
+        }
     }
 }
 
@@ -71,9 +115,9 @@ function initStarRating(): void {
     const ratingInput = document.getElementById('rating-value') as HTMLInputElement | null;
     if (!stars.length || !ratingInput) return;
 
-    stars.forEach(star => {
+    stars.forEach((star) => {
         star.addEventListener('click', () => {
-            const value = parseInt(star.getAttribute('data-value') ?? '0');
+            const value = parseInt(star.getAttribute('data-value') ?? '0', 10);
             ratingInput.value = value.toString();
             stars.forEach((s, idx) => {
                 s.className = idx < value ? 'fas fa-star' : 'far fa-star';
@@ -83,15 +127,34 @@ function initStarRating(): void {
 }
 
 function initCheckoutModal(): void {
-    const modal = document.getElementById('checkout-modal');
+    initModal('checkout-modal', 'open-checkout-btn', 'close-checkout-btn', 'cancel-checkout-btn');
+}
+
+function initContactModal(): void {
+    initModal('contact-modal', 'open-contact-btn', 'close-contact-btn', 'ok-contact-btn');
+}
+
+function initModal(
+    modalId: string,
+    openId: string,
+    closeId: string,
+    cancelId?: string
+): void {
+    const modal = document.getElementById(modalId);
     if (!modal) return;
 
-    const openBtn = document.getElementById('open-checkout-btn');
-    const closeBtn = document.getElementById('close-checkout-btn');
-    const cancelBtn = document.getElementById('cancel-checkout-btn');
+    const openBtn = document.getElementById(openId);
+    const closeBtn = document.getElementById(closeId);
+    const cancelBtn = cancelId ? document.getElementById(cancelId) : null;
 
-    const openModal = () => modal.classList.add('active');
-    const closeModal = () => modal.classList.remove('active');
+    const openModal = (): void => {
+        modal.classList.add('active');
+        document.body.classList.add('menu-open');
+    };
+    const closeModal = (): void => {
+        modal.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    };
 
     openBtn?.addEventListener('click', openModal);
     closeBtn?.addEventListener('click', closeModal);
@@ -100,25 +163,11 @@ function initCheckoutModal(): void {
     window.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
-}
 
-function initContactModal(): void {
-    const modal = document.getElementById('contact-modal');
-    if (!modal) return;
-
-    const openBtn = document.getElementById('open-contact-btn');
-    const closeBtn = document.getElementById('close-contact-btn');
-    const okBtn = document.getElementById('ok-contact-btn');
-
-    const openModal = () => modal.classList.add('active');
-    const closeModal = () => modal.classList.remove('active');
-
-    openBtn?.addEventListener('click', openModal);
-    closeBtn?.addEventListener('click', closeModal);
-    okBtn?.addEventListener('click', closeModal);
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
     });
 }
 
@@ -130,15 +179,15 @@ function initQuantitySelector(): void {
 
     if (!input || !minus || !plus || !display) return;
 
-    const hargaSatuan = parseInt(display.textContent?.replace(/\D/g, '') ?? '0');
+    const hargaSatuan = parseInt(display.textContent?.replace(/\D/g, '') ?? '0', 10);
 
-    const updateTotal = (qty: number) => {
+    const updateTotal = (qty: number): void => {
         const total = qty * hargaSatuan;
         display.textContent = 'Rp ' + total.toLocaleString('id-ID');
     };
 
     minus.addEventListener('click', () => {
-        let val = parseInt(input.value);
+        let val = parseInt(input.value, 10) || 1;
         if (val > 1) {
             val--;
             input.value = val.toString();
@@ -147,7 +196,7 @@ function initQuantitySelector(): void {
     });
 
     plus.addEventListener('click', () => {
-        let val = parseInt(input.value);
+        let val = parseInt(input.value, 10) || 1;
         val++;
         input.value = val.toString();
         updateTotal(val);

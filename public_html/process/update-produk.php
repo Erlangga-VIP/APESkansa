@@ -11,22 +11,18 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'penjual') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../dashboard/penjual/profil.php?tab=produk');
+    header('Location: ../dashboard/penjual/produk.php');
     exit;
 }
 
-$id_penjual  = $_SESSION['user_id'];
+csrf_require();
+
+$id_penjual  = (int) $_SESSION['user_id'];
 $produk_id   = (int) ($_POST['produk_id'] ?? 0);
 $nama_produk = trim($_POST['nama_produk'] ?? '');
-$kategori    = trim($_POST['kategori'] ?? '');
+$kategori    = kategori_normalize(trim($_POST['kategori'] ?? ''));
 $harga       = (int) ($_POST['harga'] ?? 0);
 $deskripsi   = trim($_POST['deskripsi'] ?? '');
-
-// Validasi kategori
-$kategori_valid = ['Makanan', 'Minuman', 'Kerajinan', 'Jasa', 'Lainnya'];
-if (!in_array($kategori, $kategori_valid, true)) {
-    $kategori = 'Lainnya';
-}
 
 // Validasi input
 $errors = [];
@@ -57,7 +53,7 @@ $result = mysqli_stmt_get_result($stmt);
 
 if (mysqli_num_rows($result) === 0) {
     $_SESSION['error'] = 'Produk tidak ditemukan atau Anda tidak memiliki akses.';
-    header('Location: ../dashboard/penjual/profil.php?tab=produk');
+    header('Location: ../dashboard/penjual/produk.php');
     exit;
 }
 $row_produk   = mysqli_fetch_assoc($result);
@@ -90,8 +86,13 @@ if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
         mkdir($target_dir, 0755, true);
     }
 
-    $ext         = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $nama_file   = uniqid('produk_') . '.' . $ext;
+    $ext = allowed_image_extension($file_type);
+    if ($ext === null) {
+        $_SESSION['error'] = 'Tipe file tidak valid (JPG, PNG, GIF, WEBP).';
+        header('Location: ../dashboard/penjual/edit-produk.php?id=' . $produk_id);
+        exit;
+    }
+    $nama_file   = uniqid('produk_', true) . '.' . $ext;
     $target_path = $target_dir . $nama_file;
 
     if (!move_uploaded_file($file['tmp_name'], $target_path)) {
@@ -128,7 +129,7 @@ if ($gambar_baru !== null) {
 
 if (mysqli_stmt_execute($stmt)) {
     $_SESSION['success'] = 'Produk berhasil diperbarui.';
-    header('Location: ../dashboard/penjual/profil.php?tab=produk');
+    header('Location: ../dashboard/penjual/produk.php');
 } else {
     error_log('Update produk gagal: ' . mysqli_error($conn));
     $_SESSION['error'] = 'Gagal memperbarui produk. Silakan coba lagi.';

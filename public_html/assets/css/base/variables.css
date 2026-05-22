@@ -1,58 +1,84 @@
 :root {
-    /* Warna */
-    --primary: #4f46e5;
-    --primary-dark: #4338ca;
-    --primary-light: #e0e7ff;
+    /* Brand — teal sekolah + aksen hangat */
+    --primary: #0d9488;
+    --primary-dark: #0f766e;
+    --primary-darker: #115e59;
+    --primary-light: #ccfbf1;
+    --primary-muted: #f0fdfa;
+    --accent: #f97316;
+    --accent-soft: #ffedd5;
+
     --secondary: #f8fafc;
-    --accent: #f1f5f9;
-    --text: #334155;
-    --text-light: #94a3b8;
+    --surface: #ffffff;
+    --surface-elevated: #ffffff;
+    --text: #475569;
+    --text-light: #64748b;
+    --text-muted: #94a3b8;
     --text-dark: #0f172a;
     --white: #ffffff;
     --border: #e2e8f0;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    --info: #3b82f6;
+    --border-strong: #cbd5e1;
 
-    /* Gradien */
-    --gradient-primary: linear-gradient(135deg, #4f46e5, #7c3aed);
-    --gradient-hero: linear-gradient(135deg, #f8fafc, #e0e7ff);
-    --gradient-testimonial: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+    --success: #059669;
+    --success-soft: #d1fae5;
+    --danger: #dc2626;
+    --danger-soft: #fee2e2;
+    --warning: #d97706;
+    --warning-soft: #fef3c7;
+    --info: #0284c7;
+    --whatsapp: #25d366;
 
-    /* Spasi */
-    --space-xs: 0.5rem;
-    --space-sm: 0.75rem;
+    --gradient-primary: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #2dd4bf 100%);
+    --gradient-hero: linear-gradient(160deg, #f0fdfa 0%, #ecfeff 35%, #fff7ed 100%);
+    --gradient-hero-mesh:
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(20, 184, 166, 0.18), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 90% 10%, rgba(249, 115, 22, 0.12), transparent 50%),
+        linear-gradient(160deg, #f0fdfa 0%, #ffffff 100%);
+    --gradient-sidebar: linear-gradient(180deg, #134e4a 0%, #0f766e 100%);
+    --gradient-footer: linear-gradient(180deg, #0f172a 0%, #134e4a 100%);
+    --gradient-card-shine: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+
+    --space-xs: 0.375rem;
+    --space-sm: 0.625rem;
     --space-md: 1rem;
     --space-lg: 1.5rem;
     --space-xl: 2rem;
-    --space-2xl: 3rem;
+    --space-2xl: 2.75rem;
     --space-3xl: 4rem;
 
-    /* Border Radius */
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 16px;
-    --radius-full: 50%;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
 
-    /* Shadow */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 16px 48px rgba(15, 23, 42, 0.12);
+    --shadow-primary: 0 8px 24px rgba(13, 148, 136, 0.28);
+    --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
-    /* Font */
-    --font: 'Poppins', system-ui, -apple-system, sans-serif;
+    --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --fs-xs: 0.75rem;
-    --fs-sm: 0.85rem;
-    --fs-base: 0.95rem;
-    --fs-lg: 1.15rem;
+    --fs-sm: 0.875rem;
+    --fs-base: 1rem;
+    --fs-lg: 1.125rem;
     --fs-xl: 1.35rem;
-    --fs-2xl: 1.6rem;
+    --fs-2xl: 1.65rem;
     --fs-3xl: 2rem;
-    --fs-4xl: 2.5rem;
+    --fs-4xl: clamp(2rem, 5vw, 2.75rem);
 
-    /* Dimensi */
-    --header-height: 70px;
-    --container-max: 1200px;
-    --transition: 0.2s ease;
+    --header-height: 68px;
+    --container-max: 1180px;
+    --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    --z-header: 100;
+    --z-flash: 95;
+    --z-modal: 200;
+}
+
+@media (min-width: 992px) {
+    :root {
+        --header-height: 76px;
+    }
 }

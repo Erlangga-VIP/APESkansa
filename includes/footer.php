@@ -8,9 +8,9 @@
                 <div>
                     <h3>Navigasi</h3>
                     <ul>
-                        <li><a href="<?= BASE_URL ?>index.php">Beranda</a></li>
-                        <li><a href="<?= BASE_URL ?>produk.php">Produk</a></li>
-                        <li><a href="<?= BASE_URL ?>penjual.php">Penjual</a></li>
+                        <li><a href="<?= page_url('index.php') ?>">Beranda</a></li>
+                        <li><a href="<?= page_url('produk.php') ?>">Produk</a></li>
+                        <li><a href="<?= page_url('penjual.php') ?>">Penjual</a></li>
                     </ul>
                 </div>
                 <div>

@@ -1,6 +1,7 @@
 /* Base */
 @import 'base/variables.css';
 @import 'base/reset.css';
+@import 'base/utilities.css';
 
 /* Layout */
 @import 'layout/grid.css';
@@ -8,8 +9,10 @@
 @import 'layout/hero.css';
 @import 'layout/footer.css';
 @import 'layout/sidebar.css';
+@import 'layout/dashboard.css';
 
 /* Components */
+@import 'components/alerts.css';
 @import 'components/buttons.css';
 @import 'components/cards.css';
 @import 'components/badges.css';

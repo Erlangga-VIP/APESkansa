@@ -1,65 +1,90 @@
-/* ============================================================
-   SIDEBAR DASHBOARD (STICKY, NON‑FIXED)
-   ============================================================ */
-
 .sidebar {
-    background: var(--text-dark);
+    background: var(--gradient-sidebar);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     color: var(--white);
-    flex-shrink: 0;
-    height: calc(100vh - var(--header-height));  /* setinggi viewport dikurangi header */
-    overflow-y: auto;
-    padding: var(--space-xl) 0;
-    position: sticky;
-    top: var(--header-height);                  /* menempel di bawah header */
-    width: 250px;
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+    width: 100%;
 }
 
 .sidebar-logo {
-    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
     text-align: center;
 }
 
 .sidebar-logo img {
-    height: 50px !important;
+    filter: brightness(0) invert(1);
+    height: 48px !important;
+    opacity: 0.95;
 }
 
 .sidebar-menu {
     display: flex;
     flex-direction: column;
+    gap: 2px;
+    padding: 0 var(--space-sm) var(--space-md);
 }
 
 .sidebar-menu-item {
     align-items: center;
-    color: var(--text-light);
+    border-radius: var(--radius-md);
+    color: rgba(255, 255, 255, 0.75);
     display: flex;
     font-size: var(--fs-sm);
+    font-weight: 600;
     gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-xl);
+    padding: 0.7rem var(--space-md);
     transition: background var(--transition), color var(--transition);
 }
 
 .sidebar-menu-item:hover,
 .sidebar-menu-item.active {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
     color: var(--white);
 }
 
 .sidebar-menu-item i {
+    opacity: 0.9;
+    text-align: center;
     width: 20px;
 }
 
-/* ---------- Mobile (≤ 992px) ---------- */
-@media (max-width: 992px) {
-    .sidebar {
-        height: auto;
-        position: relative;
-        top: auto;
-        width: 100%;
-    }
+.sidebar hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin: var(--space-md);
+}
 
+.sidebar-menu-item--danger {
+    color: #fecaca !important;
+}
+
+.sidebar-menu-item--danger:hover {
+    background: rgba(220, 38, 38, 0.25) !important;
+}
+
+@media (max-width: 991px) {
     .sidebar-menu {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .sidebar-menu-item {
+        flex: 0 1 auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .sidebar {
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+        flex-shrink: 0;
+        height: calc(100vh - var(--header-height));
+        margin-bottom: 0;
+        overflow-y: auto;
+        position: sticky;
+        top: var(--header-height);
+        width: 260px;
     }
 }

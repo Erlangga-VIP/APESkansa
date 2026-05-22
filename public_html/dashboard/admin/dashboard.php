@@ -95,7 +95,7 @@ if ($tab === 'users') {
                 <i class="fas fa-home"></i>
                 <span>Ke Beranda</span>
             </a>
-            <a href="<?= BASE_URL ?>process/logout.php" class="sidebar-menu-item" style="color: var(--danger);">
+            <a href="<?= page_url('process/logout.php') ?>" class="sidebar-menu-item sidebar-menu-item--danger">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Keluar</span>
             </a>
@@ -103,8 +103,8 @@ if ($tab === 'users') {
     </div>
 
     <div class="main-content">
-        <div class="dashboard-header glass-card" style="padding: var(--space-lg) var(--space-xl); border-radius: var(--radius-lg); margin-bottom: var(--space-xl);">
-            <h1 style="margin: 0; font-weight: 700;">
+        <div class="dashboard-header glass-card">
+            <h1 class="dashboard-title">
                 <?= match ($tab) {
                     'dashboard' => 'Dashboard Admin',
                     'users'     => 'Manajemen Pengguna',
@@ -117,22 +117,22 @@ if ($tab === 'users') {
         </div>
 
         <?php if ($tab === 'dashboard'): ?>
-            <div class="stats-grid" style="margin-bottom: var(--space-2xl);">
-                <div class="stat-card" style="border-left: 5px solid var(--primary); padding: var(--space-lg);">
-                    <h3 style="font-size: var(--fs-3xl);"><?= $total_users ?></h3>
-                    <p style="color: var(--text-light);">Pengguna</p>
+            <div class="stats-grid stats-grid--4 section-block">
+                <div class="admin-stat-tile">
+                    <h3><?= $total_users ?></h3>
+                    <p>Pengguna</p>
                 </div>
-                <div class="stat-card" style="border-left: 5px solid var(--warning); padding: var(--space-lg);">
-                    <h3 style="font-size: var(--fs-3xl);"><?= $total_produk ?></h3>
-                    <p style="color: var(--text-light);">Produk</p>
+                <div class="admin-stat-tile">
+                    <h3><?= $total_produk ?></h3>
+                    <p>Produk</p>
                 </div>
-                <div class="stat-card" style="border-left: 5px solid var(--info); padding: var(--space-lg);">
-                    <h3 style="font-size: var(--fs-3xl);"><?= $total_pesanan ?></h3>
-                    <p style="color: var(--text-light);">Pesanan</p>
+                <div class="admin-stat-tile">
+                    <h3><?= $total_pesanan ?></h3>
+                    <p>Pesanan</p>
                 </div>
-                <div class="stat-card" style="border-left: 5px solid var(--success); padding: var(--space-lg);">
-                    <h3 style="font-size: var(--fs-3xl);"><?= $total_testimoni ?></h3>
-                    <p style="color: var(--text-light);">Testimoni</p>
+                <div class="admin-stat-tile">
+                    <h3><?= $total_testimoni ?></h3>
+                    <p>Testimoni</p>
                 </div>
             </div>
 
@@ -159,12 +159,15 @@ if ($tab === 'users') {
                                 <td><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
                                 <td>
                                     <?php if ($u['role'] !== 'admin'): ?>
-                                        <a href="<?= BASE_URL ?>process/hapus-user.php?id=<?= (int) $u['user_id'] ?>"
-                                           class="btn btn-sm btn-delete"
-                                           style="background: var(--danger); color: var(--white); border: none;"
-                                           onclick="return confirm('Hapus pengguna ini?')">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </a>
+                                        <form method="POST" action="<?= BASE_URL ?>process/hapus-user.php" style="display:inline;"
+                                              onsubmit="return confirm('Hapus pengguna ini?');">
+                                            <?= csrf_field() ?>
+                                            <input type="hidden" name="user_id" value="<?= (int) $u['user_id'] ?>">
+                                            <button type="submit" class="btn btn-sm btn-delete"
+                                                    style="background: var(--danger); color: var(--white); border: none;">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </button>
+                                        </form>
                                     <?php else: ?>
                                         <span style="color: var(--text-light);">Admin</span>
                                     <?php endif; ?>
@@ -195,14 +198,17 @@ if ($tab === 'users') {
                                 <td><?= htmlspecialchars($p['nama_produk'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td><?= htmlspecialchars($p['nama_penjual'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>Rp <?= number_format((int) $p['harga'], 0, ',', '.') ?></td>
-                                <td><?= htmlspecialchars($p['kategori'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars(kategori_label($p['kategori'] ?: 'lainnya'), ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>
-                                    <a href="<?= BASE_URL ?>process/hapus-produk.php?id=<?= (int) $p['produk_id'] ?>"
-                                       class="btn btn-sm btn-delete"
-                                       style="background: var(--danger); color: var(--white); border: none;"
-                                       onclick="return confirm('Hapus produk ini?')">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </a>
+                                    <form method="POST" action="<?= BASE_URL ?>process/hapus-produk.php" style="display:inline;"
+                                          onsubmit="return confirm('Hapus produk ini?');">
+                                        <?= csrf_field() ?>
+                                        <input type="hidden" name="produk_id" value="<?= (int) $p['produk_id'] ?>">
+                                        <button type="submit" class="btn btn-sm btn-delete"
+                                                style="background: var(--danger); color: var(--white); border: none;">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
@@ -245,6 +251,7 @@ if ($tab === 'users') {
                                 <td>
                                     <?php if ($ps['status'] !== 'selesai' && $ps['status'] !== 'dibatalkan'): ?>
                                         <form method="POST" action="<?= BASE_URL ?>process/update-status-pesanan.php" style="display:inline;">
+                                            <?= csrf_field() ?>
                                             <input type="hidden" name="pesanan_id" value="<?= (int) $ps['pesanan_id'] ?>">
                                             <input type="hidden" name="status" value="selesai">
                                             <button type="submit" class="btn btn-sm"
@@ -280,12 +287,15 @@ if ($tab === 'users') {
                                 <td><?= htmlspecialchars($t['isi'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td><?= str_repeat('<i class="fas fa-star" style="color:var(--warning);"></i>', (int) $t['rating']) ?></td>
                                 <td>
-                                    <a href="<?= BASE_URL ?>process/hapus-testimoni.php?id=<?= (int) $t['testimoni_id'] ?>"
-                                       class="btn btn-sm btn-delete"
-                                       style="background: var(--danger); color: var(--white); border: none;"
-                                       onclick="return confirm('Hapus testimoni ini?')">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </a>
+                                    <form method="POST" action="<?= BASE_URL ?>process/hapus-testimoni.php" style="display:inline;"
+                                          onsubmit="return confirm('Hapus testimoni ini?');">
+                                        <?= csrf_field() ?>
+                                        <input type="hidden" name="testimoni_id" value="<?= (int) $t['testimoni_id'] ?>">
+                                        <button type="submit" class="btn btn-sm btn-delete"
+                                                style="background: var(--danger); color: var(--white); border: none;">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endwhile; ?>

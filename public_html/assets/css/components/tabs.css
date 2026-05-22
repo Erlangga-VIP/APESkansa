@@ -1,47 +1,40 @@
-/* ============================================================
-   TABS
-   ============================================================ */
-.profile-tabs {
-    border-bottom: 2px solid var(--border);
+.profile-tabs,
+.profile-tab-nav {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
     display: flex;
-    gap: var(--space-sm);
+    flex-wrap: wrap;
+    gap: var(--space-xs);
     margin-bottom: var(--space-xl);
     overflow-x: auto;
+    padding: var(--space-xs);
 }
 
 .profile-tab-btn {
-    background: none;
+    align-items: center;
+    background: transparent;
     border: none;
+    border-radius: var(--radius-md);
     color: var(--text-light);
     cursor: pointer;
+    display: inline-flex;
     font-size: var(--fs-sm);
     font-weight: 600;
+    gap: var(--space-xs);
     padding: var(--space-sm) var(--space-md);
-    position: relative;
+    transition: background var(--transition), color var(--transition);
     white-space: nowrap;
 }
 
-.profile-tab-btn:hover {
-    color: var(--primary);
-}
-
+.profile-tab-btn:hover,
 .profile-tab-btn.active {
-    color: var(--primary);
-}
-
-.profile-tab-btn.active::after {
-    background: var(--primary);
-    border-radius: 3px;
-    bottom: -2px;
-    content: '';
-    height: 3px;
-    left: 0;
-    position: absolute;
-    width: 100%;
+    background: var(--primary-muted);
+    color: var(--primary-dark);
 }
 
 .profile-tab-content {
-    animation: fadeIn 0.3s ease;
+    animation: tabFade 0.25s ease;
     display: none;
 }
 
@@ -49,10 +42,10 @@
     display: block;
 }
 
-@keyframes fadeIn {
+@keyframes tabFade {
     from {
         opacity: 0;
-        transform: translateY(5px);
+        transform: translateY(6px);
     }
     to {
         opacity: 1;

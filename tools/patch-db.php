@@ -1,9 +1,21 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * APEskansa Database Auto-Patch Script
  * File ini digunakan untuk menambahkan kolom-kolom baru dan membuat tabel yang diperlukan
  * agar fitur Pesanan, WhatsApp, dan Testimoni dapat berjalan dengan lancar.
  */
+
+if (php_sapi_name() !== 'cli') {
+    $remote = $_SERVER['REMOTE_ADDR'] ?? '';
+    $allowed = ['127.0.0.1', '::1'];
+    if (!in_array($remote, $allowed, true)) {
+        http_response_code(403);
+        exit('Akses ditolak. Jalankan patch hanya dari localhost.');
+    }
+}
 
 // Sertakan konfigurasi database
 $servername = "localhost";
@@ -227,6 +239,15 @@ if (mysqli_num_rows($prod_check) == 0) {
         ");
         echo "Produk default berhasil ditambahkan untuk demo.\n";
     }
+}
+
+// Normalisasi kategori produk ke slug lowercase
+$normalize_kategori = mysqli_query($conn, "
+    UPDATE produk SET kategori = LOWER(kategori)
+    WHERE kategori IN ('Makanan', 'Minuman', 'Kerajinan', 'Jasa', 'Lainnya')
+");
+if ($normalize_kategori) {
+    echo "Kategori produk dinormalisasi ke format lowercase.\n";
 }
 
 mysqli_close($conn);

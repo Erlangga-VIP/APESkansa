@@ -1,46 +1,48 @@
-/* ============================================================
-   BADGES
-   ============================================================ */
 .badge {
-    align-items: center;
-    border-radius: 20px;
+    border-radius: var(--radius-full);
     display: inline-flex;
     font-size: var(--fs-xs);
     font-weight: 700;
-    letter-spacing: 0.05em;
-    padding: 2px 10px;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    padding: 0.35rem 0.65rem;
+    text-transform: capitalize;
 }
 
 .badge-primary {
     background: var(--primary-light);
-    color: var(--primary);
+    color: var(--primary-darker);
 }
 
-/* ---------- Status ---------- */
+.badge-accent {
+    background: var(--accent-soft);
+    color: #c2410c;
+}
+
 .badge-status {
-    border-radius: 20px;
-    font-size: 0.7rem;
+    border-radius: var(--radius-full);
+    font-size: var(--fs-xs);
     font-weight: 700;
-    padding: 0.25rem 0.75rem;
+    padding: 0.35rem 0.75rem;
+    text-transform: capitalize;
 }
 
 .badge-waiting {
-    background: rgba(245, 158, 11, 0.15);
-    color: #d97706;
+    background: var(--warning-soft);
+    color: #b45309;
 }
 
 .badge-processing {
-    background: rgba(59, 130, 246, 0.15);
-    color: #2563eb;
+    background: #dbeafe;
+    color: #1d4ed8;
 }
 
 .badge-completed {
-    background: rgba(16, 185, 129, 0.15);
-    color: #059669;
+    background: var(--success-soft);
+    color: #047857;
 }
 
 .badge-cancelled {
-    background: rgba(239, 68, 68, 0.15);
-    color: #dc2626;
+    background: var(--danger-soft);
+    color: #b91c1c;
 }

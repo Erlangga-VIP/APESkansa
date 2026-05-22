@@ -1,131 +1,66 @@
-/* ============================================================
-   HOME PAGE
-   ============================================================ */
-
-/* ---------- Stats Section ---------- */
 .stats-section {
-    margin-top: -40px;
+    margin-top: -2.5rem;
     padding: 0 var(--space-md);
     position: relative;
-    z-index: 10;
+    z-index: 2;
 }
 
 .stats-card {
-    background: var(--white);
-    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
     box-shadow: var(--shadow-lg);
     padding: var(--space-xl);
 }
 
 .stats-card h3 {
-    color: var(--primary);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     font-size: var(--fs-3xl);
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .stats-card p {
     color: var(--text-light);
-    font-weight: 500;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin-top: var(--space-xs);
 }
 
-/* ---------- Features ---------- */
 .features {
     padding: var(--space-3xl) 0;
 }
 
-.features-title {
-    color: var(--text-dark);
-    font-size: var(--fs-3xl);
-    font-weight: 700;
-    margin-bottom: var(--space-2xl);
-    text-align: center;
-}
-
-/* ---------- Testimonials ---------- */
-.testimonials {
-    background: var(--gradient-testimonial);
-    padding: var(--space-3xl) 0;
-}
-
+.features-title,
 .testimonials-title {
     color: var(--text-dark);
     font-size: var(--fs-3xl);
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     margin-bottom: var(--space-2xl);
     text-align: center;
+}
+
+.testimonials {
+    background: linear-gradient(180deg, transparent, rgba(204, 251, 241, 0.35));
+    padding: var(--space-3xl) 0;
 }
 
 .testimonials-slider {
     display: flex;
     gap: var(--space-lg);
     overflow-x: auto;
-    padding-bottom: var(--space-sm);
+    padding-bottom: var(--space-md);
     -webkit-overflow-scrolling: touch;
 }
 
-/* ---------- Search Bar ---------- */
-.search-bar {
-    background: var(--secondary);
-    border-radius: var(--radius-md);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-2xl);
-    padding: var(--space-lg);
+.testimonials-slider::-webkit-scrollbar {
+    height: 6px;
 }
 
-.search-bar .form-control {
-    flex: 1;
-    height: 48px;
-    min-width: 200px;
-}
-
-/* ---------- Section Heading ---------- */
-.section-heading {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: var(--space-lg);
-}
-
-.section-heading h2 {
-    color: var(--text-dark);
-    font-size: var(--fs-2xl);
-    font-weight: 600;
-}
-
-.section-heading a {
-    color: var(--primary);
-    font-size: var(--fs-sm);
-    font-weight: 600;
-}
-
-/* ---------- Table ---------- */
-.table-responsive {
-    overflow-x: auto;
-}
-
-.table {
-    border-collapse: collapse;
-    font-size: var(--fs-sm);
-    width: 100%;
-}
-
-.table th {
-    background: var(--secondary);
-    border-bottom: 2px solid var(--border);
-    color: var(--text-dark);
-    font-weight: 600;
-    padding: var(--space-sm) var(--space-md);
-    text-align: left;
-}
-
-.table td {
-    border-bottom: 1px solid var(--border);
-    padding: var(--space-sm) var(--space-md);
-    vertical-align: middle;
-}
-
-.table tr:hover td {
-    background: var(--accent);
+.testimonials-slider::-webkit-scrollbar-thumb {
+    background: var(--primary-light);
+    border-radius: var(--radius-full);
 }

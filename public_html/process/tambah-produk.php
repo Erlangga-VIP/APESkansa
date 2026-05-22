@@ -15,17 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$id_penjual  = $_SESSION['user_id'];
+csrf_require();
+
+$id_penjual  = (int) $_SESSION['user_id'];
 $nama_produk = trim($_POST['nama_produk'] ?? '');
-$kategori    = trim($_POST['kategori'] ?? '');
+$kategori    = kategori_normalize(trim($_POST['kategori'] ?? ''));
 $harga       = (int) ($_POST['harga'] ?? 0);
 $deskripsi   = trim($_POST['deskripsi'] ?? '');
-
-// Validasi kategori
-$kategori_valid = ['Makanan', 'Minuman', 'Kerajinan', 'Jasa', 'Lainnya'];
-if (!in_array($kategori, $kategori_valid, true)) {
-    $kategori = 'Lainnya';
-}
 
 // Validasi input
 $errors = [];
@@ -73,8 +69,13 @@ if (!is_dir($target_dir)) {
     mkdir($target_dir, 0755, true);
 }
 
-$ext = pathinfo($gambar['name'], PATHINFO_EXTENSION);
-$nama_file = uniqid('produk_') . '.' . $ext;
+$ext = allowed_image_extension($file_type);
+if ($ext === null) {
+    $_SESSION['error'] = 'Tipe file tidak didukung. Gunakan JPG, PNG, GIF, atau WEBP.';
+    header('Location: ../dashboard/penjual/tambah-produk.php');
+    exit;
+}
+$nama_file = uniqid('produk_', true) . '.' . $ext;
 $target_path = $target_dir . $nama_file;
 
 if (!move_uploaded_file($gambar['tmp_name'], $target_path)) {
@@ -92,7 +93,7 @@ mysqli_stmt_bind_param($stmt, 'ississ', $id_penjual, $nama_produk, $kategori, $h
 
 if (mysqli_stmt_execute($stmt)) {
     $_SESSION['success'] = 'Produk berhasil ditambahkan.';
-    header('Location: ../dashboard/penjual/profil.php?tab=produk');
+    header('Location: ../dashboard/penjual/produk.php');
 } else {
     // Hapus gambar jika gagal simpan
     if (file_exists($target_path)) {
