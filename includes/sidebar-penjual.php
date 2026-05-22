@@ -1,5 +1,8 @@
 <?php
-$id_penjual = $_SESSION['user_id'];
+
+declare(strict_types=1);
+
+$id_penjual = $_SESSION['user_id'] ?? 0;
 ?>
 <div class="sidebar">
     <div class="sidebar-logo">
@@ -24,11 +27,11 @@ $id_penjual = $_SESSION['user_id'];
             <i class="fas fa-shopping-cart"></i>
             <span>Pesanan Masuk</span>
         </a>
-        <a href="../produk.php?penjual_id=<?php echo $id_penjual; ?>" class="sidebar-menu-item">
+        <a href="../produk.php?penjual_id=<?= $id_penjual ?>" class="sidebar-menu-item">
             <i class="fas fa-eye"></i>
             <span>Lihat Toko Saya</span>
         </a>
-        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.5rem 1rem;">
+        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.08); margin:1.5rem 1rem;">
         <a href="../index.php" class="sidebar-menu-item">
             <i class="fas fa-home"></i>
             <span>Ke Beranda</span>

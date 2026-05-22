@@ -24,13 +24,17 @@
                 <div>
                     <h3>Media Sosial</h3>
                     <div class="social-icons">
-                        <a href="https://tiktok.com" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://tiktok.com" target="_blank" title="TikTok" rel="noopener">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" title="Instagram" rel="noopener">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 APEskansa - SMKN 1 Bawang. All Rights Reserved.</p>
+                <p>&copy; <?= date('Y') ?> APEskansa – SMKN 1 Bawang. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
