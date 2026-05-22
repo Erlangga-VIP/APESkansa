@@ -37,7 +37,8 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/assets/css/all.min.css">
+    <!-- Perbaikan path Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body style="background-color: var(--secondary-color);">
     <div class="dashboard">
@@ -65,6 +66,11 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                 <a href="#" class="sidebar-menu-item" data-tab="pesanan">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Pesanan Masuk</span>
+                </a>
+                <!-- LINK BARU: Lihat Toko Saya -->
+                <a href="produk.php?penjual_id=<?php echo $id_penjual; ?>" class="sidebar-menu-item">
+                    <i class="fas fa-eye"></i>
+                    <span>Lihat Toko Saya</span>
                 </a>
                 <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.5rem 1rem;">
                 <a href="index.php" class="sidebar-menu-item">
@@ -296,13 +302,32 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                                                     </span>
                                                 </td>
                                                 <td>
+                                                    <!-- TOMBOL AKSI DIUBAH MENJADI FORM POST -->
                                                     <?php if ($row['status'] == 'menunggu'): ?>
                                                         <div style="display:flex; gap: 0.25rem;">
-                                                            <a href="process/update-status-pesanan.php?id=<?php echo $row['pesanan_id']; ?>&status=diproses" class="btn btn-sm btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight:600;"><i class="fas fa-check"></i> Proses</a>
-                                                            <a href="process/update-status-pesanan.php?id=<?php echo $row['pesanan_id']; ?>&status=dibatalkan" class="btn btn-sm btn-delete" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight:600; color:white;"><i class="fas fa-times"></i> Tolak</a>
+                                                            <form method="POST" action="process/update-status-pesanan.php" style="display:inline;">
+                                                                <input type="hidden" name="pesanan_id" value="<?php echo $row['pesanan_id']; ?>">
+                                                                <input type="hidden" name="status" value="diproses">
+                                                                <button type="submit" class="btn btn-sm btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight:600;">
+                                                                    <i class="fas fa-check"></i> Proses
+                                                                </button>
+                                                            </form>
+                                                            <form method="POST" action="process/update-status-pesanan.php" style="display:inline;">
+                                                                <input type="hidden" name="pesanan_id" value="<?php echo $row['pesanan_id']; ?>">
+                                                                <input type="hidden" name="status" value="dibatalkan">
+                                                                <button type="submit" class="btn btn-sm btn-delete" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight:600; color:white;">
+                                                                    <i class="fas fa-times"></i> Tolak
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     <?php elseif ($row['status'] == 'diproses'): ?>
-                                                        <a href="process/update-status-pesanan.php?id=<?php echo $row['pesanan_id']; ?>&status=selesai" class="btn btn-sm" style="background-color: var(--success-color); color:white; padding: 0.35rem 0.75rem; font-size:0.75rem; font-weight:600; border-radius:6px;"><i class="fas fa-check-double"></i> Tandai Selesai</a>
+                                                        <form method="POST" action="process/update-status-pesanan.php" style="display:inline;">
+                                                            <input type="hidden" name="pesanan_id" value="<?php echo $row['pesanan_id']; ?>">
+                                                            <input type="hidden" name="status" value="selesai">
+                                                            <button type="submit" class="btn btn-sm" style="background-color: var(--success-color); color:white; padding: 0.35rem 0.75rem; font-size:0.75rem; font-weight:600; border-radius:6px;">
+                                                                <i class="fas fa-check-double"></i> Tandai Selesai
+                                                            </button>
+                                                        </form>
                                                     <?php else: ?>
                                                         <span style="font-size: 0.8rem; color: #64748b; font-style:italic;">No Action</span>
                                                     <?php endif; ?>
@@ -327,7 +352,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
 
     <script src="assets/js/script.js"></script>
     <script>
-        // JS Tab Switcher untuk Penjual Dashboard
+        // JS Tab Switcher + Scroll Otomatis
         document.addEventListener('DOMContentLoaded', function() {
             const tabs = document.querySelectorAll('.sidebar-menu-item[data-tab]');
             const contents = document.querySelectorAll('.profile-tab-content');
@@ -341,11 +366,15 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                     contents.forEach(c => c.classList.remove('active'));
 
                     tab.classList.add('active');
-                    document.getElementById('tab-' + targetTab).classList.add('active');
+                    const activeContent = document.getElementById('tab-' + targetTab);
+                    activeContent.classList.add('active');
+
+                    // Scroll otomatis ke konten yang dipilih
+                    activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             });
 
-            // Set active tab based on URL param if exists
+            // Set active tab berdasarkan URL parameter
             const urlParams = new URLSearchParams(window.location.search);
             const tabParam = urlParams.get('tab');
             if (tabParam) {
@@ -356,10 +385,10 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
             }
         });
 
-        // Konfirmasi Hapus Produk
+        // Konfirmasi Hapus Produk (path diperbaiki)
         function confirmDelete(produkId) {
             if (confirm("Apakah Anda yakin ingin menghapus produk ini secara permanen? Tindakan ini tidak dapat dibatalkan.")) {
-                window.location.href = "api/hapus-produk.php?id=" + produkId;
+                window.location.href = "process/hapus-produk.php?id=" + produkId;
             }
         }
     </script>

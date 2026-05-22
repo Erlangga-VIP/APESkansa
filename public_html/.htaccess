@@ -1,16 +1,10 @@
-# APEskansa - Basic Security
 Options -Indexes
-<FilesMatch ".(php|inc)$">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
-<FilesMatch "^(index|login|register|produk|detail-produk|profil|penjual|penjual-dashboard|penjual-profil|penjual-tambah-produk|penjual-edit-produk|admin-dashboard).php$">
-    Allow from all
-</FilesMatch>
 
-# Lindungi folder process hanya untuk POST
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    # Izinkan GET hanya untuk logout dan update-status-pesanan
     RewriteCond %{REQUEST_METHOD} !POST
+    RewriteCond %{REQUEST_URI} !/process/logout\.php$ [NC]
+    RewriteCond %{REQUEST_URI} !/process/update-status-pesanan\.php$ [NC]
     RewriteRule ^process/ - [F]
 </IfModule>
