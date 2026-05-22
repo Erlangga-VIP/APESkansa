@@ -1,0 +1,30 @@
+/* Glassmorphism Card Effect */
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: var(--box-shadow);
+}
+
+/* Modern Card Layouts */
+.product-card {
+    border-radius: var(--border-radius) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--box-shadow) !important;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--box-shadow-hover) !important;
+}
+
+/* Floating Shadows & Hover Animation */
+.hover-float {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.hover-float:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-hover) !important;
+}
