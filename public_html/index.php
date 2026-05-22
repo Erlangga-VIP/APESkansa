@@ -14,7 +14,7 @@ include '../config/config.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/assets/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Header/Navbar -->
@@ -130,7 +130,7 @@ include '../config/config.php';
                         <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--dark-text); display: flex; align-items: center; gap: 0.5rem; margin: 0;">
                             <i class="fas fa-fire" style="color: var(--danger-color);"></i> Rekomendasi Produk
                         </h2>
-                        <a href="produk.php" style="color: var(--primary-color); font-weight: 600; font-size: 0.9rem; hover: underline;">Lihat Semua <i class="fas fa-arrow-right"></i></a>
+                        <a href="produk.php" style="color: var(--primary-color); font-weight: 600; font-size: 0.9rem;">Lihat Semua <i class="fas fa-arrow-right"></i></a>
                     </div>
                     
                     <div class="products-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem;">
@@ -237,7 +237,7 @@ include '../config/config.php';
                         </p>
                         <div class="hero-buttons" style="gap: 1.25rem;">
                             <a href="register.php" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1rem; font-weight: 600; box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);">Mulai Jualan Sekarang</a>
-                            <a href="login.php" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1rem; font-weight: 600; background: white; border: 1px solid var(--border-color); box-shadow: var(--box-shadow);">Lihat Produk</a>
+                            <a href="produk.php" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1rem; font-weight: 600; background: white; border: 1px solid var(--border-color); box-shadow: var(--box-shadow);">Lihat Produk</a>
                         </div>
                     </div>
                     <div class="hero-image" style="flex: 0.9; text-align: center;">
@@ -367,9 +367,9 @@ include '../config/config.php';
                 <div class="footer-links">
                     <h3 style="color: white; font-weight: 600;">Navigasi</h3>
                     <ul>
-                        <li><a href="index.php" style="color: #94a3b8; hover:color: white;">Beranda</a></li>
-                        <li><a href="produk.php" style="color: #94a3b8; hover:color: white;">Produk</a></li>
-                        <li><a href="penjual.php" style="color: #94a3b8; hover:color: white;">Penjual</a></li>
+                        <li><a href="index.php" style="color: #94a3b8;">Beranda</a></li>
+                        <li><a href="produk.php" style="color: #94a3b8;">Produk</a></li>
+                        <li><a href="penjual.php" style="color: #94a3b8;">Penjual</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
