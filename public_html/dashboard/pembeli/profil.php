@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../config/config.php';
+include '../../../config/config.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -9,10 +9,10 @@ if (!isset($_SESSION['user_id'])) {
 
 // Redirect penjual or admin to their specific dashboards
 if ($_SESSION['role'] == 'penjual') {
-    header("Location: penjual-profil.php");
+    header("Location: dashboard/penjual/profil.php");
     exit;
 } elseif ($_SESSION['role'] == 'admin') {
-    header("Location: admin-dashboard.php");
+    header("Location: dashboard/admin/dashboard.php");
     exit;
 }
 
@@ -66,7 +66,7 @@ $pesanan_selesai = mysqli_fetch_assoc($pesanan_selesai_q)['total'];
                     </ul>
                 </nav>
                 <div class="auth-buttons">
-                    <a href="profil.php" class="profile-icon" title="Profil Saya">
+                    <a href="dashboard/pembeli/profil.php" class="profile-icon" title="Profil Saya">
                         <?php if ($foto_profil): ?>
                             <img src="<?php echo $foto_profil; ?>" alt="Foto Profil" style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover;">
                         <?php else: ?>

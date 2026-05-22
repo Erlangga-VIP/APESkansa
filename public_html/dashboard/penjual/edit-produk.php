@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../config/config.php';
+include '../../../config/config.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'penjual') {
     header("Location: login.php");
@@ -16,7 +16,7 @@ $foto_profil = $user_data['foto_profil'] ? 'uploads/' . htmlspecialchars($user_d
 
 // Validasi dan ambil data produk
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: penjual-profil.php?tab=produk");
+    header("Location: dashboard/penjual/profil.php?tab=produk");
     exit;
 }
 
@@ -24,7 +24,7 @@ $produk_id = intval($_GET['id']);
 $produk_query = mysqli_query($conn, "SELECT * FROM produk WHERE produk_id = $produk_id AND user_id = $id_penjual");
 
 if (mysqli_num_rows($produk_query) == 0) {
-    echo "<script>alert('Produk tidak ditemukan atau Anda tidak memiliki akses ke produk ini.'); window.location='penjual-profil.php?tab=produk';</script>";
+    echo "<script>alert('Produk tidak ditemukan atau Anda tidak memiliki akses ke produk ini.'); window.location='dashboard/penjual/profil.php?tab=produk';</script>";
     exit;
 }
 
@@ -50,19 +50,19 @@ $produk_data = mysqli_fetch_assoc($produk_query);
                 <a href="index.php"><img src="assets/img/LOGOAPE.png" alt="APEskansa Logo" style="height: 60px !important;"></a>
             </div>
             <div class="sidebar-menu">
-                <a href="penjual-profil.php?tab=profil" class="sidebar-menu-item">
+                <a href="dashboard/penjual/profil.php?tab=profil" class="sidebar-menu-item">
                     <i class="fas fa-store"></i>
                     <span>Profil Toko</span>
                 </a>
-                <a href="penjual-profil.php?tab=produk" class="sidebar-menu-item active">
+                <a href="dashboard/penjual/profil.php?tab=produk" class="sidebar-menu-item active">
                     <i class="fas fa-boxes"></i>
                     <span>Daftar Produk</span>
                 </a>
-                <a href="penjual-tambah-produk.php" class="sidebar-menu-item">
+                <a href="dashboard/penjual/tambah-produk.php" class="sidebar-menu-item">
                     <i class="fas fa-plus-circle"></i>
                     <span>Tambah Produk</span>
                 </a>
-                <a href="penjual-profil.php?tab=pesanan" class="sidebar-menu-item">
+                <a href="dashboard/penjual/profil.php?tab=pesanan" class="sidebar-menu-item">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Pesanan Masuk</span>
                 </a>
@@ -146,7 +146,7 @@ $produk_data = mysqli_fetch_assoc($produk_query);
                     
                     <div class="form-buttons" style="display:flex; gap: 1rem;">
                         <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px;">Simpan Perubahan</button>
-                        <a href="penjual-profil.php?tab=produk" class="btn btn-outline" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px;">Batal</a>
+                        <a href="dashboard/penjual/profil.php?tab=produk" class="btn btn-outline" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px;">Batal</a>
                     </div>
                 </form>
             </div>

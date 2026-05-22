@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../config/config.php';
+include '../../../config/config.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'penjual') {
     header("Location: login.php");
@@ -59,7 +59,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                     <i class="fas fa-boxes"></i>
                     <span>Daftar Produk</span>
                 </a>
-                <a href="penjual-tambah-produk.php" class="sidebar-menu-item">
+                <a href="dashboard/penjual/tambah-produk.php" class="sidebar-menu-item">
                     <i class="fas fa-plus-circle"></i>
                     <span>Tambah Produk</span>
                 </a>
@@ -178,7 +178,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                 <div class="dashboard-card glass-card" style="border-radius: var(--border-radius); padding: 2.25rem;">
                     <div class="card-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 1.25rem; margin-bottom: 1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap: 1rem;">
                         <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--dark-text); margin: 0;"><i class="fas fa-cubes" style="color: var(--primary-color);"></i> Daftar Produk Saya</h2>
-                        <a href="penjual-tambah-produk.php" class="btn btn-primary" style="font-size: 0.9rem; font-weight: 600; padding: 0.5rem 1.25rem; border-radius: 8px;"><i class="fas fa-plus"></i> Tambah Produk</a>
+                        <a href="dashboard/penjual/tambah-produk.php" class="btn btn-primary" style="font-size: 0.9rem; font-weight: 600; padding: 0.5rem 1.25rem; border-radius: 8px;"><i class="fas fa-plus"></i> Tambah Produk</a>
                     </div>
                     
                     <div class="table-responsive">
@@ -220,7 +220,7 @@ $omset = mysqli_fetch_assoc($omset_q)['total'];
                                                 </td>
                                                 <td>
                                                     <div class="action-buttons">
-                                                        <a href="penjual-edit-produk.php?id=<?php echo $row['produk_id']; ?>" class="btn btn-sm btn-edit" style="border-radius:6px; padding: 0.4rem 0.75rem; font-weight:600;" title="Edit"><i class="fas fa-edit"></i> Edit</a>
+                                                        <a href="dashboard/penjual/edit-produk.php?id=<?php echo $row['produk_id']; ?>" class="btn btn-sm btn-edit" style="border-radius:6px; padding: 0.4rem 0.75rem; font-weight:600;" title="Edit"><i class="fas fa-edit"></i> Edit</a>
                                                         <a href="#" onclick="confirmDelete(<?php echo $row['produk_id']; ?>)" class="btn btn-sm btn-delete" style="border-radius:6px; padding: 0.4rem 0.75rem; font-weight:600;" title="Hapus"><i class="fas fa-trash"></i> Hapus</a>
                                                     </div>
                                                 </td>
