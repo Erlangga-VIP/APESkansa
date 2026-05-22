@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../../includes/header.php';
 
 // Proteksi akses: hanya admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../../login.php');
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
@@ -19,7 +19,7 @@ $total_testimoni = (int) mysqli_fetch_assoc(mysqli_query($conn, 'SELECT COUNT(*)
 // --- Tab aktif ---
 $tab = $_GET['tab'] ?? 'dashboard';
 
-// --- Data untuk setiap tab (query di bawah) ---
+// --- Data untuk setiap tab ---
 $users     = [];
 $produk    = [];
 $pesanan   = [];
@@ -63,10 +63,10 @@ if ($tab === 'users') {
 
 <div class="dashboard">
     <!-- Sidebar Admin -->
-    <div class="sidebar" style="background: var(--text-dark); color: var(--white);">
+    <div class="sidebar">
         <div class="sidebar-logo">
-            <a href="../../index.php">
-                <img src="../../assets/img/LOGOAPE.png" alt="APEskansa Logo" style="height: 60px !important;">
+            <a href="<?= BASE_URL ?>index.php">
+                <img src="<?= BASE_URL ?>assets/img/LOGOAPE.png" alt="APEskansa Logo">
             </a>
         </div>
         <div class="sidebar-menu">
@@ -91,11 +91,11 @@ if ($tab === 'users') {
                 <span>Testimoni</span>
             </a>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.5rem 1rem;">
-            <a href="../../index.php" class="sidebar-menu-item">
+            <a href="<?= BASE_URL ?>index.php" class="sidebar-menu-item">
                 <i class="fas fa-home"></i>
                 <span>Ke Beranda</span>
             </a>
-            <a href="../../process/logout.php" class="sidebar-menu-item" style="color: var(--danger);">
+            <a href="<?= BASE_URL ?>process/logout.php" class="sidebar-menu-item" style="color: var(--danger);">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Keluar</span>
             </a>
@@ -117,7 +117,6 @@ if ($tab === 'users') {
         </div>
 
         <?php if ($tab === 'dashboard'): ?>
-            <!-- Statistik -->
             <div class="stats-grid" style="margin-bottom: var(--space-2xl);">
                 <div class="stat-card" style="border-left: 5px solid var(--primary); padding: var(--space-lg);">
                     <h3 style="font-size: var(--fs-3xl);"><?= $total_users ?></h3>
@@ -160,7 +159,7 @@ if ($tab === 'users') {
                                 <td><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
                                 <td>
                                     <?php if ($u['role'] !== 'admin'): ?>
-                                        <a href="../../process/hapus-user.php?id=<?= (int) $u['user_id'] ?>"
+                                        <a href="<?= BASE_URL ?>process/hapus-user.php?id=<?= (int) $u['user_id'] ?>"
                                            class="btn btn-sm btn-delete"
                                            style="background: var(--danger); color: var(--white); border: none;"
                                            onclick="return confirm('Hapus pengguna ini?')">
@@ -198,7 +197,7 @@ if ($tab === 'users') {
                                 <td>Rp <?= number_format((int) $p['harga'], 0, ',', '.') ?></td>
                                 <td><?= htmlspecialchars($p['kategori'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>
-                                    <a href="../../process/hapus-produk.php?id=<?= (int) $p['produk_id'] ?>"
+                                    <a href="<?= BASE_URL ?>process/hapus-produk.php?id=<?= (int) $p['produk_id'] ?>"
                                        class="btn btn-sm btn-delete"
                                        style="background: var(--danger); color: var(--white); border: none;"
                                        onclick="return confirm('Hapus produk ini?')">
@@ -245,7 +244,7 @@ if ($tab === 'users') {
                                 <td><span class="badge-status <?= $status_class ?>"><?= $ps['status'] ?></span></td>
                                 <td>
                                     <?php if ($ps['status'] !== 'selesai' && $ps['status'] !== 'dibatalkan'): ?>
-                                        <form method="POST" action="../../process/update-status-pesanan.php" style="display:inline;">
+                                        <form method="POST" action="<?= BASE_URL ?>process/update-status-pesanan.php" style="display:inline;">
                                             <input type="hidden" name="pesanan_id" value="<?= (int) $ps['pesanan_id'] ?>">
                                             <input type="hidden" name="status" value="selesai">
                                             <button type="submit" class="btn btn-sm"
@@ -281,7 +280,7 @@ if ($tab === 'users') {
                                 <td><?= htmlspecialchars($t['isi'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td><?= str_repeat('<i class="fas fa-star" style="color:var(--warning);"></i>', (int) $t['rating']) ?></td>
                                 <td>
-                                    <a href="../../process/hapus-testimoni.php?id=<?= (int) $t['testimoni_id'] ?>"
+                                    <a href="<?= BASE_URL ?>process/hapus-testimoni.php?id=<?= (int) $t['testimoni_id'] ?>"
                                        class="btn btn-sm btn-delete"
                                        style="background: var(--danger); color: var(--white); border: none;"
                                        onclick="return confirm('Hapus testimoni ini?')">

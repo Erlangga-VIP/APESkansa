@@ -18,42 +18,35 @@ function initMobileMenu() {
     });
 }
 function initTabSwitchers() {
-    const pembeliTabs = document.querySelectorAll('.profile-tab-btn');
-    const pembeliContents = document.querySelectorAll('.profile-tab-content');
-    pembeliTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetTab = tab.dataset.tab;
-            if (!targetTab)
-                return;
-            pembeliTabs.forEach(t => t.classList.remove('active'));
-            pembeliContents.forEach(c => c.classList.remove('active'));
-            tab.classList.add('active');
-            document.getElementById('tab-' + targetTab)?.classList.add('active');
-        });
-    });
-    const penjualTabs = document.querySelectorAll('.sidebar-menu-item[data-tab]');
-    penjualTabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetTab = tab.dataset.tab;
-            if (!targetTab)
-                return;
-            penjualTabs.forEach(t => t.classList.remove('active'));
-            pembeliContents.forEach(c => c.classList.remove('active'));
-            tab.classList.add('active');
-            const activeContent = document.getElementById('tab-' + targetTab);
-            if (activeContent) {
-                activeContent.classList.add('active');
+    document.addEventListener('click', (e) => {
+        const target = e.target;
+        const tab = target.closest('.profile-tab-btn, .sidebar-menu-item[data-tab]');
+        if (!tab)
+            return;
+        e.preventDefault();
+        const targetTab = tab.getAttribute('data-tab');
+        if (!targetTab)
+            return;
+        const allTabs = document.querySelectorAll('.profile-tab-btn, .sidebar-menu-item[data-tab]');
+        const allContents = document.querySelectorAll('.profile-tab-content');
+        allTabs.forEach(t => t.classList.remove('active'));
+        allContents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        const activeContent = document.getElementById('tab-' + targetTab);
+        if (activeContent) {
+            activeContent.classList.add('active');
+            if (tab.classList.contains('sidebar-menu-item')) {
                 activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        });
+        }
     });
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
     if (tabParam) {
         const targetBtn = document.querySelector(`.profile-tab-btn[data-tab="${tabParam}"]`)
             ?? document.querySelector(`.sidebar-menu-item[data-tab="${tabParam}"]`);
-        targetBtn?.click();
+        if (targetBtn)
+            targetBtn.click();
     }
 }
 function initStarRating() {
@@ -63,7 +56,7 @@ function initStarRating() {
         return;
     stars.forEach(star => {
         star.addEventListener('click', () => {
-            const value = parseInt(star.dataset.value ?? '0');
+            const value = parseInt(star.getAttribute('data-value') ?? '0');
             ratingInput.value = value.toString();
             stars.forEach((s, idx) => {
                 s.className = idx < value ? 'fas fa-star' : 'far fa-star';

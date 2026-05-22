@@ -1,15 +1,17 @@
 /* ============================================================
-   SIDEBAR DASHBOARD (MOBILE‑FIRST)
+   SIDEBAR DASHBOARD (STICKY, NON‑FIXED)
    ============================================================ */
+
 .sidebar {
     background: var(--text-dark);
     color: var(--white);
-    height: 100vh;
+    flex-shrink: 0;
+    height: calc(100vh - var(--header-height));  /* setinggi viewport dikurangi header */
     overflow-y: auto;
     padding: var(--space-xl) 0;
-    position: fixed;
+    position: sticky;
+    top: var(--header-height);                  /* menempel di bawah header */
     width: 250px;
-    z-index: 90;
 }
 
 .sidebar-logo {
@@ -51,6 +53,7 @@
     .sidebar {
         height: auto;
         position: relative;
+        top: auto;
         width: 100%;
     }
 

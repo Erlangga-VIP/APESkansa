@@ -1,7 +1,5 @@
 /* ============================================================
    GRID SYSTEM & FLEX HELPERS
-   Mobile‑first, semua aturan mengikuti urutan properti yang
-   konsisten (display → gap → grid‑template → lalu sisanya).
    ============================================================ */
 
 /* ---------- Product Grid ---------- */
@@ -48,6 +46,20 @@
     }
 }
 
+/* ---------- Dashboard Layout ---------- */
+.dashboard {
+    display: flex;
+    align-items: flex-start;   /* sidebar & konten mulai dari atas */
+    min-height: calc(100vh - var(--header-height));
+}
+
+.main-content {
+    flex: 1;
+    min-height: 100%;
+    padding: var(--space-xl);
+    min-width: 0;              /* mencegah overflow horizontal */
+}
+
 /* ---------- Flex Helpers ---------- */
 .flex-between {
     align-items: center;
@@ -72,4 +84,15 @@
 
 .col {
     flex: 1 1 250px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 992px) {
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: var(--space-md);
+    }
 }

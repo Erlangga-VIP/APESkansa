@@ -1,22 +1,9 @@
 /**
  * APEskansa – Main Script (TypeScript 2026‑ready)
  * Menangani: Mobile Menu, Tab Switcher, Modal, Star Rating,
- *            Quantity Selector, Konfirmasi Hapus
+ *            Quantity Selector
  */
-
 'use strict';
-
-// ============================================================
-// TIPE DATA
-// ============================================================
-
-interface StarElement extends HTMLElement {
-    readonly dataset: DOMStringMap & { value?: string };
-}
-
-// ============================================================
-// INISIALISASI UTAMA
-// ============================================================
 
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
@@ -26,10 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactModal();
     initQuantitySelector();
 });
-
-// ============================================================
-// MOBILE MENU TOGGLE
-// ============================================================
 
 function initMobileMenu(): void {
     const toggle = document.getElementById('mobileMenuToggle');
@@ -42,67 +25,55 @@ function initMobileMenu(): void {
     });
 }
 
-// ============================================================
-// TAB SWITCHER
-// ============================================================
-
 function initTabSwitchers(): void {
-    const pembeliTabs = document.querySelectorAll<HTMLButtonElement>('.profile-tab-btn');
-    const pembeliContents = document.querySelectorAll<HTMLElement>('.profile-tab-content');
+    // Gunakan event delegation pada document
+    document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const tab = target.closest('.profile-tab-btn, .sidebar-menu-item[data-tab]');
+        if (!tab) return;
 
-    pembeliTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetTab = tab.dataset.tab;
-            if (!targetTab) return;
+        e.preventDefault();
+        const targetTab = tab.getAttribute('data-tab');
+        if (!targetTab) return;
 
-            pembeliTabs.forEach(t => t.classList.remove('active'));
-            pembeliContents.forEach(c => c.classList.remove('active'));
+        // Nonaktifkan semua tab dan konten dalam satu halaman
+        const allTabs = document.querySelectorAll('.profile-tab-btn, .sidebar-menu-item[data-tab]');
+        const allContents = document.querySelectorAll('.profile-tab-content');
 
-            tab.classList.add('active');
-            document.getElementById('tab-' + targetTab)?.classList.add('active');
-        });
-    });
+        allTabs.forEach(t => t.classList.remove('active'));
+        allContents.forEach(c => c.classList.remove('active'));
 
-    const penjualTabs = document.querySelectorAll<HTMLAnchorElement>('.sidebar-menu-item[data-tab]');
-    penjualTabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetTab = tab.dataset.tab;
-            if (!targetTab) return;
+        // Aktifkan tab yang diklik
+        tab.classList.add('active');
 
-            penjualTabs.forEach(t => t.classList.remove('active'));
-            pembeliContents.forEach(c => c.classList.remove('active'));
-
-            tab.classList.add('active');
-            const activeContent = document.getElementById('tab-' + targetTab);
-            if (activeContent) {
-                activeContent.classList.add('active');
+        const activeContent = document.getElementById('tab-' + targetTab);
+        if (activeContent) {
+            activeContent.classList.add('active');
+            // Scroll untuk dashboard penjual
+            if (tab.classList.contains('sidebar-menu-item')) {
                 activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        });
+        }
     });
 
+    // Aktifkan tab dari URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
     if (tabParam) {
-        const targetBtn = document.querySelector<HTMLButtonElement>(`.profile-tab-btn[data-tab="${tabParam}"]`)
-                       ?? document.querySelector<HTMLAnchorElement>(`.sidebar-menu-item[data-tab="${tabParam}"]`);
-        targetBtn?.click();
+        const targetBtn = document.querySelector(`.profile-tab-btn[data-tab="${tabParam}"]`)
+                       ?? document.querySelector(`.sidebar-menu-item[data-tab="${tabParam}"]`);
+        if (targetBtn) (targetBtn as HTMLElement).click();
     }
 }
 
-// ============================================================
-// STAR RATING
-// ============================================================
-
 function initStarRating(): void {
-    const stars = document.querySelectorAll<StarElement>('#star-selector i');
+    const stars = document.querySelectorAll('#star-selector i');
     const ratingInput = document.getElementById('rating-value') as HTMLInputElement | null;
     if (!stars.length || !ratingInput) return;
 
     stars.forEach(star => {
         star.addEventListener('click', () => {
-            const value = parseInt(star.dataset.value ?? '0');
+            const value = parseInt(star.getAttribute('data-value') ?? '0');
             ratingInput.value = value.toString();
             stars.forEach((s, idx) => {
                 s.className = idx < value ? 'fas fa-star' : 'far fa-star';
@@ -110,10 +81,6 @@ function initStarRating(): void {
         });
     });
 }
-
-// ============================================================
-// MODAL CHECKOUT
-// ============================================================
 
 function initCheckoutModal(): void {
     const modal = document.getElementById('checkout-modal');
@@ -135,10 +102,6 @@ function initCheckoutModal(): void {
     });
 }
 
-// ============================================================
-// MODAL KONTAK PENJUAL
-// ============================================================
-
 function initContactModal(): void {
     const modal = document.getElementById('contact-modal');
     if (!modal) return;
@@ -158,10 +121,6 @@ function initContactModal(): void {
         if (e.target === modal) closeModal();
     });
 }
-
-// ============================================================
-// QUANTITY SELECTOR (+/-)
-// ============================================================
 
 function initQuantitySelector(): void {
     const input = document.getElementById('jumlah') as HTMLInputElement | null;

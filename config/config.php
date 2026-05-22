@@ -1,14 +1,17 @@
 <?php
-$servername = "localhost";
-$username = "root"; // <-- Ganti dengan username database Anda
-$password = ""; // <-- Ganti dengan password database Anda
-$dbname = "db_skansaape"; // <-- Ganti dengan nama database Anda
 
-// Membuat koneksi
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+declare(strict_types=1);
 
-// Cek koneksi
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'db_skansaape');
+define('BASE_URL', '/APEskansa/public_html/');
+
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
 if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+    die('Koneksi database gagal: ' . mysqli_connect_error());
 }
-?>
+
+mysqli_set_charset($conn, 'utf8mb4');

@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../../includes/header.php';
 
 // Pastikan hanya pembeli yang bisa akses
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pembeli') {
-    header('Location: ../../login.php');
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
@@ -21,7 +21,7 @@ mysqli_stmt_close($stmt);
 
 $user_initial = mb_substr($user_data['nama'] ?? '', 0, 1);
 $foto_profil = !empty($user_data['foto_profil'])
-    ? '../../uploads/' . htmlspecialchars($user_data['foto_profil'], ENT_QUOTES, 'UTF-8')
+    ? 'uploads/' . htmlspecialchars($user_data['foto_profil'], ENT_QUOTES, 'UTF-8')
     : null;
 $no_hp = htmlspecialchars($user_data['no_hp'] ?? '', ENT_QUOTES, 'UTF-8');
 
@@ -84,7 +84,7 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
         <!-- Tab 1: Profil -->
         <div class="profile-tab-content active" id="tab-profil">
             <h3 style="font-size: var(--fs-xl); font-weight: 600; margin-bottom: var(--space-lg);">Informasi Akun</h3>
-            <form action="../../process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+            <form action="<?= BASE_URL ?>process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" id="nama" name="nama" class="form-control"
@@ -151,7 +151,7 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
                             <tr>
                                 <td>
                                     <div class="flex-center">
-                                        <img src="../../uploads/<?= htmlspecialchars($row['gambar'], ENT_QUOTES, 'UTF-8') ?>"
+                                        <img src="uploads/<?= htmlspecialchars($row['gambar'], ENT_QUOTES, 'UTF-8') ?>"
                                              width="50" height="50" style="object-fit:cover; border-radius: var(--radius-sm);" alt="Gambar">
                                         <span style="font-weight: 600;"><?= htmlspecialchars($row['nama_produk'], ENT_QUOTES, 'UTF-8') ?></span>
                                     </div>
@@ -186,7 +186,7 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
             <p style="color: var(--text-light); font-size: var(--fs-sm); margin-bottom: var(--space-lg);">
                 Bagikan pengalaman belanja Anda di APEskansa.
             </p>
-            <form action="../../process/beri-testimoni.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+            <form action="<?= BASE_URL ?>process/beri-testimoni.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
                 <div class="form-group">
                     <label>Nilai Kualitas Pelayanan / Aplikasi</label>
                     <div style="display: flex; gap: var(--space-xs); font-size: 1.75rem; color: var(--warning);" id="star-selector">

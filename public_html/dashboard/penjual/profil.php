@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../../includes/header.php';
 
 // Proteksi akses: hanya penjual
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'penjual') {
-    header('Location: ../../login.php');
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
@@ -21,7 +21,7 @@ mysqli_stmt_close($stmt);
 
 $user_initial = mb_substr($user_data['nama'] ?? '', 0, 1);
 $foto_profil = !empty($user_data['foto_profil'])
-    ? '../../uploads/' . htmlspecialchars($user_data['foto_profil'], ENT_QUOTES, 'UTF-8')
+    ? 'uploads/' . htmlspecialchars($user_data['foto_profil'], ENT_QUOTES, 'UTF-8')
     : null;
 $no_hp = htmlspecialchars($user_data['no_hp'] ?? '', ENT_QUOTES, 'UTF-8');
 
@@ -95,7 +95,7 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
                     <h2 style="font-size: var(--fs-xl); font-weight: 700; color: var(--text-dark); margin: 0;"><i class="fas fa-user-edit" style="color: var(--primary);"></i> Profil & Toko Saya</h2>
                 </div>
 
-                <form action="../../process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
+                <form action="<?= BASE_URL ?>process/edit-profil.php" method="POST" enctype="multipart/form-data" style="max-width: 600px;">
                     <div class="form-group">
                         <label for="nama">Nama Toko / Penjual</label>
                         <input type="text" id="nama" name="nama" class="form-control"
@@ -127,7 +127,7 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
             <div class="dashboard-card glass-card" style="border-radius: var(--radius-lg); padding: var(--space-xl);">
                 <div class="card-header" style="border-bottom: 1px solid var(--border); padding-bottom: var(--space-md); margin-bottom: var(--space-lg); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
                     <h2 style="font-size: var(--fs-xl); font-weight: 700; color: var(--text-dark); margin: 0;"><i class="fas fa-cubes" style="color: var(--primary);"></i> Daftar Produk Saya</h2>
-                    <a href="tambah-produk.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Produk</a>
+                    <a href="<?= BASE_URL ?>dashboard/penjual/tambah-produk.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Produk</a>
                 </div>
 
                 <div class="table-responsive">
@@ -154,7 +154,7 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
                             ?>
                                 <tr>
                                     <td>
-                                        <img src="../../uploads/<?= htmlspecialchars($row['gambar'], ENT_QUOTES, 'UTF-8') ?>"
+                                        <img src="uploads/<?= htmlspecialchars($row['gambar'], ENT_QUOTES, 'UTF-8') ?>"
                                              width="60" height="60" style="object-fit:cover; border-radius: var(--radius-sm);" alt="Produk">
                                     </td>
                                     <td style="font-weight: 600;"><?= htmlspecialchars($row['nama_produk'], ENT_QUOTES, 'UTF-8') ?></td>
@@ -170,10 +170,10 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
                                     </td>
                                     <td>
                                         <div class="action-buttons" style="display: flex; gap: var(--space-xs);">
-                                            <a href="edit-produk.php?id=<?= (int) $row['produk_id'] ?>" class="btn btn-sm btn-edit" style="background: var(--warning); color: var(--text-dark); border: none; padding: 0.25rem 0.5rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);" title="Edit">
+                                            <a href="<?= BASE_URL ?>dashboard/penjual/edit-produk.php?id=<?= (int) $row['produk_id'] ?>" class="btn btn-sm btn-edit" style="background: var(--warning); color: var(--text-dark); border: none; padding: 0.25rem 0.5rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);" title="Edit">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
-                                            <a href="#" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen?') && (window.location.href='../../process/hapus-produk.php?id=<?= (int) $row['produk_id'] ?>')" class="btn btn-sm btn-delete" style="background: var(--danger); color: var(--white); border: none; padding: 0.25rem 0.5rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);" title="Hapus">
+                                            <a href="#" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen?') && (window.location.href='<?= BASE_URL ?>process/hapus-produk.php?id=<?= (int) $row['produk_id'] ?>')" class="btn btn-sm btn-delete" style="background: var(--danger); color: var(--white); border: none; padding: 0.25rem 0.5rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);" title="Hapus">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </a>
                                         </div>
@@ -243,7 +243,7 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
                                     <td style="font-size: var(--fs-xs); font-weight: 700; color: var(--text-light);">#<?= (int) $row['pesanan_id'] ?></td>
                                     <td>
                                         <div class="flex-center">
-                                            <img src="../../uploads/<?= htmlspecialchars($row['gambar'], ENT_QUOTES, 'UTF-8') ?>"
+                                            <img src="uploads/<?= htmlspecialchars($row['gambar'], ENT_QUOTES, 'UTF-8') ?>"
                                                  width="45" height="45" style="object-fit:cover; border-radius: var(--radius-sm);" alt="Img">
                                             <span style="font-weight: 600; font-size: var(--fs-sm);"><?= htmlspecialchars($row['nama_produk'], ENT_QUOTES, 'UTF-8') ?></span>
                                         </div>
@@ -259,14 +259,14 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
                                     <td>
                                         <?php if ($row['status'] === 'menunggu'): ?>
                                             <div style="display: flex; gap: 0.25rem;">
-                                                <form method="POST" action="../../process/update-status-pesanan.php" style="display:inline;">
+                                                <form method="POST" action="<?= BASE_URL ?>process/update-status-pesanan.php" style="display:inline;">
                                                     <input type="hidden" name="pesanan_id" value="<?= (int) $row['pesanan_id'] ?>">
                                                     <input type="hidden" name="status" value="diproses">
                                                     <button type="submit" class="btn btn-sm btn-outline" style="font-size: var(--fs-xs); font-weight: 600;">
                                                         <i class="fas fa-check"></i> Proses
                                                     </button>
                                                 </form>
-                                                <form method="POST" action="../../process/update-status-pesanan.php" style="display:inline;">
+                                                <form method="POST" action="<?= BASE_URL ?>process/update-status-pesanan.php" style="display:inline;">
                                                     <input type="hidden" name="pesanan_id" value="<?= (int) $row['pesanan_id'] ?>">
                                                     <input type="hidden" name="status" value="dibatalkan">
                                                     <button type="submit" class="btn btn-sm btn-delete" style="background: var(--danger); color: var(--white); border: none; font-size: var(--fs-xs); font-weight: 600;">
@@ -275,7 +275,7 @@ $omset           = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE
                                                 </form>
                                             </div>
                                         <?php elseif ($row['status'] === 'diproses'): ?>
-                                            <form method="POST" action="../../process/update-status-pesanan.php" style="display:inline;">
+                                            <form method="POST" action="<?= BASE_URL ?>process/update-status-pesanan.php" style="display:inline;">
                                                 <input type="hidden" name="pesanan_id" value="<?= (int) $row['pesanan_id'] ?>">
                                                 <input type="hidden" name="status" value="selesai">
                                                 <button type="submit" class="btn btn-sm" style="background: var(--success); color: var(--white); padding: 0.35rem 0.75rem; font-size: var(--fs-xs); font-weight: 600; border-radius: var(--radius-sm);">

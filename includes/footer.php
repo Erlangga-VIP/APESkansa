@@ -2,15 +2,15 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="assets/img/LOGOAPE.png" alt="APEskansa Logo">
+                    <img src="<?= BASE_URL ?>assets/img/LOGOAPE.png" alt="APEskansa Logo">
                     <p>Marketplace Siswa SMKN 1 Bawang. Media kreasi & kewirausahaan siswa.</p>
                 </div>
                 <div>
                     <h3>Navigasi</h3>
                     <ul>
-                        <li><a href="index.php">Beranda</a></li>
-                        <li><a href="produk.php">Produk</a></li>
-                        <li><a href="penjual.php">Penjual</a></li>
+                        <li><a href="<?= BASE_URL ?>index.php">Beranda</a></li>
+                        <li><a href="<?= BASE_URL ?>produk.php">Produk</a></li>
+                        <li><a href="<?= BASE_URL ?>penjual.php">Penjual</a></li>
                     </ul>
                 </div>
                 <div>
@@ -38,6 +38,6 @@
             </div>
         </div>
     </footer>
-    <script src="assets/js/script.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/script.js"></script>
 </body>
 </html>

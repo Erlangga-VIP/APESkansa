@@ -14,7 +14,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 // Data user yang sedang login
 $current_user_foto = null;
 $current_user_initial = '';
-$dashboard_link = 'dashboard/pembeli/profil.php';
+$dashboard_link = BASE_URL . 'dashboard/pembeli/profil.php';
 
 if (isset($_SESSION['user_id'])) {
     $stmt = mysqli_prepare($conn, 'SELECT foto_profil, nama FROM users WHERE user_id = ?');
@@ -32,9 +32,9 @@ if (isset($_SESSION['user_id'])) {
 
     if (isset($_SESSION['role'])) {
         if ($_SESSION['role'] === 'penjual') {
-            $dashboard_link = 'dashboard/penjual/profil.php';
+            $dashboard_link = BASE_URL . 'dashboard/penjual/profil.php';
         } elseif ($_SESSION['role'] === 'admin') {
-            $dashboard_link = 'dashboard/admin/dashboard.php';
+            $dashboard_link = BASE_URL . 'dashboard/admin/dashboard.php';
         }
     }
 }
@@ -45,7 +45,7 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APEskansa – Marketplace Siswa SMKN 1 Bawang</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -55,21 +55,21 @@ if (isset($_SESSION['user_id'])) {
     <header class="header">
         <div class="container header-content">
             <div class="logo">
-                <a href="index.php">
-                    <img src="assets/img/LOGOAPE.png" alt="APEskansa Logo">
+                <a href="<?= BASE_URL ?>index.php">
+                    <img src="<?= BASE_URL ?>assets/img/LOGOAPE.png" alt="APEskansa Logo">
                 </a>
             </div>
 
             <nav class="nav" id="mainNav">
                 <ul class="nav-list">
                     <li>
-                        <a href="index.php" class="nav-link <?= $current_page === 'index' ? 'active' : '' ?>">Beranda</a>
+                        <a href="<?= BASE_URL ?>index.php" class="nav-link <?= $current_page === 'index' ? 'active' : '' ?>">Beranda</a>
                     </li>
                     <li>
-                        <a href="produk.php" class="nav-link <?= $current_page === 'produk' ? 'active' : '' ?>">Produk</a>
+                        <a href="<?= BASE_URL ?>produk.php" class="nav-link <?= $current_page === 'produk' ? 'active' : '' ?>">Produk</a>
                     </li>
                     <li>
-                        <a href="penjual.php" class="nav-link <?= $current_page === 'penjual' ? 'active' : '' ?>">Penjual</a>
+                        <a href="<?= BASE_URL ?>penjual.php" class="nav-link <?= $current_page === 'penjual' ? 'active' : '' ?>">Penjual</a>
                     </li>
                 </ul>
             </nav>
@@ -85,8 +85,8 @@ if (isset($_SESSION['user_id'])) {
                     </a>
                     <a href="process/logout.php" class="btn btn-outline btn-sm">Keluar</a>
                 <?php else: ?>
-                    <a href="login.php" class="btn btn-outline btn-sm">Masuk</a>
-                    <a href="register.php" class="btn btn-primary btn-sm">Daftar</a>
+                    <a href="<?= BASE_URL ?>login.php" class="btn btn-outline btn-sm">Masuk</a>
+                    <a href="<?= BASE_URL ?>register.php" class="btn btn-primary btn-sm">Daftar</a>
                 <?php endif; ?>
             </div>
 
