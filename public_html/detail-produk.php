@@ -6,7 +6,6 @@ include '../config/config.php'; // Koneksi ke database
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($product_id == 0) {
-    // Jika tidak ada ID atau ID bukan angka, hentikan skrip
     die("Error: Produk tidak valid.");
 }
 
@@ -23,7 +22,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
     mysqli_stmt_close($stmt);
 }
 
-// Jika produk dengan ID tersebut tidak ditemukan di database, hentikan skrip
 if ($product === null) {
     die("Produk tidak ditemukan.");
 }
@@ -51,7 +49,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/assets/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body style="background-color: var(--secondary-color); min-height: 100vh;">
     <!-- Header -->
@@ -64,7 +62,7 @@ if (isset($_SESSION['user_id'])) {
                     </a>
                 </div>
                 <nav class="nav">
-                     <ul class="nav-list">
+                    <ul class="nav-list">
                         <li class="nav-item"><a href="index.php" class="nav-link">Beranda</a></li>
                         <li class="nav-item"><a href="produk.php" class="nav-link active">Produk</a></li>
                         <li class="nav-item"><a href="penjual.php" class="nav-link">Penjual</a></li>
@@ -135,35 +133,40 @@ if (isset($_SESSION['user_id'])) {
                         <p style="color:#64748b; font-size: 0.95rem; line-height: 1.6; max-height:180px; overflow-y:auto; padding-right:5px;"><?php echo nl2br(htmlspecialchars($product['deskripsi'])); ?></p>
                     </div>
                     
+                    <!-- PERBAIKAN: Tombol Hubungi Penjual untuk SEMUA, Pesan hanya untuk pembeli -->
                     <div class="product-detail-buttons" style="display:flex; gap: 1rem; flex-wrap:wrap;">
                         <?php
+                        // Tombol Pesan (hanya untuk pembeli yang login)
                         if (isset($_SESSION['role']) && $_SESSION['role'] == 'pembeli') {
                             echo '<button id="open-checkout-btn" class="btn btn-primary" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px; display:inline-flex; align-items:center; gap:0.5rem;"><i class="fas fa-shopping-bag"></i> Pesan Sekarang</button>';
-                            
-                            // Logika pembuatan Link WhatsApp
-                            $no_hp = trim($product['no_hp_penjual']);
-                            $wa_link = "";
-                            $has_wa = false;
+                        }
 
-                            if (!empty($no_hp)) {
-                                $has_wa = true;
-                                $clean_no = preg_replace('/[^0-9]/', '', $no_hp);
-                                if (substr($clean_no, 0, 1) === '0') {
-                                    $clean_no = '62' . substr($clean_no, 1);
-                                }
-                                $pesan = "Halo " . $product['nama_penjual'] . ", saya tertarik dengan produk *" . $product['nama_produk'] . "* Anda yang dijual di APEskansa. Apakah masih tersedia?";
-                                $wa_link = "https://wa.me/" . $clean_no . "?text=" . urlencode($pesan);
+                        // Tombol Hubungi Penjual (WhatsApp) untuk SEMUA pengunjung
+                        $no_hp = trim($product['no_hp_penjual']);
+                        $wa_link = "";
+                        $has_wa = false;
+                        if (!empty($no_hp)) {
+                            $has_wa = true;
+                            $clean_no = preg_replace('/[^0-9]/', '', $no_hp);
+                            if (substr($clean_no, 0, 1) === '0') {
+                                $clean_no = '62' . substr($clean_no, 1);
                             }
+                            $pesan = "Halo " . $product['nama_penjual'] . ", saya tertarik dengan produk *" . $product['nama_produk'] . "* Anda yang dijual di APEskansa. Apakah masih tersedia?";
+                            $wa_link = "https://wa.me/" . $clean_no . "?text=" . urlencode($pesan);
+                        }
 
-                            if ($has_wa) {
-                                echo '<a href="' . $wa_link . '" target="_blank" class="btn btn-outline" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px; display:inline-flex; align-items:center; gap:0.5rem;"><i class="fab fa-whatsapp" style="font-size:1.2rem;"></i> Hubungi Penjual</a>';
-                            } else {
-                                echo '<button id="open-contact-btn" class="btn btn-outline" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px; display:inline-flex; align-items:center; gap:0.5rem;"><i class="fas fa-envelope"></i> Hubungi Penjual</button>';
-                            }
-                        } elseif (isset($_SESSION['role']) && ($_SESSION['role'] == 'penjual' || $_SESSION['role'] == 'admin')) {
-                            echo '<span style="font-style:italic; font-size:0.9rem; color:#64748b;"><i class="fas fa-info-circle"></i> Anda masuk sebagai ' . $_SESSION['role'] . '. Fitur pemesanan hanya tersedia untuk akun Pembeli.</span>';
+                        if ($has_wa) {
+                            echo '<a href="' . $wa_link . '" target="_blank" class="btn btn-outline" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px; display:inline-flex; align-items:center; gap:0.5rem;"><i class="fab fa-whatsapp" style="font-size:1.2rem;"></i> Hubungi Penjual</a>';
                         } else {
+                            // Jika tidak ada WA, tampilkan tombol yang membuka modal kontak (email)
+                            echo '<button id="open-contact-btn" class="btn btn-outline" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px; display:inline-flex; align-items:center; gap:0.5rem;"><i class="fas fa-envelope"></i> Hubungi Penjual</button>';
+                        }
+
+                        // Guest: tombol login untuk memesan
+                        if (!isset($_SESSION['user_id'])) {
                             echo '<a href="login.php" class="btn btn-primary" style="padding: 0.75rem 2rem; font-weight:600; border-radius:8px;"><i class="fas fa-sign-in-alt"></i> Login untuk Memesan</a>';
+                        } elseif ($_SESSION['role'] != 'pembeli') {
+                            echo '<span style="font-style:italic; font-size:0.9rem; color:#64748b;"><i class="fas fa-info-circle"></i> Anda masuk sebagai ' . $_SESSION['role'] . '. Fitur pemesanan hanya untuk pembeli.</span>';
                         }
                         ?>
                     </div>
@@ -182,7 +185,6 @@ if (isset($_SESSION['user_id'])) {
             <form action="process/buat-pesanan.php" method="POST">
                 <input type="hidden" name="produk_id" value="<?php echo $product_id; ?>">
                 <div class="modal-body">
-                    <!-- Detail Produk di Modal -->
                     <div style="display:flex; gap:1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom:1.25rem; margin-bottom:1.5rem; align-items:center;">
                         <img src="uploads/<?php echo htmlspecialchars($product['gambar']); ?>" alt="Img" style="width: 80px; height: 80px; object-fit:cover; border-radius:10px; border: 1px solid var(--border-color);">
                         <div>
@@ -192,7 +194,6 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                     </div>
 
-                    <!-- Pilihan Jumlah -->
                     <div class="form-group" style="margin-bottom: 1.25rem;">
                         <label for="jumlah" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display:block;">Jumlah Pembelian</label>
                         <div style="display:flex; align-items:center; gap:0.5rem;">
@@ -202,13 +203,11 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                     </div>
 
-                    <!-- Catatan Pesanan -->
                     <div class="form-group" style="margin-bottom: 1.5rem;">
                         <label for="catatan" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display:block;">Catatan Tambahan (Opsional)</label>
                         <textarea id="catatan" name="catatan" class="form-control" rows="3" placeholder="Contoh: COD di Kelas XI RPL 2 jam istirahat pertama, atau varian rasa..." style="border-radius: 8px; resize:none; padding:0.75rem; border: 1px solid var(--border-color); width:100%; font-family:inherit;"></textarea>
                     </div>
 
-                    <!-- Total Bayar -->
                     <div style="background: rgba(79, 70, 229, 0.05); padding:1rem; border-radius:10px; border:1px solid rgba(79,70,229,0.1); display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-weight:600; color:#64748b; font-size:0.95rem;">Total Pembayaran:</span>
                         <span style="font-size:1.3rem; font-weight:800; color:var(--primary-color);" id="total-bayar-display">Rp <?php echo number_format($product['harga'], 0, ',', '.'); ?></span>
@@ -298,7 +297,6 @@ if (isset($_SESSION['user_id'])) {
             const closeContactBtn = document.getElementById('close-contact-btn');
             const okContactBtn = document.getElementById('ok-contact-btn');
             
-            // Modal Checkout triggers
             if(openCheckoutBtn) {
                 openCheckoutBtn.addEventListener('click', () => {
                     checkoutModal.classList.add('active');
@@ -312,7 +310,6 @@ if (isset($_SESSION['user_id'])) {
             if(closeCheckoutBtn) closeCheckoutBtn.addEventListener('click', closeCheckout);
             if(cancelCheckoutBtn) cancelCheckoutBtn.addEventListener('click', closeCheckout);
             
-            // Modal Kontak triggers
             if(openContactBtn) {
                 openContactBtn.addEventListener('click', () => {
                     contactModal.classList.add('active');
@@ -326,13 +323,11 @@ if (isset($_SESSION['user_id'])) {
             if(closeContactBtn) closeContactBtn.addEventListener('click', closeContact);
             if(okContactBtn) okContactBtn.addEventListener('click', closeContact);
             
-            // Close modal when clicking on overlay
             window.addEventListener('click', (e) => {
                 if (e.target === checkoutModal) closeCheckout();
                 if (e.target === contactModal) closeContact();
             });
             
-            // Plus Minus Logic
             const inputJumlah = document.getElementById('jumlah');
             const btnMinus = document.getElementById('btn-minus');
             const btnPlus = document.getElementById('btn-plus');
