@@ -1,30 +1,170 @@
-/* Glassmorphism Card Effect */
-.glass-card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: var(--box-shadow);
-}
-
-/* Modern Card Layouts */
 .product-card {
-    border-radius: var(--border-radius) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: var(--box-shadow) !important;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--box-shadow-hover) !important;
+    transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
 }
 
-/* Floating Shadows & Hover Animation */
-.hover-float {
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+@media (hover: hover) {
+    .product-card:hover {
+        border-color: rgba(13, 148, 136, 0.25);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-6px);
+    }
 }
-.hover-float:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--box-shadow-hover) !important;
+
+.product-image {
+    aspect-ratio: 1 / 1;
+    background: var(--secondary);
+    overflow: hidden;
+    position: relative;
+}
+
+.product-image img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    width: 100%;
+}
+
+@media (hover: hover) {
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+}
+
+.product-image .badge {
+    position: absolute;
+    right: var(--space-sm);
+    top: var(--space-sm);
+}
+
+.product-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: var(--space-md);
+}
+
+.product-title {
+    color: var(--text-dark);
+    font-size: var(--fs-base);
+    font-weight: 700;
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.product-seller {
+    align-items: center;
+    color: var(--text-muted);
+    display: flex;
+    font-size: var(--fs-xs);
+    gap: 0.35rem;
+}
+
+.product-price {
+    color: var(--primary-dark);
+    font-size: var(--fs-lg);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: var(--space-xs) 0 var(--space-sm);
+}
+
+.product-info .btn {
+    margin-top: auto;
+}
+
+.feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-xl);
+    text-align: center;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+@media (hover: hover) {
+    .feature-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-4px);
+    }
+}
+
+.feature-icon {
+    align-items: center;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-primary);
+    color: var(--white);
+    display: flex;
+    font-size: 1.35rem;
+    height: 64px;
+    justify-content: center;
+    margin: 0 auto var(--space-lg);
+    width: 64px;
+}
+
+.feature-card h3 {
+    color: var(--text-dark);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+}
+
+.feature-card p {
+    color: var(--text-light);
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+}
+
+.testimonial-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    flex-shrink: 0;
+    max-width: 340px;
+    min-width: 280px;
+    padding: var(--space-lg);
+}
+
+.testimonial-stars {
+    color: #fbbf24;
+    font-size: var(--fs-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.testimonial-text {
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+}
+
+.testimonial-author {
+    align-items: center;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-md);
+    padding-top: var(--space-md);
+}
+
+.testimonial-author h4 {
+    color: var(--text-dark);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+}
+
+.testimonial-author p {
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
 }

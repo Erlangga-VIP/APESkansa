@@ -1,30 +1,34 @@
-/* Custom Welcome Banner */
 .welcome-banner {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #3b82f6 100%);
-    color: white;
-    padding: 2.5rem 2rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 2rem;
-    position: relative;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-primary);
+    color: var(--white);
+    margin-bottom: var(--space-xl);
     overflow: hidden;
-    box-shadow: var(--box-shadow);
+    padding: var(--space-xl) var(--space-2xl);
+    position: relative;
 }
-.welcome-banner::after {
+
+.welcome-banner::before {
+    background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.2), transparent 45%);
     content: '';
+    inset: 0;
+    pointer-events: none;
     position: absolute;
-    width: 300px;
-    height: 300px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    right: -100px;
-    top: -100px;
 }
-.welcome-banner-text h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+
+.welcome-banner h1 {
+    font-size: clamp(1.5rem, 4vw, var(--fs-3xl));
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    position: relative;
 }
-.welcome-banner-text p {
-    font-size: 1.1rem;
-    opacity: 0.9;
+
+.welcome-banner p {
+    font-size: var(--fs-base);
+    line-height: 1.65;
+    margin-top: var(--space-sm);
+    max-width: 36rem;
+    opacity: 0.92;
+    position: relative;
 }

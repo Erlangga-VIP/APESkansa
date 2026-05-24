@@ -1,33 +1,68 @@
 <?php
-include '../../config/config.php'; // koneksi database
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $role = $_POST['role'];
+declare(strict_types=1);
 
-    // Cek apakah email sudah terdaftar
-    $check_query = "SELECT email FROM users WHERE email='$email'";
-    $check_result = mysqli_query($conn, $check_query);
+session_start();
+require_once __DIR__ . '/../../config/config.php';
 
-    if ($check_result) {
-        if (mysqli_num_rows($check_result) > 0) {
-            echo "<script>alert('Email sudah digunakan!'); window.location='../register.php';</script>";
-        } else {
-            $sql = "INSERT INTO users (nama, email, password, role) VALUES ('$nama', '$email', '$password', '$role')";
-            if (mysqli_query($conn, $sql)) {
-                echo "<script>alert('Pendaftaran berhasil! Silakan login.'); window.location='../login.php';</script>";
-            } else {
-                // Tampilkan pesan error umum ke pengguna, dan log error detail di server
-                error_log("Error: " . $sql . "\n" . mysqli_error($conn));
-                echo "<script>alert('Terjadi kesalahan saat pendaftaran. Silakan coba lagi nanti.'); window.location='../register.php';</script>";
-            }
-        }
-    } else {
-        // Tampilkan pesan error umum ke pengguna, dan log error detail di server
-        error_log("Error: " . $check_query . "\n" . mysqli_error($conn));
-        echo "<script>alert('Terjadi kesalahan pada sistem. Silakan coba lagi nanti.'); window.location='../register.php';</script>";
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../register.php');
+    exit;
 }
-?>
+
+csrf_require();
+
+$nama     = trim($_POST['nama'] ?? '');
+$email    = trim($_POST['email'] ?? '');
+$password = $_POST['password'] ?? '';
+$role     = $_POST['role'] ?? 'pembeli';
+
+// Validasi input
+$errors = [];
+if ($nama === '') {
+    $errors[] = 'Nama lengkap wajib diisi.';
+}
+if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors[] = 'Format email tidak valid.';
+}
+if (strlen($password) < 6) {
+    $errors[] = 'Password minimal 6 karakter.';
+}
+if (!in_array($role, ['pembeli', 'penjual'], true)) {
+    $role = 'pembeli';
+}
+
+if (!empty($errors)) {
+    $_SESSION['error'] = implode(' ', $errors);
+    header('Location: ../register.php');
+    exit;
+}
+
+// Cek email sudah terdaftar
+$stmt = mysqli_prepare($conn, 'SELECT user_id FROM users WHERE email = ?');
+mysqli_stmt_bind_param($stmt, 's', $email);
+mysqli_stmt_execute($stmt);
+mysqli_stmt_store_result($stmt);
+
+if (mysqli_stmt_num_rows($stmt) > 0) {
+    $_SESSION['error'] = 'Email sudah digunakan.';
+    header('Location: ../register.php');
+    exit;
+}
+mysqli_stmt_close($stmt);
+
+// Insert user baru
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+$stmt = mysqli_prepare($conn, 'INSERT INTO users (nama, email, password, role) VALUES (?, ?, ?, ?)');
+mysqli_stmt_bind_param($stmt, 'ssss', $nama, $email, $hashed_password, $role);
+
+if (mysqli_stmt_execute($stmt)) {
+    $_SESSION['success'] = 'Pendaftaran berhasil. Silakan login.';
+    header('Location: ../login.php');
+} else {
+    error_log('Register error: ' . mysqli_error($conn));
+    $_SESSION['error'] = 'Terjadi kesalahan. Silakan coba lagi.';
+    header('Location: ../register.php');
+}
+mysqli_stmt_close($stmt);
+exit;

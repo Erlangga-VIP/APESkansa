@@ -2,9 +2,8 @@ Options -Indexes
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    # Izinkan GET hanya untuk logout dan update-status-pesanan
+    # Hanya izinkan POST ke folder process/, kecuali logout (GET)
     RewriteCond %{REQUEST_METHOD} !POST
     RewriteCond %{REQUEST_URI} !/process/logout\.php$ [NC]
-    RewriteCond %{REQUEST_URI} !/process/update-status-pesanan\.php$ [NC]
     RewriteRule ^process/ - [F]
 </IfModule>

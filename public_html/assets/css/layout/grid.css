@@ -1,0 +1,120 @@
+.products-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 480px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.stats-grid {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 576px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: calc(100vh - var(--header-height));
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: var(--space-md);
+}
+
+@media (min-width: 992px) {
+    .dashboard {
+        flex-direction: row;
+    }
+
+    .main-content {
+        padding: var(--space-xl);
+    }
+}
+
+.flex-between {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: space-between;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    gap: var(--space-md);
+}
+
+.table-responsive {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+}
+
+.table {
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+    min-width: 640px;
+    width: 100%;
+}
+
+.table th {
+    background: var(--secondary);
+    border-bottom: 2px solid var(--border);
+    color: var(--text-dark);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: var(--space-md);
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.table td {
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-md);
+    vertical-align: middle;
+}
+
+.table tbody tr:hover td {
+    background: var(--primary-muted);
+}
+
+.table img.thumb {
+    border-radius: var(--radius-sm);
+    height: 48px;
+    object-fit: cover;
+    width: 48px;
+}

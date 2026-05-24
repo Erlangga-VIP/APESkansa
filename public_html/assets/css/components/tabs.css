@@ -1,50 +1,54 @@
-/* Modern Tab Navigation */
-.profile-tabs {
+.profile-tabs,
+.profile-tab-nav {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
     display: flex;
-    gap: 0.5rem;
-    border-bottom: 2px solid var(--border-color);
-    margin-bottom: 2rem;
-    padding-bottom: 0.25rem;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-xl);
     overflow-x: auto;
+    padding: var(--space-xs);
 }
+
 .profile-tab-btn {
-    background: none;
+    align-items: center;
+    background: transparent;
     border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #64748b;
+    border-radius: var(--radius-md);
+    color: var(--text-light);
     cursor: pointer;
-    padding: 0.75rem 1.25rem;
-    position: relative;
+    display: inline-flex;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    transition: background var(--transition), color var(--transition);
     white-space: nowrap;
-    transition: all 0.3s ease;
-    border-radius: 6px 6px 0 0;
 }
-.profile-tab-btn:hover {
-    color: var(--primary-color);
-    background-color: var(--accent-color);
-}
+
+.profile-tab-btn:hover,
 .profile-tab-btn.active {
-    color: var(--primary-color);
+    background: var(--primary-muted);
+    color: var(--primary-dark);
 }
-.profile-tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: var(--primary-color);
-    border-radius: 3px;
-}
+
 .profile-tab-content {
+    animation: tabFade 0.25s ease;
     display: none;
-    animation: tabFadeIn 0.4s ease;
 }
+
 .profile-tab-content.active {
     display: block;
 }
-@keyframes tabFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+
+@keyframes tabFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -1,60 +1,90 @@
 <?php
+
+declare(strict_types=1);
+
 session_start();
-include '../../config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 
-// Pastikan hanya penjual yang bisa akses
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'penjual') {
-    header("Location: ../login.php");
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-    $id_penjual = $_SESSION['user_id'];
-    $produk_id = intval($_GET['id']);
+$role = $_SESSION['role'] ?? '';
+if ($role !== 'penjual' && $role !== 'admin') {
+    header('Location: ' . BASE_URL . 'login.php');
+    exit;
+}
 
-    // Validasi kepemilikan produk dan ambil nama berkas gambar
-    $check_sql = "SELECT gambar FROM produk WHERE produk_id = ? AND user_id = ?";
-    if ($stmt_check = mysqli_prepare($conn, $check_sql)) {
-        mysqli_stmt_bind_param($stmt_check, "ii", $produk_id, $id_penjual);
-        mysqli_stmt_execute($stmt_check);
-        $result_check = mysqli_stmt_get_result($stmt_check);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $redirect = $role === 'admin'
+        ? BASE_URL . 'dashboard/admin/dashboard.php?tab=produk'
+        : BASE_URL . 'dashboard/penjual/produk.php';
+    header('Location: ' . $redirect);
+    exit;
+}
 
-        if (mysqli_num_rows($result_check) > 0) {
-            $row_produk = mysqli_fetch_assoc($result_check);
-            $gambar_produk = $row_produk['gambar'];
-            mysqli_stmt_close($stmt_check);
+csrf_require();
 
-            // Hapus gambar dari server jika ada
-            $target_dir = "../../uploads/";
-            if (!empty($gambar_produk) && file_exists($target_dir . $gambar_produk)) {
-                @unlink($target_dir . $gambar_produk);
-            }
+$produk_id = (int) ($_POST['produk_id'] ?? 0);
 
-            // Hapus record produk dari database
-            $delete_sql = "DELETE FROM produk WHERE produk_id = ? AND user_id = ?";
-            if ($stmt_delete = mysqli_prepare($conn, $delete_sql)) {
-                mysqli_stmt_bind_param($stmt_delete, "ii", $produk_id, $id_penjual);
-                
-                if (mysqli_stmt_execute($stmt_delete)) {
-                    echo "<script>alert('Produk berhasil dihapus!'); window.location='../penjual-profil.php?tab=produk';</script>";
-                } else {
-                    echo "<script>alert('Error: Gagal menghapus produk dari database.'); window.location='../penjual-profil.php?tab=produk';</script>";
-                }
-                mysqli_stmt_close($stmt_delete);
-            } else {
-                echo "<script>alert('Error: Gagal menyiapkan query penghapusan database.'); window.location='../penjual-profil.php?tab=produk';</script>";
-            }
-        } else {
-            mysqli_stmt_close($stmt_check);
-            echo "<script>alert('Produk tidak ditemukan atau Anda tidak memiliki akses ke produk ini.'); window.location='../penjual-profil.php?tab=produk';</script>";
-        }
-    } else {
-        echo "<script>alert('Error: Gagal menyiapkan query validasi kepemilikan produk.'); window.location='../penjual-profil.php?tab=produk';</script>";
-    }
+if ($produk_id <= 0) {
+    $_SESSION['error'] = 'ID produk tidak valid.';
+    $redirect = $role === 'admin'
+        ? BASE_URL . 'dashboard/admin/dashboard.php?tab=produk'
+        : BASE_URL . 'dashboard/penjual/produk.php';
+    header('Location: ' . $redirect);
+    exit;
+}
+
+if ($role === 'admin') {
+    $stmt = mysqli_prepare($conn, 'SELECT gambar FROM produk WHERE produk_id = ?');
+    mysqli_stmt_bind_param($stmt, 'i', $produk_id);
 } else {
-    header("Location: ../penjual-profil.php?tab=produk");
+    $id_penjual = (int) $_SESSION['user_id'];
+    $stmt = mysqli_prepare($conn, 'SELECT gambar FROM produk WHERE produk_id = ? AND user_id = ?');
+    mysqli_stmt_bind_param($stmt, 'ii', $produk_id, $id_penjual);
+}
+
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+if (mysqli_num_rows($result) === 0) {
+    $_SESSION['error'] = 'Produk tidak ditemukan atau Anda tidak memiliki akses.';
+    $redirect = $role === 'admin'
+        ? BASE_URL . 'dashboard/admin/dashboard.php?tab=produk'
+        : BASE_URL . 'dashboard/penjual/produk.php';
+    header('Location: ' . $redirect);
     exit;
 }
 
-mysqli_close($conn);
-?>
+$row = mysqli_fetch_assoc($result);
+$gambar_produk = $row['gambar'];
+mysqli_stmt_close($stmt);
+
+$target_dir = __DIR__ . '/../uploads/';
+if (!empty($gambar_produk) && file_exists($target_dir . $gambar_produk)) {
+    unlink($target_dir . $gambar_produk);
+}
+
+if ($role === 'admin') {
+    $stmt = mysqli_prepare($conn, 'DELETE FROM produk WHERE produk_id = ?');
+    mysqli_stmt_bind_param($stmt, 'i', $produk_id);
+} else {
+    $stmt = mysqli_prepare($conn, 'DELETE FROM produk WHERE produk_id = ? AND user_id = ?');
+    mysqli_stmt_bind_param($stmt, 'ii', $produk_id, $id_penjual);
+}
+
+if (mysqli_stmt_execute($stmt)) {
+    $_SESSION['success'] = 'Produk berhasil dihapus.';
+} else {
+    error_log('Hapus produk gagal: ' . mysqli_error($conn));
+    $_SESSION['error'] = 'Gagal menghapus produk. Silakan coba lagi.';
+}
+mysqli_stmt_close($stmt);
+
+$redirect = $role === 'admin'
+    ? BASE_URL . 'dashboard/admin/dashboard.php?tab=produk'
+    : BASE_URL . 'dashboard/penjual/produk.php';
+header('Location: ' . $redirect);
+exit;

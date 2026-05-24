@@ -1,39 +1,34 @@
-/* Popular Sellers Carousel / Horizontal Scroll */
-.sellers-scroll {
-    display: flex;
-    gap: 1.5rem;
-    overflow-x: auto;
-    padding: 0.5rem 0.25rem 1.5rem 0.25rem;
-    scrollbar-width: thin;
-}
-.seller-circle-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 120px;
+.seller-card {
+    padding: var(--space-xl) !important;
     text-align: center;
-    background: white;
-    padding: 1.25rem 1rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
 }
-.seller-circle-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--box-shadow-hover);
+
+.seller-card-avatar {
+    border: 3px solid var(--primary-light);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    height: 88px;
+    margin: 0 auto var(--space-md);
+    object-fit: cover;
+    width: 88px;
 }
-.seller-circle-avatar {
-    width: 65px;
-    height: 65px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #818cf8 100%);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+
+.seller-card .avatar-circle {
+    font-size: var(--fs-2xl);
+    height: 88px;
+    margin: 0 auto var(--space-md);
+    width: 88px;
+}
+
+.seller-card-name {
+    color: var(--text-dark);
+    font-size: var(--fs-lg);
+    font-weight: 800;
+    margin-bottom: var(--space-xs);
+}
+
+.seller-card-email {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    margin-bottom: var(--space-md);
 }

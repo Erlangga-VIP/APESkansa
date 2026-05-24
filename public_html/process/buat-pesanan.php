@@ -1,69 +1,68 @@
 <?php
+
+declare(strict_types=1);
+
 session_start();
-include '../../config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 
-// Pastikan pembeli sudah login
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'pembeli') {
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pembeli_id = $_SESSION['user_id'];
-    $produk_id = intval($_POST['produk_id']);
-    $jumlah = intval($_POST['jumlah']);
-    $catatan = isset($_POST['catatan']) ? trim($_POST['catatan']) : '';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ' . page_url('index.php'));
+    exit;
+}
 
-    if ($jumlah <= 0) {
-        die("<script>alert('Jumlah pesanan harus minimal 1.'); window.history.back();</script>");
-    }
+csrf_require();
 
-    // Ambil detail produk untuk mendapatkan harga dan penjual_id
-    $produk_sql = "SELECT harga, user_id FROM produk WHERE produk_id = ?";
-    if ($stmt_prod = mysqli_prepare($conn, $produk_sql)) {
-        mysqli_stmt_bind_param($stmt_prod, "i", $produk_id);
-        mysqli_stmt_execute($stmt_prod);
-        $result_prod = mysqli_stmt_get_result($stmt_prod);
+$pembeli_id = (int) $_SESSION['user_id'];
+$produk_id  = (int) ($_POST['produk_id'] ?? 0);
+$jumlah     = (int) ($_POST['jumlah'] ?? 0);
+$catatan    = trim($_POST['catatan'] ?? '');
 
-        if (mysqli_num_rows($result_prod) > 0) {
-            $row_prod = mysqli_fetch_assoc($result_prod);
-            $harga = $row_prod['harga'];
-            $penjual_id = $row_prod['user_id'];
-            mysqli_stmt_close($stmt_prod);
+if ($produk_id <= 0 || $jumlah <= 0) {
+    $_SESSION['error'] = 'Data pesanan tidak valid.';
+    header('Location: ' . page_url('produk.php'));
+    exit;
+}
 
-            // Pembeli tidak boleh membeli barangnya sendiri
-            if ($pembeli_id == $penjual_id) {
-                die("<script>alert('Anda tidak bisa membeli produk Anda sendiri.'); window.history.back();</script>");
-            }
+$stmt = mysqli_prepare($conn, 'SELECT harga, user_id FROM produk WHERE produk_id = ?');
+mysqli_stmt_bind_param($stmt, 'i', $produk_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-            // Hitung total harga secara aman di server
-            $total_harga = $harga * $jumlah;
+if (!$row = mysqli_fetch_assoc($result)) {
+    $_SESSION['error'] = 'Produk tidak ditemukan.';
+    header('Location: ' . page_url('produk.php'));
+    exit;
+}
+mysqli_stmt_close($stmt);
 
-            // Simpan pesanan ke database
-            $order_sql = "INSERT INTO pesanan (produk_id, pembeli_id, penjual_id, jumlah, total_harga, status, catatan) VALUES (?, ?, ?, ?, ?, 'menunggu', ?)";
-            if ($stmt_order = mysqli_prepare($conn, $order_sql)) {
-                mysqli_stmt_bind_param($stmt_order, "iiiiis", $produk_id, $pembeli_id, $penjual_id, $jumlah, $total_harga, $catatan);
+if ($pembeli_id === (int) $row['user_id']) {
+    $_SESSION['error'] = 'Anda tidak bisa membeli produk sendiri.';
+    header('Location: ' . page_url('detail-produk.php?id=' . $produk_id));
+    exit;
+}
 
-                if (mysqli_stmt_execute($stmt_order)) {
-                    echo "<script>alert('Pesanan Anda berhasil dikirim ke Penjual! Silakan pantau status pesanan di halaman Profil.'); window.location='../profil.php?tab=pesanan';</script>";
-                } else {
-                    echo "<script>alert('Error: Gagal memproses pesanan Anda ke database.'); window.history.back();</script>";
-                }
-                mysqli_stmt_close($stmt_order);
-            } else {
-                echo "<script>alert('Error: Gagal memuat query pembuatan pesanan.'); window.history.back();</script>";
-            }
-        } else {
-            mysqli_stmt_close($stmt_prod);
-            echo "<script>alert('Produk tidak ditemukan.'); window.location='../produk.php';</script>";
-        }
-    } else {
-        echo "<script>alert('Error: Gagal memuat statement pencarian produk.'); window.history.back();</script>";
-    }
+$total_harga = $row['harga'] * $jumlah;
+$penjual_id  = (int) $row['user_id'];
 
-    mysqli_close($conn);
+$stmt = mysqli_prepare(
+    $conn,
+    "INSERT INTO pesanan (produk_id, pembeli_id, penjual_id, jumlah, total_harga, status, catatan)
+     VALUES (?, ?, ?, ?, ?, 'menunggu', ?)"
+);
+mysqli_stmt_bind_param($stmt, 'iiiiis', $produk_id, $pembeli_id, $penjual_id, $jumlah, $total_harga, $catatan);
+
+if (mysqli_stmt_execute($stmt)) {
+    $_SESSION['success'] = 'Pesanan berhasil dikirim.';
+    header('Location: ' . page_url('dashboard/pembeli/profil.php?tab=pesanan'));
 } else {
-    header("Location: ../produk.php");
-    exit;
+    error_log('Buat pesanan gagal: ' . mysqli_error($conn));
+    $_SESSION['error'] = 'Gagal memproses pesanan. Silakan coba lagi.';
+    header('Location: ' . page_url('detail-produk.php?id=' . $produk_id));
 }
-?>
+mysqli_stmt_close($stmt);
+exit;
