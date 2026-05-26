@@ -51,12 +51,12 @@ $page_subtitle = 'Kelola pesanan dari pembeli dan perbarui status transaksi.';
 
                         if (mysqli_num_rows($pesanan_list) > 0):
                             while ($row = mysqli_fetch_assoc($pesanan_list)):
-                                $status_class = match ($row['status']) {
+                                $status_map = [
                                     'diproses'   => 'badge-processing',
                                     'selesai'    => 'badge-completed',
                                     'dibatalkan' => 'badge-cancelled',
-                                    default      => 'badge-waiting',
-                                };
+                                ];
+                                $status_class = $status_map[$row['status']] ?? 'badge-waiting';
                         ?>
                             <tr>
                                 <td class="table-cell-muted">#<?= (int) $row['pesanan_id'] ?></td>

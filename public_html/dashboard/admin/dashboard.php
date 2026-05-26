@@ -105,14 +105,16 @@ if ($tab === 'users') {
     <div class="main-content">
         <div class="dashboard-header glass-card">
             <h1 class="dashboard-title">
-                <?= match ($tab) {
+                <?php
+                $tab_titles = [
                     'dashboard' => 'Dashboard Admin',
                     'users'     => 'Manajemen Pengguna',
                     'produk'    => 'Manajemen Produk',
                     'pesanan'   => 'Manajemen Pesanan',
                     'testimoni' => 'Manajemen Testimoni',
-                    default     => 'Dashboard Admin'
-                } ?>
+                ];
+                echo $tab_titles[$tab] ?? 'Dashboard Admin';
+                ?>
             </h1>
         </div>
 
@@ -233,12 +235,12 @@ if ($tab === 'users') {
                     </thead>
                     <tbody>
                         <?php while ($ps = mysqli_fetch_assoc($pesanan)):
-                            $status_class = match ($ps['status']) {
+                            $status_map = [
                                 'diproses'   => 'badge-processing',
                                 'selesai'    => 'badge-completed',
                                 'dibatalkan' => 'badge-cancelled',
-                                default      => 'badge-waiting'
-                            };
+                            ];
+                            $status_class = $status_map[$ps['status']] ?? 'badge-waiting';
                         ?>
                             <tr>
                                 <td>#<?= (int) $ps['pesanan_id'] ?></td>

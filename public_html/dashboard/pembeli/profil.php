@@ -140,12 +140,12 @@ $pesanan_selesai = (int) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*)
 
                         if (mysqli_num_rows($result) > 0):
                             while ($row = mysqli_fetch_assoc($result)):
-                                $status_class = match ($row['status']) {
+                                $status_map = [
                                     'diproses'   => 'badge-processing',
                                     'selesai'    => 'badge-completed',
                                     'dibatalkan' => 'badge-cancelled',
-                                    default      => 'badge-waiting'
-                                };
+                                ];
+                                $status_class = $status_map[$row['status']] ?? 'badge-waiting';
                         ?>
                             <tr>
                                 <td>

@@ -60,13 +60,13 @@ function page_url(string $path = ''): string
 /** @return string|null ekstensi aman dari MIME, null jika tidak didukung */
 function allowed_image_extension(string $mime): ?string
 {
-    return match ($mime) {
-        'image/jpeg' => 'jpg',
-        'image/png'  => 'png',
-        'image/gif'  => 'gif',
-        'image/webp' => 'webp',
-        default      => null,
-    };
+    switch ($mime) {
+        case 'image/jpeg': return 'jpg';
+        case 'image/png':  return 'png';
+        case 'image/gif':  return 'gif';
+        case 'image/webp': return 'webp';
+        default:           return null;
+    }
 }
 
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
