@@ -1,0 +1,160 @@
+/* Systems of Animation & Micro-interactions */
+
+/* --- Keyframes --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(13, 148, 136, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(13, 148, 136, 0);
+    }
+}
+
+@keyframes floatHero {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(1deg);
+    }
+}
+
+/* --- Entrance & Scroll Reveal Classes --- */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Entrance Animations */
+.animate-fade-in-up {
+    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+.animate-scale-in {
+    animation: scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+/* Float Animation Overrides */
+.hero-image img.animated-hero {
+    animation: floatHero 6s ease-in-out infinite !important;
+}
+
+/* Delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* --- Premium Micro-interactions & Hovers --- */
+
+/* Product Cards */
+.product-card {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+.product-card:hover {
+    border-color: var(--primary-light);
+    box-shadow: 0 20px 35px rgba(13, 148, 136, 0.12), 0 4px 12px rgba(0, 0, 0, 0.02);
+    transform: translateY(-8px) scale(1.015);
+}
+
+.product-card .btn-primary {
+    transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover .btn-primary {
+    animation: pulseGlow 2s infinite;
+    transform: translateY(-2px);
+}
+
+/* Feature Cards */
+.feature-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.3s ease;
+}
+
+.feature-card:hover {
+    background-color: var(--surface-elevated);
+    box-shadow: 0 22px 40px rgba(13, 148, 136, 0.08), 0 4px 12px rgba(249, 115, 22, 0.04);
+    transform: translateY(-6px);
+}
+
+.feature-icon i {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.feature-card:hover .feature-icon i {
+    transform: scale(1.18) rotate(8deg);
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.testimonial-card:hover {
+    box-shadow: 0 16px 36px rgba(13, 148, 136, 0.06);
+    transform: translateY(-4px);
+}
+
+/* Category Chips */
+.btn-pill-chip {
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.btn-pill-chip:hover {
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+
+.btn-pill-chip:active {
+    transform: translateY(0);
+}
+
+/* Stats Counter */
+.stats-grid > div {
+    transition: transform 0.3s ease;
+}
+.stats-grid > div:hover {
+    transform: scale(1.05);
+}

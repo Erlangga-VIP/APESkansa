@@ -39,13 +39,13 @@ $testimoni = mysqli_stmt_get_result($stmt_testi);
 ?>
 
 <?php if (isset($_SESSION['user_id'])): ?>
-    <main class="container page-section">
-        <div class="welcome-banner">
+    <main class="container page-section animate-fade-in-up">
+        <div class="welcome-banner animate-fade-in-up delay-100">
             <h1>Halo, <?= htmlspecialchars($_SESSION['nama'], ENT_QUOTES, 'UTF-8') ?>!</h1>
             <p>Selamat datang kembali di APEskansa. Jelajahi kreasi terbaik dari teman-teman sekolahmu hari ini.</p>
         </div>
 
-        <form action="<?= page_url('produk.php') ?>" method="GET" class="search-bar">
+        <form action="<?= page_url('produk.php') ?>" method="GET" class="search-bar animate-fade-in-up delay-200">
             <div class="search-input-wrap">
                 <i class="fas fa-search search-input-icon" aria-hidden="true"></i>
                 <input type="text" name="search" class="form-control search-input-field"
@@ -54,7 +54,7 @@ $testimoni = mysqli_stmt_get_result($stmt_testi);
             <button type="submit" class="btn btn-primary btn-lg">Cari Produk</button>
         </form>
 
-        <section class="section-block">
+        <section class="section-block animate-fade-in-up delay-300">
             <div class="section-header">
                 <h2><i class="fas fa-tags"></i> Jelajahi Kategori</h2>
             </div>
@@ -83,7 +83,7 @@ $testimoni = mysqli_stmt_get_result($stmt_testi);
             </div>
         </section>
 
-        <div class="home-layout">
+        <div class="home-layout reveal-on-scroll">
             <section class="section-block">
                 <div class="section-header">
                     <h2><i class="fas fa-fire" style="color: var(--accent);"></i> Rekomendasi Produk</h2>
@@ -144,21 +144,21 @@ $testimoni = mysqli_stmt_get_result($stmt_testi);
     <section class="hero">
         <div class="container hero-content">
             <div class="hero-text">
-                <span class="hero-badge">SMKN 1 Bawang</span>
-                <h1 class="hero-title">Marketplace Siswa <br><span>SMKN 1 Bawang</span></h1>
-                <p class="hero-desc">Platform jual beli wirausaha siswa yang aman dan praktis. Temukan jajanan, kerajinan, dan jasa kreatif buatan teman sekolahmu.</p>
-                <div class="hero-buttons">
+                <span class="hero-badge animate-fade-in-up">SMKN 1 Bawang</span>
+                <h1 class="hero-title animate-fade-in-up delay-100">Marketplace Siswa <br><span>SMKN 1 Bawang</span></h1>
+                <p class="hero-desc animate-fade-in-up delay-200">Platform jual beli wirausaha siswa yang aman dan praktis. Temukan jajanan, kerajinan, dan jasa kreatif buatan teman sekolahmu.</p>
+                <div class="hero-buttons animate-fade-in-up delay-300">
                     <a href="<?= page_url('register.php') ?>" class="btn btn-primary btn-lg">Mulai Jualan</a>
                     <a href="<?= page_url('produk.php') ?>" class="btn btn-secondary btn-lg">Jelajahi Produk</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="<?= page_url('assets/img/hero-illustration.svg') ?>" alt="Ilustrasi Marketplace Sekolah">
+            <div class="hero-image animate-scale-in delay-200">
+                <img src="<?= page_url('assets/img/hero-illustration.png') ?>" alt="Ilustrasi Marketplace Sekolah" class="animated-hero">
             </div>
         </div>
     </section>
 
-    <section class="stats-section">
+    <section class="stats-section reveal-on-scroll">
         <div class="container">
             <div class="stats-card">
                 <div class="stats-grid">
@@ -179,7 +179,7 @@ $testimoni = mysqli_stmt_get_result($stmt_testi);
         </div>
     </section>
 
-    <section class="features">
+    <section class="features reveal-on-scroll">
         <div class="container">
             <h2 class="features-title">Kenapa APEskansa?</h2>
             <div class="products-grid">
@@ -201,7 +201,7 @@ $testimoni = mysqli_stmt_get_result($stmt_testi);
         </div>
     </section>
 
-    <section class="testimonials">
+    <section class="testimonials reveal-on-scroll">
         <div class="container">
             <h2 class="testimonials-title">Kata Mereka</h2>
             <div class="testimonials-slider">

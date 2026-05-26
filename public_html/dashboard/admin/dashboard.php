@@ -249,17 +249,9 @@ if ($tab === 'users') {
                                 <td>Rp <?= number_format((int) $ps['total_harga'], 0, ',', '.') ?></td>
                                 <td><span class="badge-status <?= $status_class ?>"><?= $ps['status'] ?></span></td>
                                 <td>
-                                    <?php if ($ps['status'] !== 'selesai' && $ps['status'] !== 'dibatalkan'): ?>
-                                        <form method="POST" action="<?= BASE_URL ?>process/update-status-pesanan.php" style="display:inline;">
-                                            <?= csrf_field() ?>
-                                            <input type="hidden" name="pesanan_id" value="<?= (int) $ps['pesanan_id'] ?>">
-                                            <input type="hidden" name="status" value="selesai">
-                                            <button type="submit" class="btn btn-sm"
-                                                    style="background: var(--success); color: var(--white); border: none;">
-                                                <i class="fas fa-check"></i> Selesai
-                                            </button>
-                                        </form>
-                                    <?php endif; ?>
+                                    <span class="badge badge-outline" style="color: var(--text-light); border-color: var(--border); font-size: var(--fs-xs); padding: 0.35rem 0.65rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                                        <i class="fas fa-user-lock"></i> Hanya Penjual
+                                    </span>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
